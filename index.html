@@ -9,7 +9,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="ReabScale">
-<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%231d4e3a'/><text y='.9em' font-size='70' x='10'>📋</text></svg>">
+<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%231d4e3a'/><text y='72' x='50' font-size='58' text-anchor='middle' font-family='sans-serif' font-weight='bold' fill='white'>R</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -612,7 +612,7 @@ body {
     <span class="nav-badge" id="nb-history">0</span>
   </div>
   <div class="nav-item" onclick="go('evolucao')">
-    <div class="nav-icon">📈</div>
+    <div class="nav-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></div>
     Evolução
   </div>
   <div class="nav-item" onclick="go('export')">
@@ -909,22 +909,22 @@ body {
     </div>
     <div class="export-grid">
       <div class="export-card" onclick="exportCSV()">
-        <div class="export-card-icon">📊</div>
+        <div class="export-card-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1d4e3a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
         <div class="export-card-title">Planilha CSV</div>
         <div class="export-card-desc">Abre no Excel, Google Sheets e LibreOffice. Inclui todos os registros do histórico.</div>
       </div>
       <div class="export-card" onclick="exportTXT()">
-        <div class="export-card-icon">📄</div>
+        <div class="export-card-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1d4e3a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
         <div class="export-card-title">Relatório em texto</div>
         <div class="export-card-desc">Resumo formatado por paciente, pronto para colar no prontuário eletrônico.</div>
       </div>
       <div class="export-card" onclick="window.print()">
-        <div class="export-card-icon">🖨️</div>
+        <div class="export-card-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1d4e3a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg></div>
         <div class="export-card-title">Imprimir / PDF</div>
         <div class="export-card-desc">Gera PDF via impressão do navegador. Ideal para arquivamento físico.</div>
       </div>
       <div class="export-card" onclick="exportJSON()">
-        <div class="export-card-icon">{ }</div>
+        <div class="export-card-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1d4e3a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
         <div class="export-card-title">JSON (dados brutos)</div>
         <div class="export-card-desc">Para integração com sistemas eletrônicos e bancos de dados.</div>
       </div>
@@ -1017,11 +1017,11 @@ if(!navigator.onLine) document.getElementById('offline-pill').style.display='blo
       <div class="mbn-label">GDS-15</div>
     </div>
     <div class="mbn-item" onclick="go('history')" id="mbn-history">
-      <div class="mbn-icon">📋</div>
+      <div class="mbn-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></div>
       <div class="mbn-label">Histórico</div>
     </div>
     <div class="mbn-item" onclick="go('evolucao')" id="mbn-evolucao">
-      <div class="mbn-icon">📈</div>
+      <div class="mbn-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></div>
       <div class="mbn-label">Evolução</div>
     </div>
     <div class="mbn-item" onclick="go('export')" id="mbn-export">
