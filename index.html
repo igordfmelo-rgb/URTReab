@@ -448,14 +448,83 @@ body {
 }
 .toast.show { opacity: 1; transform: translateY(0); }
 
+/* ── MOBILE BOTTOM NAV ── */
+.mobile-bottom-nav {
+  display: none;
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  z-index: 200;
+  padding: 6px 0 env(safe-area-inset-bottom, 6px);
+  box-shadow: 0 -2px 16px rgba(0,0,0,.08);
+}
+.mbn-scroll {
+  display: flex;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  gap: 2px;
+  padding: 0 6px;
+}
+.mbn-scroll::-webkit-scrollbar { display: none; }
+.mbn-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 6px 10px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  flex-shrink: 0;
+  min-width: 56px;
+  transition: background .15s;
+}
+.mbn-item:active { background: var(--surface2); }
+.mbn-item.active { background: var(--accent-light); }
+.mbn-icon {
+  width: 28px; height: 28px;
+  border-radius: 8px;
+  background: var(--surface2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 700;
+  color: var(--text2);
+  transition: all .15s;
+}
+.mbn-item.active .mbn-icon { background: var(--accent); color: #fff; }
+.mbn-label {
+  font-size: 9px;
+  color: var(--text3);
+  text-align: center;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+.mbn-item.active .mbn-label { color: var(--accent); font-weight: 600; }
+
+/* ── MOBILE HEADER CURRENT SCALE ── */
+.mobile-scale-indicator {
+  display: none;
+  font-size: 12px;
+  color: rgba(255,255,255,.7);
+  font-weight: 400;
+}
+
 /* ── RESPONSIVE ── */
 @media (max-width: 768px) {
   .app-layout { grid-template-columns: 1fr; }
   .sidebar { display: none; }
-  .main { padding: 1rem; }
+  .main { padding: 1rem; padding-bottom: 100px; }
   .patient-grid { grid-template-columns: 1fr 1fr; }
   .score-number { font-size: 40px; }
   .export-grid { grid-template-columns: 1fr; }
+  .mobile-bottom-nav { display: block; }
+  .mobile-scale-indicator { display: block; }
+  .header-sub { display: none; }
+  .score-hero { flex-direction: column; gap: 10px; align-items: flex-start; }
+  .score-right { text-align: left; }
+  .patient-grid { grid-template-columns: 1fr; }
+  .btn-row { flex-direction: column; }
+  .btn-row .btn { width: 100%; justify-content: center; }
 }
 
 /* ── ANIMATIONS ── */
@@ -475,6 +544,7 @@ body {
 <header class="site-header">
   <div class="logo">Reab<span>Scale</span></div>
   <div class="header-sub">Escalas clínicas · Unidade de Reabilitação</div>
+  <div class="mobile-scale-indicator" id="mobile-scale-name">Barthel</div>
 </header>
 
 <div class="app-layout">
@@ -800,6 +870,52 @@ body {
 </div>
 
 <div class="toast" id="toast"></div>
+
+<!-- MOBILE BOTTOM NAV -->
+<nav class="mobile-bottom-nav">
+  <div class="mbn-scroll">
+    <div class="mbn-item active" onclick="go('barthel')" id="mbn-barthel">
+      <div class="mbn-icon">B</div>
+      <div class="mbn-label">Barthel</div>
+    </div>
+    <div class="mbn-item" onclick="go('mif')" id="mbn-mif">
+      <div class="mbn-icon">MIF</div>
+      <div class="mbn-label">MIF</div>
+    </div>
+    <div class="mbn-item" onclick="go('berg')" id="mbn-berg">
+      <div class="mbn-icon">Bg</div>
+      <div class="mbn-label">Berg</div>
+    </div>
+    <div class="mbn-item" onclick="go('mrc')" id="mbn-mrc">
+      <div class="mbn-icon">MRC</div>
+      <div class="mbn-label">Força</div>
+    </div>
+    <div class="mbn-item" onclick="go('ims')" id="mbn-ims">
+      <div class="mbn-icon">IMS</div>
+      <div class="mbn-label">IMS</div>
+    </div>
+    <div class="mbn-item" onclick="go('faq')" id="mbn-faq">
+      <div class="mbn-icon">FAQ</div>
+      <div class="mbn-label">Pfeffer</div>
+    </div>
+    <div class="mbn-item" onclick="go('mmse')" id="mbn-mmse">
+      <div class="mbn-icon">MM</div>
+      <div class="mbn-label">MEEM</div>
+    </div>
+    <div class="mbn-item" onclick="go('gds')" id="mbn-gds">
+      <div class="mbn-icon">GDS</div>
+      <div class="mbn-label">GDS-15</div>
+    </div>
+    <div class="mbn-item" onclick="go('history')" id="mbn-history">
+      <div class="mbn-icon">📋</div>
+      <div class="mbn-label">Histórico</div>
+    </div>
+    <div class="mbn-item" onclick="go('export')" id="mbn-export">
+      <div class="mbn-icon">↓</div>
+      <div class="mbn-label">Exportar</div>
+    </div>
+  </div>
+</nav>
 
 <script>
 // ─── DATA ───────────────────────────────────────────────────────────────────
@@ -1179,12 +1295,23 @@ function dl(content,filename,type){
 function today(){return new Date().toISOString().slice(0,10);}
 
 // ─── NAV ─────────────────────────────────────────────────────────────────────
+const NAV_LABELS={barthel:'Barthel',mif:'MIF',faq:'Pfeffer',berg:'Berg',ims:'IMS',mrc:'MRC Força',mmse:'MEEM',gds:'GDS-15',history:'Histórico',export:'Exportar'};
+
 function go(name){
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.querySelectorAll('.mbn-item').forEach(n=>n.classList.remove('active'));
   document.getElementById('panel-'+name).classList.add('active');
   const navs=['barthel','mif','faq','berg','ims','mrc','mmse','gds','history','export'];
   navs.forEach((n,i)=>{if(n===name)document.querySelectorAll('.nav-item')[i].classList.add('active');});
+  const mbn=document.getElementById('mbn-'+name);
+  if(mbn){
+    mbn.classList.add('active');
+    mbn.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
+  }
+  const ind=document.getElementById('mobile-scale-name');
+  if(ind) ind.textContent=NAV_LABELS[name]||'';
+  window.scrollTo({top:0,behavior:'smooth'});
 }
 
 // ─── TOAST ───────────────────────────────────────────────────────────────────
