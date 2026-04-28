@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ReabScale · Escalas de Reabilitação</title>
+<title>Rede D'Or · Escalas de Reabilitação</title>
 <meta name="description" content="Escalas clínicas para reabilitação geriátrica — beira-leito">
-<meta name="theme-color" content="#1d4e3a">
+<meta name="theme-color" content="#003087">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="ReabScale">
-<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%231d4e3a'/><text y='72' x='50' font-size='58' text-anchor='middle' font-family='sans-serif' font-weight='bold' fill='white'>R</text></svg>">
+<meta name="apple-mobile-web-app-title" content="ReabScale D'Or">
+<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23003087'/><text y='72' x='50' font-size='58' text-anchor='middle' font-family='sans-serif' font-weight='bold' fill='white'>R</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -23,10 +23,10 @@
   --text: #1a1714;
   --text2: #6b6560;
   --text3: #9e9891;
-  --accent: #1d4e3a;
-  --accent-light: #e8f2ee;
-  --accent2: #c17d3c;
-  --accent2-light: #fdf3e7;
+  --accent: #003087;
+  --accent-light: #e6eef8;
+  --accent2: #0066cc;
+  --accent2-light: #e0f0ff;
   --danger: #b83232;
   --danger-light: #fdf0f0;
   --radius: 10px;
@@ -64,7 +64,7 @@ body {
   font-size: 22px;
   letter-spacing: -.3px;
 }
-.logo span { color: #7ec9a8; }
+.logo span { color: #5b9bd5; }
 .header-sub {
   font-size: 12px;
   color: rgba(255,255,255,.55);
@@ -326,7 +326,7 @@ body {
   color: #fff;
   border-color: var(--accent);
 }
-.btn-primary:hover { background: #163d2c; }
+.btn-primary:hover { background: #002070; }
 .btn-export {
   background: var(--accent2-light);
   color: var(--accent2);
@@ -548,8 +548,16 @@ body {
 <body>
 
 <header class="site-header">
-  <div class="logo">Reab<span>Scale</span></div>
-  <div class="header-sub">Escalas clínicas · Unidade de Reabilitação</div>
+  <div style="display:flex;align-items:center;gap:12px">
+    <div style="background:#fff;border-radius:8px;padding:4px 10px;display:flex;align-items:center"><img src="data:image/png;base64,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" alt="Rede D'Or" style="height:26px;width:auto;display:block"/></div>
+    <div style="width:1px;height:28px;background:rgba(255,255,255,0.2)"></div>
+    <div style="line-height:1.2">
+      <div style="font-size:13px;font-weight:600;color:#fff;letter-spacing:.01em">Escalas de Reabilitação</div>
+      <div style="font-size:10px;color:rgba(255,255,255,0.6);font-weight:300">Unidade de Reabilitação</div>
+    </div>
+  </div>
+  <div class="logo" style="display:none">ReabScale</div>
+  <div class="header-sub" style="display:none">Escalas clínicas</div>
   <div class="mobile-scale-indicator" id="mobile-scale-name">Barthel</div>
 </header>
 
@@ -915,22 +923,22 @@ body {
     </div>
     <div class="export-grid">
       <div class="export-card" onclick="exportCSV()">
-        <div class="export-card-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1d4e3a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
+        <div class="export-card-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#003087" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
         <div class="export-card-title">Planilha CSV</div>
         <div class="export-card-desc">Abre no Excel, Google Sheets e LibreOffice. Inclui todos os registros do histórico.</div>
       </div>
       <div class="export-card" onclick="exportTXT()">
-        <div class="export-card-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1d4e3a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+        <div class="export-card-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#003087" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
         <div class="export-card-title">Relatório em texto</div>
         <div class="export-card-desc">Resumo formatado por paciente, pronto para colar no prontuário eletrônico.</div>
       </div>
       <div class="export-card" onclick="window.print()">
-        <div class="export-card-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1d4e3a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg></div>
+        <div class="export-card-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#003087" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg></div>
         <div class="export-card-title">Imprimir / PDF</div>
         <div class="export-card-desc">Gera PDF via impressão do navegador. Ideal para arquivamento físico.</div>
       </div>
       <div class="export-card" onclick="exportJSON()">
-        <div class="export-card-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1d4e3a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+        <div class="export-card-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#003087" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
         <div class="export-card-title">JSON (dados brutos)</div>
         <div class="export-card-desc">Para integração com sistemas eletrônicos e bancos de dados.</div>
       </div>
@@ -1103,7 +1111,7 @@ body {
 <!-- BANNER DE INSTALAÇÃO -->
 <div class="install-banner" id="install-banner">
   <div class="install-banner-text">
-    <b>Instalar ReabScale</b>
+    <b>Instalar App · Rede D'Or</b>
     Funciona offline, sem internet
   </div>
   <div class="install-banner-btns">
@@ -1599,7 +1607,7 @@ function toast(msg){
 
 // ─── EVOLUÇÃO ────────────────────────────────────────────────────────────────
 const SCALE_MAXES={'Índice de Barthel':100,'MIF':126,'Berg':56,'MRC Força':60,'IMS / Rivermead':15,'FAQ Pfeffer':30,'MEEM':30,'GDS-15':15};
-const SCALE_COLORS={'Índice de Barthel':'#1d4e3a','MIF':'#2563eb','Berg':'#7c3aed','MRC Força':'#c17d3c','IMS / Rivermead':'#0891b2','FAQ Pfeffer':'#dc2626','MEEM':'#059669','GDS-15':'#db2777'};
+const SCALE_COLORS={'Índice de Barthel':'#003087','MIF':'#2563eb','Berg':'#7c3aed','MRC Força':'#c17d3c','IMS / Rivermead':'#0891b2','FAQ Pfeffer':'#dc2626','MEEM':'#059669','GDS-15':'#db2777'};
 
 let evoChart=null;
 
@@ -1647,13 +1655,13 @@ function renderEvo(){
     const max=SCALE_MAXES[sc]||100;
     const pct=Math.round((last/max)*100);
     const sign=delta>0?'+':'';
-    const col=delta>0?'#1d4e3a':delta<0?'#b83232':'#6b6560';
+    const col=delta>0?'#003087':delta<0?'#b83232':'#6b6560';
     return `<div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1rem;box-shadow:var(--shadow)">
       <div style="font-size:11px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">${sc}</div>
       <div style="font-size:28px;font-weight:600;color:var(--text);line-height:1">${last}<span style="font-size:14px;color:var(--text3)">/${max}</span></div>
       <div style="font-size:12px;color:${col};margin-top:4px;font-weight:500">${sign}${delta} desde início</div>
       <div style="margin-top:8px;background:var(--surface2);border-radius:4px;height:4px;overflow:hidden">
-        <div style="height:100%;width:${pct}%;background:${SCALE_COLORS[sc]||'#1d4e3a'};border-radius:4px;transition:width .4s"></div>
+        <div style="height:100%;width:${pct}%;background:${SCALE_COLORS[sc]||'#003087'};border-radius:4px;transition:width .4s"></div>
       </div>
       <div style="font-size:11px;color:var(--text3);margin-top:3px">${pct}% do máximo · ${arr.length} avaliação(ões)</div>
     </div>`;
@@ -1672,8 +1680,8 @@ function renderEvo(){
     return {
       label:sc+' (%)',
       data:allDates.map(d=>dataMap[d]??null),
-      borderColor:SCALE_COLORS[sc]||'#1d4e3a',
-      backgroundColor:(SCALE_COLORS[sc]||'#1d4e3a')+'22',
+      borderColor:SCALE_COLORS[sc]||'#003087',
+      backgroundColor:(SCALE_COLORS[sc]||'#003087')+'22',
       tension:.35,
       fill:scaleNames.length===1,
       pointRadius:5,
@@ -1713,7 +1721,7 @@ function renderEvo(){
     let deltaHtml='<span style="color:var(--text3)">—</span>';
     if(delta!==null){
       const sign=delta>0?'+':'';
-      const col=delta>0?'#1d4e3a':delta<0?'#b83232':'#6b6560';
+      const col=delta>0?'#003087':delta<0?'#b83232':'#6b6560';
       deltaHtml=`<span style="color:${col};font-weight:500">${sign}${delta}</span>`;
     }
     return `<tr><td>${e.date}</td><td>${e.scale}</td><td><strong>${e.score}</strong></td><td>${deltaHtml}</td><td>${e.interp}</td></tr>`;
