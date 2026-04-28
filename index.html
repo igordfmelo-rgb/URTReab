@@ -619,6 +619,12 @@ body {
     <div class="nav-icon">↓</div>
     Exportar
   </div>
+
+  <div class="sidebar-section">Alta Segura</div>
+  <div class="nav-item" id="nav-farol" onclick="go('farol')">
+    <div class="nav-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+    FAROL · Alta
+  </div>
 </aside>
 
 <!-- MAIN -->
@@ -932,9 +938,143 @@ body {
     <div id="export-preview" style="margin-top:1rem"></div>
   </div>
 
+  <!-- ══════════════════ FAROL ══════════════════ -->
+  <div class="panel" id="panel-farol">
+    <div class="panel-header">
+      <div class="panel-title">FAROL · Score de Alta Segura</div>
+      <div class="panel-desc">Donzé · Forster · NEWS2 — Decisão de seguimento pós-alta em 30 dias. Ferramenta de apoio clínico.</div>
+    </div>
+
+    <!-- IDENTIFICAÇÃO -->
+    <div class="farol-card" style="margin-bottom:12px">
+      <div class="farol-block-title">Identificação</div>
+      <div style="display:grid;grid-template-columns:2fr 1fr 1fr;gap:8px">
+        <div class="field-group"><label class="field-label">Prontuário / ID</label><input class="field-input" id="f-ptid" placeholder="000000"/></div>
+        <div class="field-group"><label class="field-label">Idade</label><input class="field-input" id="f-age" type="number" placeholder="—"/></div>
+        <div class="field-group"><label class="field-label">Unidade</label><input class="field-input" id="f-unit" placeholder="Ex: CM 4º"/></div>
+      </div>
+    </div>
+
+    <!-- RESULTADO STICKY -->
+    <div class="farol-result-bar" id="farol-result-bar">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px">
+        <div class="farol-score-cell">
+          <div class="farol-score-label">HOSPITAL</div>
+          <div class="farol-score-num" id="fr-hospital">0<span class="farol-score-max">/13</span></div>
+          <div class="farol-score-sub" id="fr-hospital-band">—</div>
+        </div>
+        <div class="farol-score-cell">
+          <div class="farol-score-label">Prontidão</div>
+          <div class="farol-score-num" id="fr-readiness">0<span class="farol-score-max">/9</span></div>
+          <div class="farol-score-sub" id="fr-readiness-sub">—</div>
+        </div>
+        <div class="farol-score-cell">
+          <div class="farol-score-label">Forster</div>
+          <div class="farol-score-num" id="fr-forster" style="color:var(--accent2)">0<span class="farol-score-max">/7</span></div>
+          <div class="farol-score-sub" id="fr-forster-sub">—</div>
+        </div>
+      </div>
+      <div id="farol-rec-chip" class="farol-chip farol-chip-idle">Aguardando dados</div>
+      <div id="farol-rec-title" class="farol-rec-title"></div>
+      <div id="farol-rec-followup" class="farol-rec-followup"></div>
+      <div id="farol-rec-detail" class="farol-rec-detail"></div>
+      <div id="farol-actions-wrap" style="display:none;margin-top:10px;padding-top:10px;border-top:0.5px solid var(--border)">
+        <div class="farol-score-label" style="margin-bottom:6px">Ações recomendadas</div>
+        <ul id="farol-actions-list" style="display:flex;flex-direction:column;gap:4px"></ul>
+      </div>
+      <button onclick="farolCopyProntuario()" id="farol-copy-btn" style="margin-top:10px;width:100%;padding:9px;border-radius:var(--radius);border:1px solid var(--border2);background:var(--surface);font-size:13px;font-weight:500;cursor:pointer;color:var(--text);display:flex;align-items:center;justify-content:center;gap:6px">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        Copiar resumo para prontuário
+      </button>
+    </div>
+
+    <!-- HOSPITAL SCORE -->
+    <div class="farol-card">
+      <div class="farol-block-title">HOSPITAL Score <span class="farol-ref">Donzé et al. · JAMA Intern Med 2013</span></div>
+      <div class="farol-subtitle">Prediz readmissão potencialmente evitável em 30 dias. Máx: 13 pts.</div>
+      <div id="farol-hospital-items"></div>
+      <div style="margin-top:10px;padding-top:10px;border-top:0.5px solid var(--border)">
+        <div class="farol-score-label" style="margin-bottom:6px">Internações no último ano</div>
+        <div id="farol-prior-items"></div>
+      </div>
+    </div>
+
+    <!-- PRONTIDÃO -->
+    <div class="farol-card">
+      <div class="farol-block-title">Prontidão para Alta <span class="farol-ref">Gate fisiológico + operacional</span></div>
+      <div class="farol-subtitle">Cada critério não atingido é um gap e pondera contra a alta.</div>
+      <div id="farol-readiness-items"></div>
+    </div>
+
+    <!-- FORSTER -->
+    <div class="farol-card" style="border-color:rgba(193,125,60,.3)">
+      <div class="farol-block-title" style="color:var(--accent2)">Gatilhos de Evento Adverso Pós-Alta <span class="farol-ref" style="color:var(--text3)">Forster et al. · Ann Intern Med 2003</span></div>
+      <div class="farol-subtitle">Marque os presentes na alta. Cada gatilho aumenta o risco de evento adverso em 3 semanas.</div>
+      <div id="farol-forster-items"></div>
+    </div>
+
+    <div style="font-size:11px;color:var(--text3);margin-top:6px;line-height:1.5">
+      FAROL é ferramenta de apoio à decisão clínica. A indicação final deve considerar julgamento clínico, preferência do paciente e recursos disponíveis. · Smith GB et al. NEWS2 — RCP. Resuscitation 2013.
+    </div>
+
+    <div class="btn-row">
+      <button class="btn" onclick="farolReset()">Limpar FAROL</button>
+    </div>
+  </div>
+
 </main>
 </div>
 
+<style>
+/* ── FAROL ── */
+.farol-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.1rem 1.25rem;margin-bottom:12px;box-shadow:var(--shadow)}
+.farol-block-title{font-size:13px;font-weight:600;color:var(--accent);margin-bottom:3px}
+.farol-ref{font-size:10px;font-weight:400;color:var(--text3);margin-left:6px}
+.farol-subtitle{font-size:12px;color:var(--text3);margin-bottom:10px;line-height:1.4}
+.farol-check-row{display:flex;align-items:flex-start;gap:10px;padding:8px 12px;border-radius:var(--radius);border:1px solid var(--border);margin-bottom:6px;cursor:pointer;transition:all .15s;background:var(--bg);user-select:none}
+.farol-check-row:hover{border-color:var(--border2)}
+.farol-check-row.checked{border-color:var(--accent);background:var(--accent-light)}
+.farol-check-row.checked-amber{border-color:rgba(193,125,60,.5);background:var(--accent2-light)}
+.farol-check-icon{flex-shrink:0;margin-top:1px}
+.farol-check-label{flex:1;font-size:13px;color:var(--text2);line-height:1.4}
+.farol-check-row.checked .farol-check-label{color:var(--accent);font-weight:500}
+.farol-check-row.checked-amber .farol-check-label{color:var(--accent2);font-weight:500}
+.farol-pts{font-size:11px;padding:2px 7px;border-radius:20px;background:var(--surface2);color:var(--text3);font-weight:600;flex-shrink:0;margin-top:1px}
+.farol-check-row.checked .farol-pts{background:var(--accent);color:#fff}
+.farol-radio-row{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:var(--radius);border:1px solid var(--border);margin-bottom:6px;cursor:pointer;transition:all .15s;background:var(--bg)}
+.farol-radio-row:hover{border-color:var(--border2)}
+.farol-radio-row.checked{border-color:var(--accent);background:var(--accent-light)}
+.farol-radio-row .farol-check-label{color:var(--text2)}
+.farol-radio-row.checked .farol-check-label{color:var(--accent);font-weight:500}
+.farol-radio-dot{width:16px;height:16px;border-radius:50%;border:1.5px solid var(--border2);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.farol-radio-row.checked .farol-radio-dot{border-color:var(--accent)}
+.farol-radio-inner{width:8px;height:8px;border-radius:50%;background:var(--accent);display:none}
+.farol-radio-row.checked .farol-radio-inner{display:block}
+.farol-result-bar{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.1rem 1.25rem;margin-bottom:14px;box-shadow:var(--shadow-lg)}
+.farol-score-cell{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:10px 12px}
+.farol-score-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--text3)}
+.farol-score-num{font-size:26px;font-weight:600;color:var(--text);line-height:1.1;margin-top:2px}
+.farol-score-max{font-size:13px;color:var(--text3);font-weight:400}
+.farol-score-sub{font-size:11px;color:var(--text3);margin-top:3px}
+.farol-chip{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+.farol-chip-idle{background:var(--surface2);color:var(--text3)}
+.farol-chip-low{background:var(--accent-light);color:var(--accent)}
+.farol-chip-moderate{background:var(--accent2-light);color:var(--accent2)}
+.farol-chip-high{background:var(--danger-light);color:var(--danger)}
+.farol-chip-hold{background:var(--danger);color:#fff}
+.farol-rec-title{font-size:16px;font-weight:600;color:var(--text);margin-bottom:3px}
+.farol-rec-title.low{color:var(--accent)}
+.farol-rec-title.moderate{color:var(--accent2)}
+.farol-rec-title.high,.farol-rec-title.hold{color:var(--danger)}
+.farol-rec-followup{font-size:14px;font-weight:500;color:var(--text);margin-bottom:2px}
+.farol-rec-detail{font-size:12px;color:var(--text3);line-height:1.4}
+.farol-action-item{display:flex;align-items:flex-start;gap:8px;font-size:12.5px;color:var(--text2);line-height:1.4;padding:4px 0}
+.farol-action-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0;margin-top:5px}
+.farol-result-bar .farol-result-topbar{height:3px;border-radius:3px 3px 0 0;margin:-1.1rem -1.25rem 12px;background:var(--accent)}
+.farol-result-topbar.moderate{background:var(--accent2)}
+.farol-result-topbar.high,.farol-result-topbar.hold{background:var(--danger)}
+.farol-result-topbar.idle,.farol-result-topbar.low{background:var(--accent)}
+</style>
 <style>
 .install-banner{
   position:fixed;bottom:80px;left:50%;transform:translateX(-50%);
@@ -1027,6 +1167,10 @@ if(!navigator.onLine) document.getElementById('offline-pill').style.display='blo
     <div class="mbn-item" onclick="go('export')" id="mbn-export">
       <div class="mbn-icon">↓</div>
       <div class="mbn-label">Exportar</div>
+    </div>
+    <div class="mbn-item" onclick="go('farol')" id="mbn-farol">
+      <div class="mbn-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+      <div class="mbn-label">FAROL</div>
     </div>
   </div>
 </nav>
@@ -1646,6 +1790,247 @@ if(localStorage.getItem('reabscale_banner_dismissed')==='1'){
   const banner=document.getElementById('install-banner');
   if(banner) banner.style.display='none';
 }
+
+// ─── FAROL ───────────────────────────────────────────────────────────────────
+const FAROL_HOSPITAL=[
+  {id:'h_hb',label:'Hemoglobina na alta < 12 g/dL',pts:1},
+  {id:'h_onc',label:'Alta do serviço de Oncologia',pts:2},
+  {id:'h_na',label:'Sódio na alta < 135 mEq/L',pts:1},
+  {id:'h_proc',label:'Procedimento durante a internação índice',pts:1},
+  {id:'h_urg',label:'Admissão índice não-eletiva (urgência/emergência)',pts:1},
+  {id:'h_los',label:'Tempo de permanência ≥ 5 dias',pts:2},
+];
+const FAROL_PRIOR=[
+  {id:'pa_01',label:'0 a 1 internação no último ano',pts:0},
+  {id:'pa_25',label:'2 a 5 internações no último ano',pts:2},
+  {id:'pa_6', label:'> 5 internações no último ano',pts:5},
+];
+const FAROL_READINESS=[
+  {id:'r_hemo', label:'Hemodinâmica estável nas últimas 24h'},
+  {id:'r_afeb', label:'Afebril ≥ 24h sem antitérmico'},
+  {id:'r_spo2', label:'SpO₂ estável em ar ambiente ou O₂ domiciliar titulado'},
+  {id:'r_vo',   label:'Tolerância à dieta VO e trânsito intestinal presente'},
+  {id:'r_dor',  label:'Dor controlada em esquema oral'},
+  {id:'r_deamb',label:'Deambulação em nível basal ou plano de reabilitação definido'},
+  {id:'r_rec',  label:'Reconciliação medicamentosa completa'},
+  {id:'r_teach',label:'Teach-back positivo (paciente/cuidador compreendeu plano)'},
+  {id:'r_news', label:'NEWS2 ≤ 2 nas últimas 12h'},
+];
+const FAROL_FORSTER=[
+  {id:'f_poly', label:'Polifarmácia (≥ 5 medicamentos na alta)'},
+  {id:'f_hra',  label:'Droga de alta vigilância iniciada (anticoagulante, hipoglicemiante, opioide, imunossupressor)'},
+  {id:'f_pend', label:'Exame pendente com resultado após a alta'},
+  {id:'f_int',  label:'Intervenção não concluída (consulta, imagem ou procedimento)'},
+  {id:'f_soc',  label:'Baixa literacia em saúde ou paciente vive sozinho sem cuidador'},
+  {id:'f_cr',   label:'Creatinina em trajetória de piora na alta'},
+  {id:'f_hb10', label:'Hemoglobina < 10 g/dL na alta'},
+];
+
+let fState={hospital:{},prior:'pa_01',readiness:{},forster:{}};
+
+const ICON_UNCHECKED=`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text3)"><circle cx="12" cy="12" r="10"/></svg>`;
+const ICON_CHECKED=`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent)"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>`;
+const ICON_CHECKED_AMBER=`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent2)"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>`;
+
+function buildFarolItems(){
+  // Hospital checks
+  document.getElementById('farol-hospital-items').innerHTML=FAROL_HOSPITAL.map(it=>`
+    <div class="farol-check-row" id="frow-${it.id}" onclick="farolToggleHospital('${it.id}')">
+      <div class="farol-check-icon">${ICON_UNCHECKED}</div>
+      <div class="farol-check-label">${it.label}</div>
+      <div class="farol-pts">+${it.pts}</div>
+    </div>`).join('');
+
+  // Prior admissions
+  document.getElementById('farol-prior-items').innerHTML=FAROL_PRIOR.map(it=>`
+    <div class="farol-radio-row${it.id===fState.prior?' checked':''}" id="fprior-${it.id}" onclick="farolSetPrior('${it.id}')">
+      <div class="farol-radio-dot"><div class="farol-radio-inner"></div></div>
+      <div class="farol-check-label">${it.label}</div>
+      <div class="farol-pts">+${it.pts}</div>
+    </div>`).join('');
+
+  // Readiness
+  document.getElementById('farol-readiness-items').innerHTML=FAROL_READINESS.map(it=>`
+    <div class="farol-check-row" id="frow-${it.id}" onclick="farolToggleReadiness('${it.id}')">
+      <div class="farol-check-icon">${ICON_UNCHECKED}</div>
+      <div class="farol-check-label">${it.label}</div>
+    </div>`).join('');
+
+  // Forster
+  document.getElementById('farol-forster-items').innerHTML=FAROL_FORSTER.map(it=>`
+    <div class="farol-check-row" id="frow-${it.id}" onclick="farolToggleForster('${it.id}')">
+      <div class="farol-check-icon">${ICON_UNCHECKED}</div>
+      <div class="farol-check-label">${it.label}</div>
+    </div>`).join('');
+}
+
+function farolToggleHospital(id){
+  fState.hospital[id]=!fState.hospital[id];
+  const row=document.getElementById('frow-'+id);
+  row.classList.toggle('checked',fState.hospital[id]);
+  row.querySelector('.farol-check-icon').innerHTML=fState.hospital[id]?ICON_CHECKED:ICON_UNCHECKED;
+  farolCalc();
+}
+function farolToggleReadiness(id){
+  fState.readiness[id]=!fState.readiness[id];
+  const row=document.getElementById('frow-'+id);
+  row.classList.toggle('checked',fState.readiness[id]);
+  row.querySelector('.farol-check-icon').innerHTML=fState.readiness[id]?ICON_CHECKED:ICON_UNCHECKED;
+  farolCalc();
+}
+function farolToggleForster(id){
+  fState.forster[id]=!fState.forster[id];
+  const row=document.getElementById('frow-'+id);
+  row.classList.toggle('checked',!!fState.forster[id]);
+  row.classList.toggle('checked-amber',!!fState.forster[id]);
+  row.querySelector('.farol-check-icon').innerHTML=fState.forster[id]?ICON_CHECKED_AMBER:ICON_UNCHECKED;
+  farolCalc();
+}
+function farolSetPrior(id){
+  fState.prior=id;
+  FAROL_PRIOR.forEach(it=>{
+    const row=document.getElementById('fprior-'+it.id);
+    row.classList.toggle('checked',it.id===id);
+    const lbl=row.querySelector('.farol-check-label');
+    lbl.style.color=it.id===id?'var(--accent)':'';
+    lbl.style.fontWeight=it.id===id?'500':'';
+  });
+  farolCalc();
+}
+
+function farolCalc(){
+  const hospBase=FAROL_HOSPITAL.reduce((a,it)=>a+(fState.hospital[it.id]?it.pts:0),0);
+  const priorPts=FAROL_PRIOR.find(p=>p.id===fState.prior)?.pts??0;
+  const hospTotal=hospBase+priorPts;
+  const readinessFilled=FAROL_READINESS.filter(it=>fState.readiness[it.id]).length;
+  const readinessGaps=FAROL_READINESS.length-readinessFilled;
+  const forsterCount=FAROL_FORSTER.filter(it=>fState.forster[it.id]).length;
+
+  // Band
+  const band=hospTotal<=4?{label:'Baixo risco',rate:'5,8%'}:hospTotal<=6?{label:'Risco intermediário',rate:'12,0%'}:{label:'Alto risco',rate:'23,7%'};
+
+  document.getElementById('fr-hospital').innerHTML=`${hospTotal}<span class="farol-score-max">/13</span>`;
+  document.getElementById('fr-hospital-band').textContent=`${band.label} · ~${band.rate}`;
+  document.getElementById('fr-readiness').innerHTML=`${readinessFilled}<span class="farol-score-max">/9</span>`;
+  document.getElementById('fr-readiness-sub').textContent=readinessGaps===0?'Prontidão completa':`${readinessGaps} gap(s)`;
+  document.getElementById('fr-forster').innerHTML=`${forsterCount}<span class="farol-score-max">/7</span>`;
+  document.getElementById('fr-forster-sub').textContent=forsterCount===0?'Sem gatilhos':`${forsterCount} ativo(s)`;
+
+  // Recommendation
+  let level,title,followUp,detail,actions=[];
+  const started=hospTotal>0||forsterCount>0||readinessFilled>0;
+  if(!started){
+    level='idle';title='';followUp='';detail='Preencha os três blocos para gerar a recomendação.';
+  } else if(readinessGaps>=2){
+    level='hold';title='ALTA NÃO RECOMENDADA';
+    followUp=`${readinessGaps} critérios de prontidão não atingidos`;
+    detail='Revisar critérios pendentes antes de prescrever alta.';
+    actions=['Discutir com equipe multiprofissional os critérios pendentes','Reavaliar prontidão em round do turno seguinte','Considerar alta com internação domiciliar ou hospital-dia se gap persistir'];
+  } else if(hospTotal>=7||forsterCount>=3){
+    level='high';title='ALTO RISCO DE READMISSÃO';
+    followUp='Consulta presencial ou telemedicina em ≤ 72h';
+    detail=`HOSPITAL ${hospTotal} · Forster ${forsterCount} · ${readinessGaps} gap(s) de prontidão`;
+    actions=['Contato telefônico ativo em 48h (nurse navigator)','Reconciliação medicamentosa revisada pelo farmacêutico clínico','Garantir contato direto com equipe (telefone/WhatsApp institucional)'];
+    if(fState.forster.f_pend) actions.push('Definir responsável pelo acompanhamento de exames pendentes');
+    if(fState.forster.f_hra) actions.push('Orientação escrita sobre droga de alta vigilância + teach-back documentado');
+  } else if(hospTotal>=5||forsterCount>=1||readinessGaps===1){
+    level='moderate';title='RISCO INTERMEDIÁRIO';
+    followUp='Consulta obrigatória em 7 dias';
+    detail=`HOSPITAL ${hospTotal} · Forster ${forsterCount} · ${readinessGaps} gap(s) de prontidão`;
+    actions=['Agendar consulta antes da alta, com data confirmada ao paciente','Orientação escrita e verbal dos sinais de alarme'];
+    if(fState.forster.f_poly) actions.push('Revisão de polifarmácia com farmacêutico se ≥ 5 fármacos');
+  } else {
+    level='low';title='BAIXO RISCO';
+    followUp='Consulta em 14–30 dias conforme patologia';
+    detail=`HOSPITAL ${hospTotal} · Sem gatilhos Forster · Prontidão completa`;
+    actions=['Seguimento ambulatorial padrão conforme diagnóstico','Orientar retorno antes do previsto se sinais de alarme'];
+  }
+
+  // Update UI
+  const bar=document.getElementById('farol-result-bar');
+  const topbar=bar.querySelector('.farol-result-topbar')||document.createElement('div');
+  topbar.className=`farol-result-topbar ${level}`;
+  if(!bar.querySelector('.farol-result-topbar')) bar.prepend(topbar);
+
+  const chip=document.getElementById('farol-rec-chip');
+  chip.className='farol-chip farol-chip-'+level;
+  chip.textContent=level==='idle'?'Aguardando dados':level==='low'?'Baixo risco':level==='moderate'?'Risco intermediário':level==='high'?'Alto risco':'Alta não recomendada';
+
+  const titleEl=document.getElementById('farol-rec-title');
+  titleEl.textContent=title;
+  titleEl.className='farol-rec-title '+level;
+
+  document.getElementById('farol-rec-followup').textContent=followUp;
+  document.getElementById('farol-rec-detail').textContent=detail;
+
+  const actWrap=document.getElementById('farol-actions-wrap');
+  const actList=document.getElementById('farol-actions-list');
+  if(actions.length){
+    actWrap.style.display='block';
+    actList.innerHTML=actions.map(a=>`<li class="farol-action-item"><div class="farol-action-dot"></div><span>${a}</span></li>`).join('');
+  } else {
+    actWrap.style.display='none';
+  }
+
+  // Store for copy
+  bar._farolData={hospTotal,band,readinessFilled,readinessGaps,forsterCount,level,title,followUp,detail,actions};
+}
+
+function farolCopyProntuario(){
+  const d=document.getElementById('farol-result-bar')._farolData;
+  if(!d){toast('Preencha o FAROL antes de copiar.');return;}
+  const ptid=document.getElementById('f-ptid').value;
+  const age=document.getElementById('f-age').value;
+  const unit=document.getElementById('f-unit').value;
+  const date=new Date().toLocaleString('pt-BR');
+  const hospChecked=FAROL_HOSPITAL.filter(it=>fState.hospital[it.id]).map(it=>`  · ${it.label} (+${it.pts})`);
+  const priorLabel=FAROL_PRIOR.find(p=>p.id===fState.prior)?.label;
+  const priorPts=FAROL_PRIOR.find(p=>p.id===fState.prior)?.pts??0;
+  const readyMissing=FAROL_READINESS.filter(it=>!fState.readiness[it.id]).map(it=>`  · ${it.label}`);
+  const forsterActive=FAROL_FORSTER.filter(it=>fState.forster[it.id]).map(it=>`  · ${it.label}`);
+  const txt=[
+    `FAROL · Score de Alta Segura — ${date}`,
+    [ptid&&`Pront: ${ptid}`,age&&`${age}a`,unit].filter(Boolean).join(' · ')||null,
+    '',
+    `HOSPITAL Score: ${d.hospTotal} pts — ${d.band.label} (readmissão 30d ~${d.band.rate})`,
+    ...(hospChecked.length?hospChecked:['  · (sem itens marcados)']),
+    `  · ${priorLabel} (+${priorPts})`,
+    '',
+    `Prontidão para alta: ${d.readinessFilled}/9 critérios`,
+    ...(readyMissing.length?['Pendentes:',...readyMissing]:['  · Todos os critérios atingidos']),
+    '',
+    `Gatilhos de Forster: ${d.forsterCount} ativo(s)`,
+    ...(forsterActive.length?forsterActive:['  · Nenhum gatilho ativo']),
+    '',
+    `RECOMENDAÇÃO: ${d.title}`,
+    d.followUp?`Seguimento: ${d.followUp}`:'',
+    d.detail,
+    '',
+    'Ações:',
+    ...d.actions.map(a=>`  → ${a}`),
+  ].filter(l=>l!==null).join('\n');
+  navigator.clipboard.writeText(txt).then(()=>{
+    const btn=document.getElementById('farol-copy-btn');
+    btn.textContent='✓ Resumo copiado!';
+    setTimeout(()=>btn.innerHTML='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copiar resumo para prontuário',2000);
+  });
+}
+
+function farolReset(){
+  fState={hospital:{},prior:'pa_01',readiness:{},forster:{}};
+  buildFarolItems();
+  farolCalc();
+  document.getElementById('f-ptid').value='';
+  document.getElementById('f-age').value='';
+  document.getElementById('f-unit').value='';
+}
+
+// Update NAV_LABELS to include farol
+NAV_LABELS['farol']='FAROL · Alta';
+
+// Build FAROL on init
+buildFarolItems();
+farolCalc();
 </script>
 </body>
 </html>
