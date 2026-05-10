@@ -4,1204 +4,100 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Rede D'Or · Escalas de Reabilitação</title>
-<meta name="description" content="Escalas clínicas para reabilitação geriátrica — beira-leito">
 <meta name="theme-color" content="#003087">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="ReabScale D'Or">
-<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23003087'/><text y='72' x='50' font-size='58' text-anchor='middle' font-family='sans-serif' font-weight='bold' fill='white'>R</text></svg>">
+<meta name="apple-mobile-web-app-title" content="ReabScale">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg: #f5f3ef;
-  --surface: #ffffff;
-  --surface2: #f0ede8;
-  --border: #e2ddd6;
-  --border2: #ccc7be;
-  --text: #1a1714;
-  --text2: #6b6560;
-  --text3: #9e9891;
-  --accent: #003087;
-  --accent-light: #e6eef8;
-  --accent2: #0066cc;
-  --accent2-light: #e0f0ff;
-  --danger: #b83232;
-  --danger-light: #fdf0f0;
-  --radius: 10px;
-  --radius-lg: 16px;
-  --shadow: 0 1px 3px rgba(0,0,0,.06), 0 4px 16px rgba(0,0,0,.04);
-  --shadow-lg: 0 2px 8px rgba(0,0,0,.08), 0 12px 32px rgba(0,0,0,.06);
+:root{
+  --bg:#f5f3ef;--surface:#fff;--surface2:#f0ede8;
+  --border:#e2ddd6;--border2:#ccc7be;
+  --text:#1a1714;--text2:#6b6560;--text3:#9e9891;
+  --accent:#003087;--accent-light:#e6eef8;
+  --accent2:#0066cc;--accent2-light:#e0f0ff;
+  --danger:#b83232;--danger-light:#fdf0f0;
+  --radius:10px;--radius-lg:16px;
+  --shadow:0 1px 3px rgba(0,0,0,.06),0 4px 16px rgba(0,0,0,.04);
+  --shadow-lg:0 2px 8px rgba(0,0,0,.08),0 12px 32px rgba(0,0,0,.06);
 }
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-body {
-  font-family: 'DM Sans', sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  min-height: 100vh;
-  font-size: 15px;
-  line-height: 1.6;
-}
-
-/* ── HEADER ── */
-.site-header {
-  background: var(--accent);
-  padding: 0 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 60px;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  box-shadow: 0 1px 0 rgba(255,255,255,.08);
-}
-.logo {
-  font-family: 'DM Serif Display', serif;
-  color: #fff;
-  font-size: 22px;
-  letter-spacing: -.3px;
-}
-.logo span { color: #5b9bd5; }
-.header-sub {
-  font-size: 12px;
-  color: rgba(255,255,255,.55);
-  font-weight: 300;
-}
-
-/* ── LAYOUT ── */
-.app-layout {
-  display: grid;
-  grid-template-columns: 240px 1fr;
-  min-height: calc(100vh - 60px);
-}
-
-/* ── SIDEBAR ── */
-.sidebar {
-  background: var(--surface);
-  border-right: 1px solid var(--border);
-  padding: 1.5rem 0;
-  position: sticky;
-  top: 60px;
-  height: calc(100vh - 60px);
-  overflow-y: auto;
-}
-.sidebar-section {
-  padding: 0 1rem .5rem;
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  color: var(--text3);
-  margin-top: 1rem;
-}
-.sidebar-section:first-child { margin-top: 0; }
-.nav-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 9px 1.25rem;
-  font-size: 14px;
-  color: var(--text2);
-  cursor: pointer;
-  border-left: 3px solid transparent;
-  transition: all .15s;
-  user-select: none;
-}
-.nav-item:hover { background: var(--surface2); color: var(--text); }
-.nav-item.active {
-  background: var(--accent-light);
-  color: var(--accent);
-  border-left-color: var(--accent);
-  font-weight: 500;
-}
-.nav-icon {
-  width: 18px;
-  height: 18px;
-  border-radius: 5px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 11px;
-  background: var(--surface2);
-  color: var(--text2);
-  flex-shrink: 0;
-}
-.nav-item.active .nav-icon { background: var(--accent); color: #fff; }
-.nav-badge {
-  margin-left: auto;
-  font-size: 10px;
-  background: var(--surface2);
-  color: var(--text3);
-  padding: 2px 7px;
-  border-radius: 20px;
-}
-.nav-item.active .nav-badge { background: var(--accent); color: #fff; }
-
-/* ── MAIN ── */
-.main {
-  padding: 2rem;
-  max-width: 860px;
-}
-
-/* ── PATIENT BAR ── */
-.patient-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 1.25rem 1.5rem;
-  margin-bottom: 1.75rem;
-  box-shadow: var(--shadow);
-}
-.patient-card-title {
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  color: var(--text3);
-  margin-bottom: 12px;
-}
-.patient-grid {
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr;
-  gap: 10px;
-}
-.field-group { display: flex; flex-direction: column; gap: 4px; }
-.field-label { font-size: 11px; color: var(--text3); font-weight: 500; }
-.field-input {
-  padding: 8px 12px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  font-family: inherit;
-  font-size: 14px;
-  color: var(--text);
-  background: var(--bg);
-  transition: border-color .15s, box-shadow .15s;
-  width: 100%;
-}
-.field-input:focus {
-  outline: none;
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(29,78,58,.1);
-}
-
-/* ── PANEL ── */
-.panel { display: none; }
-.panel.active { display: block; }
-.panel-header {
-  margin-bottom: 1.5rem;
-}
-.panel-title {
-  font-family: 'DM Serif Display', serif;
-  font-size: 26px;
-  color: var(--text);
-  line-height: 1.2;
-  margin-bottom: 6px;
-}
-.panel-desc {
-  font-size: 13px;
-  color: var(--text2);
-  line-height: 1.5;
-}
-
-/* ── SCORE HERO ── */
-.score-hero {
-  background: var(--accent);
-  border-radius: var(--radius-lg);
-  padding: 1.5rem 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 1.5rem;
-  box-shadow: var(--shadow-lg);
-}
-.score-number {
-  font-family: 'DM Serif Display', serif;
-  font-size: 56px;
-  color: #fff;
-  line-height: 1;
-}
-.score-max { font-size: 20px; color: rgba(255,255,255,.45); }
-.score-label { font-size: 12px; color: rgba(255,255,255,.6); margin-bottom: 4px; }
-.score-interp {
-  background: rgba(255,255,255,.15);
-  color: #fff;
-  padding: 6px 14px;
-  border-radius: 20px;
-  font-size: 13px;
-  font-weight: 500;
-  margin-top: 8px;
-  display: inline-block;
-}
-.score-right { text-align: right; }
-
-/* ── ITEMS ── */
-.items-wrap { display: flex; flex-direction: column; gap: 8px; margin-bottom: 1.5rem; }
-.scale-item {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 1rem 1.25rem;
-  box-shadow: var(--shadow);
-  transition: border-color .15s;
-}
-.scale-item:has(input:checked) { border-color: var(--accent); }
-.item-title {
-  font-size: 14px;
-  font-weight: 500;
-  margin-bottom: 10px;
-  color: var(--text);
-}
-.item-subtitle {
-  font-size: 11px;
-  color: var(--text3);
-  margin-bottom: 8px;
-}
-.section-label {
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  color: var(--accent);
-  padding: 6px 0 2px;
-  margin-top: 8px;
-}
-.opts { display: flex; flex-direction: column; gap: 5px; }
-.opt {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  padding: 7px 10px;
-  border-radius: 7px;
-  cursor: pointer;
-  font-size: 13px;
-  color: var(--text2);
-  transition: background .1s;
-  border: 1px solid transparent;
-}
-.opt:hover { background: var(--surface2); }
-.opt:has(input:checked) {
-  background: var(--accent-light);
-  color: var(--accent);
-  border-color: rgba(29,78,58,.2);
-  font-weight: 500;
-}
-.opt input { margin-top: 2px; flex-shrink: 0; accent-color: var(--accent); }
-.opts-row { flex-direction: row; flex-wrap: wrap; gap: 6px; }
-.opts-row .opt { padding: 5px 12px; }
-
-/* ── MIF LEVELS COMPACT ── */
-.mif-select {
-  width: 100%;
-  padding: 8px 10px;
-  border: 1px solid var(--border);
-  border-radius: 7px;
-  font-family: inherit;
-  font-size: 13px;
-  background: var(--bg);
-  color: var(--text);
-  cursor: pointer;
-}
-.mif-select:focus { outline: none; border-color: var(--accent); }
-
-/* ── BUTTONS ── */
-.btn-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
-.btn {
-  padding: 10px 20px;
-  border-radius: var(--radius);
-  font-family: inherit;
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all .15s;
-  border: 1px solid var(--border2);
-  background: var(--surface);
-  color: var(--text);
-}
-.btn:hover { background: var(--surface2); }
-.btn-primary {
-  background: var(--accent);
-  color: #fff;
-  border-color: var(--accent);
-}
-.btn-primary:hover { background: #002070; }
-.btn-export {
-  background: var(--accent2-light);
-  color: var(--accent2);
-  border-color: rgba(193,125,60,.3);
-}
-.btn-export:hover { background: #f5e8d5; }
-.btn-danger {
-  background: var(--danger-light);
-  color: var(--danger);
-  border-color: rgba(184,50,50,.2);
-}
-.btn-danger:hover { background: #fbe0e0; }
-.btn-sm {
-  padding: 6px 14px;
-  font-size: 12px;
-}
-
-/* ── HISTORY ── */
-.history-empty {
-  text-align: center;
-  padding: 3rem 2rem;
-  color: var(--text3);
-  font-size: 14px;
-}
-.pt-group { margin-bottom: 1.5rem; }
-.pt-group-header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 10px;
-}
-.pt-avatar {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: var(--accent);
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 13px;
-  font-weight: 600;
-  flex-shrink: 0;
-}
-.pt-name { font-weight: 500; font-size: 15px; }
-.pt-id { font-size: 12px; color: var(--text3); }
-.eval-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 13px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  overflow: hidden;
-  box-shadow: var(--shadow);
-}
-.eval-table th {
-  padding: 10px 14px;
-  text-align: left;
-  background: var(--surface2);
-  color: var(--text3);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: .06em;
-  text-transform: uppercase;
-  border-bottom: 1px solid var(--border);
-}
-.eval-table td {
-  padding: 10px 14px;
-  border-bottom: 1px solid var(--border);
-  color: var(--text);
-}
-.eval-table tr:last-child td { border-bottom: none; }
-.eval-table tr:hover td { background: var(--surface2); }
-.badge {
-  display: inline-block;
-  padding: 3px 10px;
-  border-radius: 20px;
-  font-size: 11px;
-  font-weight: 500;
-}
-.badge-green { background: var(--accent-light); color: var(--accent); }
-.badge-amber { background: var(--accent2-light); color: var(--accent2); }
-.badge-red { background: var(--danger-light); color: var(--danger); }
-
-/* ── EXPORT PANEL ── */
-.export-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 1rem; }
-.export-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 1.25rem 1.5rem;
-  cursor: pointer;
-  transition: all .15s;
-  box-shadow: var(--shadow);
-}
-.export-card:hover { border-color: var(--accent); box-shadow: var(--shadow-lg); }
-.export-card-icon { font-size: 24px; margin-bottom: 8px; }
-.export-card-title { font-weight: 500; font-size: 15px; margin-bottom: 4px; }
-.export-card-desc { font-size: 12px; color: var(--text2); }
-
-/* ── PROGRESS BAR ── */
-.prog-wrap { margin-bottom: 1rem; }
-.prog-label { display: flex; justify-content: space-between; font-size: 12px; color: var(--text3); margin-bottom: 4px; }
-.prog-bar { height: 4px; background: var(--surface2); border-radius: 2px; overflow: hidden; }
-.prog-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width .3s; }
-
-/* ── TOAST ── */
-.toast {
-  position: fixed;
-  bottom: 2rem;
-  right: 2rem;
-  background: var(--text);
-  color: #fff;
-  padding: 12px 20px;
-  border-radius: var(--radius);
-  font-size: 14px;
-  font-weight: 500;
-  box-shadow: var(--shadow-lg);
-  opacity: 0;
-  transform: translateY(8px);
-  transition: all .2s;
-  pointer-events: none;
-  z-index: 999;
-}
-.toast.show { opacity: 1; transform: translateY(0); }
-
-/* ── MOBILE BOTTOM NAV ── */
-.mobile-bottom-nav {
-  display: none;
-  position: fixed;
-  bottom: 0; left: 0; right: 0;
-  background: var(--surface);
-  border-top: 1px solid var(--border);
-  z-index: 200;
-  padding: 6px 0 env(safe-area-inset-bottom, 6px);
-  box-shadow: 0 -2px 16px rgba(0,0,0,.08);
-}
-.mbn-scroll {
-  display: flex;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-  gap: 2px;
-  padding: 0 6px;
-}
-.mbn-scroll::-webkit-scrollbar { display: none; }
-.mbn-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 3px;
-  padding: 6px 10px;
-  border-radius: var(--radius);
-  cursor: pointer;
-  flex-shrink: 0;
-  min-width: 56px;
-  transition: background .15s;
-}
-.mbn-item:active { background: var(--surface2); }
-.mbn-item.active { background: var(--accent-light); }
-.mbn-icon {
-  width: 28px; height: 28px;
-  border-radius: 8px;
-  background: var(--surface2);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 13px; font-weight: 700;
-  color: var(--text2);
-  transition: all .15s;
-}
-.mbn-item.active .mbn-icon { background: var(--accent); color: #fff; }
-.mbn-label {
-  font-size: 9px;
-  color: var(--text3);
-  text-align: center;
-  line-height: 1.2;
-  white-space: nowrap;
-}
-.mbn-item.active .mbn-label { color: var(--accent); font-weight: 600; }
-
-/* ── MOBILE HEADER CURRENT SCALE ── */
-.mobile-scale-indicator {
-  display: none;
-  font-size: 12px;
-  color: rgba(255,255,255,.7);
-  font-weight: 400;
-}
-
-/* ── RESPONSIVE ── */
-@media (max-width: 768px) {
-  .app-layout { grid-template-columns: 1fr; }
-  .sidebar { display: none; }
-  .main { padding: 1rem; padding-bottom: 100px; }
-  .patient-grid { grid-template-columns: 1fr 1fr; }
-  .score-number { font-size: 40px; }
-  .export-grid { grid-template-columns: 1fr; }
-  .mobile-bottom-nav { display: block; }
-  .mobile-scale-indicator { display: block; }
-  .header-sub { display: none; }
-  .score-hero { flex-direction: column; gap: 10px; align-items: flex-start; }
-  .score-right { text-align: left; }
-  .patient-grid { grid-template-columns: 1fr; }
-  .btn-row { flex-direction: column; }
-  .btn-row .btn { width: 100%; justify-content: center; }
-}
-
-/* ── ANIMATIONS ── */
-@keyframes fadeIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:translateY(0); } }
-.panel.active { animation: fadeIn .2s ease; }
-
-/* ── PRINT ── */
-@media print {
-  .site-header, .sidebar { display: none; }
-  .app-layout { grid-template-columns: 1fr; }
-  .main { padding: 0; }
-}
-</style>
-</head>
-<body>
-
-<header class="site-header">
-  <div style="display:flex;align-items:center;gap:12px">
-    <div style="background:#fff;border-radius:8px;padding:4px 10px;display:flex;align-items:center"><img src="data:image/png;base64,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" alt="Rede D'Or" style="height:26px;width:auto;display:block"/></div>
-    <div style="width:1px;height:28px;background:rgba(255,255,255,0.2)"></div>
-    <div style="line-height:1.2">
-      <div style="font-size:13px;font-weight:600;color:#fff;letter-spacing:.01em">Escalas de Reabilitação</div>
-      <div style="font-size:10px;color:rgba(255,255,255,0.6);font-weight:300">Unidade de Reabilitação</div>
-    </div>
-  </div>
-  <div class="logo" style="display:none">ReabScale</div>
-  <div class="header-sub" style="display:none">Escalas clínicas</div>
-  <div class="mobile-scale-indicator" id="mobile-scale-name">Barthel</div>
-</header>
-
-<div class="app-layout">
-
-<!-- SIDEBAR -->
-<aside class="sidebar">
-  <div class="sidebar-section">Funcionais / AVD</div>
-  <div class="nav-item active" id="nav-barthel" onclick="go('barthel')">
-    <div class="nav-icon">B</div>
-    Índice de Barthel
-    <span class="nav-badge" id="nb-barthel">—</span>
-  </div>
-  <div class="nav-item" id="nav-mif" onclick="go('mif')">
-    <div class="nav-icon">M</div>
-    MIF
-    <span class="nav-badge" id="nb-mif">—</span>
-  </div>
-  <div class="nav-item" id="nav-faq" onclick="go('faq')">
-    <div class="nav-icon">F</div>
-    FAQ Pfeffer
-    <span class="nav-badge" id="nb-faq">—</span>
-  </div>
-
-  <div class="sidebar-section">Mobilidade / Equilíbrio</div>
-  <div class="nav-item" id="nav-berg" onclick="go('berg')">
-    <div class="nav-icon">E</div>
-    Berg (Equilíbrio)
-    <span class="nav-badge" id="nb-berg">—</span>
-  </div>
-  <div class="nav-item" id="nav-ims" onclick="go('ims')">
-    <div class="nav-icon">I</div>
-    IMS · Motricidade
-    <span class="nav-badge" id="nb-ims">—</span>
-  </div>
-
-  <div class="sidebar-section">Força Muscular</div>
-  <div class="nav-item" id="nav-mrc" onclick="go('mrc')">
-    <div class="nav-icon">R</div>
-    MRC Força
-    <span class="nav-badge" id="nb-mrc">—</span>
-  </div>
-  <div class="nav-item" id="nav-cpax" onclick="go('cpax')">
-    <div class="nav-icon">CP</div>
-    CPAx (UTI)
-    <span class="nav-badge" id="nb-cpax">—</span>
-  </div>
-
-  <div class="sidebar-section">Deglutição / Fonoaudiologia</div>
-  <div class="nav-item" id="nav-fois" onclick="go('fois')">
-    <div class="nav-icon">FO</div>
-    FOIS
-    <span class="nav-badge" id="nb-fois">—</span>
-  </div>
-  <div class="nav-item" id="nav-doss" onclick="go('doss')">
-    <div class="nav-icon">DO</div>
-    DOSS
-    <span class="nav-badge" id="nb-doss">—</span>
-  </div>
-
-  <div class="sidebar-section">Funcionalidade Global</div>
-  <div class="nav-item" id="nav-katz" onclick="go('katz')">
-    <div class="nav-icon">KZ</div>
-    Katz
-    <span class="nav-badge" id="nb-katz">—</span>
-  </div>
-  <div class="nav-item" id="nav-ecf" onclick="go('ecf')">
-    <div class="nav-icon">EC</div>
-    ECF
-    <span class="nav-badge" id="nb-ecf">—</span>
-  </div>
-
-  <div class="sidebar-section">Cognição / Humor</div>
-  <div class="nav-item" id="nav-mmse" onclick="go('mmse')">
-    <div class="nav-icon">C</div>
-    MEEM
-    <span class="nav-badge" id="nb-mmse">—</span>
-  </div>
-  <div class="nav-item" id="nav-gds" onclick="go('gds')">
-    <div class="nav-icon">D</div>
-    GDS-15
-    <span class="nav-badge" id="nb-gds">—</span>
-  </div>
-
-  <div class="sidebar-section">Dados</div>
-  <div class="nav-item" id="nav-history" onclick="go('history')">
-    <div class="nav-icon">H</div>
-    Histórico
-    <span class="nav-badge" id="nb-history">0</span>
-  </div>
-  <div class="nav-item" id="nav-evolucao" onclick="go('evolucao')">
-    <div class="nav-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></div>
-    Evolução
-  </div>
-  <div class="nav-item" id="nav-export" onclick="go('export')">
-    <div class="nav-icon">↓</div>
-    Exportar
-  </div>
-
-  <div class="sidebar-section">Alta Segura</div>
-  <div class="nav-item" id="nav-farol" onclick="go('farol')">
-    <div class="nav-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
-    FAROL · Alta
-  </div>
-</aside>
-
-<!-- MAIN -->
-<main class="main">
-
-  <!-- PATIENT -->
-  <div class="patient-card">
-    <div class="patient-card-title">Identificação do Paciente</div>
-    <div class="patient-grid">
-      <div class="field-group">
-        <label class="field-label">Nome completo</label>
-        <input class="field-input" id="pt-name" placeholder="Nome do paciente" />
-      </div>
-      <div class="field-group">
-        <label class="field-label">Prontuário / ID</label>
-        <input class="field-input" id="pt-id" placeholder="N° prontuário" />
-      </div>
-      <div class="field-group">
-        <label class="field-label">Data de avaliação</label>
-        <input class="field-input" type="date" id="pt-date" />
-      </div>
-      <div class="field-group">
-        <label class="field-label">Avaliador</label>
-        <input class="field-input" id="pt-eval" placeholder="Nome do profissional" />
-      </div>
-    </div>
-  </div>
-
-  <!-- ══════════════════ BARTHEL ══════════════════ -->
-  <div class="panel active" id="panel-barthel">
-    <div class="panel-header">
-      <div class="panel-title">Índice de Barthel</div>
-      <div class="panel-desc">Avalia independência nas atividades da vida diária (AVDs). <b>0–20</b> dependência total · <b>21–60</b> grave · <b>61–90</b> moderada · <b>91–99</b> leve · <b>100</b> independente</div>
-    </div>
-    <div class="score-hero">
-      <div>
-        <div class="score-label">Pontuação total</div>
-        <div class="score-number" id="barthel-score">0<span class="score-max">/100</span></div>
-      </div>
-      <div class="score-right">
-        <div class="score-label">Classificação</div>
-        <div class="score-interp" id="barthel-interp">—</div>
-      </div>
-    </div>
-    <div class="items-wrap" id="barthel-items"></div>
-    <div class="btn-row">
-      <button class="btn btn-primary" onclick="saveScale('barthel')">✓ Salvar avaliação</button>
-      <button class="btn" onclick="clearScale('barthel')">Limpar</button>
-    </div>
-  </div>
-
-  <!-- ══════════════════ MIF ══════════════════ -->
-  <div class="panel" id="panel-mif">
-    <div class="panel-header">
-      <div class="panel-title">MIF — Medida de Independência Funcional</div>
-      <div class="panel-desc">18 itens, cada um pontuado de <b>1</b> (dependência total) a <b>7</b> (independência completa). Mínimo: 18 · Máximo: 126</div>
-    </div>
-    <div class="score-hero">
-      <div>
-        <div class="score-label">Pontuação total</div>
-        <div class="score-number" id="mif-score">18<span class="score-max">/126</span></div>
-      </div>
-      <div class="score-right">
-        <div class="score-label">Classificação</div>
-        <div class="score-interp" id="mif-interp">—</div>
-      </div>
-    </div>
-    <div class="items-wrap" id="mif-items"></div>
-    <div class="btn-row">
-      <button class="btn btn-primary" onclick="saveScale('mif')">✓ Salvar avaliação</button>
-      <button class="btn" onclick="clearScale('mif')">Limpar</button>
-    </div>
-  </div>
-
-  <!-- ══════════════════ BERG ══════════════════ -->
-  <div class="panel" id="panel-berg">
-    <div class="panel-header">
-      <div class="panel-title">Escala de Equilíbrio de Berg</div>
-      <div class="panel-desc">14 tarefas funcionais, pontuadas de 0 a 4. <b>0–20</b> alto risco de queda · <b>21–40</b> médio risco · <b>41–56</b> baixo risco</div>
-    </div>
-    <div class="score-hero">
-      <div>
-        <div class="score-label">Pontuação total</div>
-        <div class="score-number" id="berg-score">0<span class="score-max">/56</span></div>
-      </div>
-      <div class="score-right">
-        <div class="score-label">Risco de queda</div>
-        <div class="score-interp" id="berg-interp">—</div>
-      </div>
-    </div>
-    <div class="items-wrap" id="berg-items"></div>
-    <div class="btn-row">
-      <button class="btn btn-primary" onclick="saveScale('berg')">✓ Salvar avaliação</button>
-      <button class="btn" onclick="clearScale('berg')">Limpar</button>
-    </div>
-  </div>
-
-  <!-- ══════════════════ MRC ══════════════════ -->
-  <div class="panel" id="panel-mrc">
-    <div class="panel-header">
-      <div class="panel-title">Escala MRC de Força Muscular</div>
-      <div class="panel-desc">Avalia 12 grupos musculares bilateralmente. <b>0</b> sem contração · <b>5</b> força normal. Total máximo: 60. Abaixo de 48 sugere fraqueza clinicamente relevante (UCI-AW).</div>
-    </div>
-    <div class="score-hero">
-      <div>
-        <div class="score-label">Pontuação total</div>
-        <div class="score-number" id="mrc-score">0<span class="score-max">/60</span></div>
-      </div>
-      <div class="score-right">
-        <div class="score-label">Classificação</div>
-        <div class="score-interp" id="mrc-interp">—</div>
-      </div>
-    </div>
-    <div class="items-wrap" id="mrc-items"></div>
-    <div class="btn-row">
-      <button class="btn btn-primary" onclick="saveScale('mrc')">✓ Salvar avaliação</button>
-      <button class="btn" onclick="clearScale('mrc')">Limpar</button>
-    </div>
-  </div>
-
-  <!-- ══════════════════ IMS — MOTRICITY INDEX ══════════════════ -->
-  <div class="panel" id="panel-ims">
-    <div class="panel-header">
-      <div class="panel-title">IMS — Índice de Motricidade (Motricity Index)</div>
-      <div class="panel-desc">Avalia força de MMSS e MMII com pesos validados. Cada membro é testado em 3 movimentos com pontuação: <b>0, 9, 14, 19, 22, 25</b>. Soma + 1 por membro. Máximo: 100 por lado.</div>
-    </div>
-    <div class="score-hero">
-      <div>
-        <div class="score-label">Total</div>
-        <div class="score-number" id="ims-score">0<span class="score-max">/200</span></div>
-      </div>
-      <div class="score-right">
-        <div class="score-label">Classificação</div>
-        <div class="score-interp" id="ims-interp">—</div>
-      </div>
-    </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1rem">
-      <div style="background:var(--surface2);border-radius:var(--radius);padding:8px 12px;text-align:center">
-        <div class="score-label">MMSS Direito</div>
-        <div style="font-size:22px;font-weight:600" id="ims-usd">0</div>
-      </div>
-      <div style="background:var(--surface2);border-radius:var(--radius);padding:8px 12px;text-align:center">
-        <div class="score-label">MMSS Esquerdo</div>
-        <div style="font-size:22px;font-weight:600" id="ims-use">0</div>
-      </div>
-      <div style="background:var(--surface2);border-radius:var(--radius);padding:8px 12px;text-align:center">
-        <div class="score-label">MMII Direito</div>
-        <div style="font-size:22px;font-weight:600" id="ims-lid">0</div>
-      </div>
-      <div style="background:var(--surface2);border-radius:var(--radius);padding:8px 12px;text-align:center">
-        <div class="score-label">MMII Esquerdo</div>
-        <div style="font-size:22px;font-weight:600" id="ims-lie">0</div>
-      </div>
-    </div>
-    <div class="items-wrap" id="ims-items"></div>
-    <div class="btn-row">
-      <button class="btn btn-primary" onclick="saveScale('ims')">✓ Salvar avaliação</button>
-      <button class="btn" onclick="clearScale('ims')">Limpar</button>
-    </div>
-  </div>
-
-  <!-- ══════════════════ CPAx ══════════════════ -->
-  <div class="panel" id="panel-cpax">
-    <div class="panel-header">
-      <div class="panel-title">CPAx — Chelsea Critical Care Physical Assessment</div>
-      <div class="panel-desc">11 domínios de função física para pacientes críticos (UTI). Cada domínio: <b>0–5</b>. Máximo: <b>55</b>. Quanto maior, melhor função física.</div>
-    </div>
-    <div class="score-hero">
-      <div>
-        <div class="score-label">Pontuação total</div>
-        <div class="score-number" id="cpax-score">0<span class="score-max">/55</span></div>
-      </div>
-      <div class="score-right">
-        <div class="score-label">Classificação</div>
-        <div class="score-interp" id="cpax-interp">—</div>
-      </div>
-    </div>
-    <div class="items-wrap" id="cpax-items"></div>
-    <div class="btn-row">
-      <button class="btn btn-primary" onclick="saveScale('cpax')">✓ Salvar avaliação</button>
-      <button class="btn" onclick="clearScale('cpax')">Limpar</button>
-    </div>
-  </div>
-
-  <!-- ══════════════════ FOIS ══════════════════ -->
-  <div class="panel" id="panel-fois">
-    <div class="panel-header">
-      <div class="panel-title">FOIS — Functional Oral Intake Scale</div>
-      <div class="panel-desc">Escala de ingestão oral funcional. 7 níveis — do nada por via oral até dieta oral total sem restrições. Coma AVC, disfagia, IOT recente.</div>
-    </div>
-    <div class="score-hero">
-      <div>
-        <div class="score-label">Nível</div>
-        <div class="score-number" id="fois-score">—<span class="score-max">/7</span></div>
-      </div>
-      <div class="score-right">
-        <div class="score-label">Descrição</div>
-        <div class="score-interp" id="fois-interp">—</div>
-      </div>
-    </div>
-    <div class="items-wrap" id="fois-items"></div>
-    <div class="btn-row">
-      <button class="btn btn-primary" onclick="saveScale('fois')">✓ Salvar avaliação</button>
-      <button class="btn" onclick="clearScale('fois')">Limpar</button>
-    </div>
-  </div>
-
-  <!-- ══════════════════ DOSS ══════════════════ -->
-  <div class="panel" id="panel-doss">
-    <div class="panel-header">
-      <div class="panel-title">DOSS — Dysphagia Outcome and Severity Scale</div>
-      <div class="panel-desc">Escala de resultado e gravidade da disfagia. 7 níveis — de dependência total com SNE a alimentação oral normal. Correlaciona com nível funcional de deglutição.</div>
-    </div>
-    <div class="score-hero">
-      <div>
-        <div class="score-label">Nível</div>
-        <div class="score-number" id="doss-score">—<span class="score-max">/7</span></div>
-      </div>
-      <div class="score-right">
-        <div class="score-label">Descrição</div>
-        <div class="score-interp" id="doss-interp">—</div>
-      </div>
-    </div>
-    <div class="items-wrap" id="doss-items"></div>
-    <div class="btn-row">
-      <button class="btn btn-primary" onclick="saveScale('doss')">✓ Salvar avaliação</button>
-      <button class="btn" onclick="clearScale('doss')">Limpar</button>
-    </div>
-  </div>
-
-  <!-- ══════════════════ KATZ ══════════════════ -->
-  <div class="panel" id="panel-katz">
-    <div class="panel-header">
-      <div class="panel-title">Índice de Katz — Independência nas AVDs</div>
-      <div class="panel-desc">Avalia 6 funções básicas. Cada função: <b>1</b> independente · <b>0</b> dependente. <b>6</b> independência total · <b>4</b> dependência moderada · <b>≤2</b> dependência grave.</div>
-    </div>
-    <div class="score-hero">
-      <div>
-        <div class="score-label">Pontuação</div>
-        <div class="score-number" id="katz-score">0<span class="score-max">/6</span></div>
-      </div>
-      <div class="score-right">
-        <div class="score-label">Classificação</div>
-        <div class="score-interp" id="katz-interp">—</div>
-      </div>
-    </div>
-    <div class="items-wrap" id="katz-items"></div>
-    <div class="btn-row">
-      <button class="btn btn-primary" onclick="saveScale('katz')">✓ Salvar avaliação</button>
-      <button class="btn" onclick="clearScale('katz')">Limpar</button>
-    </div>
-  </div>
-
-  <!-- ══════════════════ ECF ══════════════════ -->
-  <div class="panel" id="panel-ecf">
-    <div class="panel-header">
-      <div class="panel-title">ECF — Escala de Comprometimento Funcional</div>
-      <div class="panel-desc">Avalia o grau de comprometimento funcional global. 7 níveis: <b>1</b> dependência total · <b>7</b> independência plena. Aplicável em reabilitação e cuidados prolongados.</div>
-    </div>
-    <div class="score-hero">
-      <div>
-        <div class="score-label">Nível</div>
-        <div class="score-number" id="ecf-score">—<span class="score-max">/7</span></div>
-      </div>
-      <div class="score-right">
-        <div class="score-label">Classificação</div>
-        <div class="score-interp" id="ecf-interp">—</div>
-      </div>
-    </div>
-    <div class="items-wrap" id="ecf-items"></div>
-    <div class="btn-row">
-      <button class="btn btn-primary" onclick="saveScale('ecf')">✓ Salvar avaliação</button>
-      <button class="btn" onclick="clearScale('ecf')">Limpar</button>
-    </div>
-  </div>
-
-  <!-- ══════════════════ FAQ ══════════════════ -->
-  <div class="panel" id="panel-faq">
-    <div class="panel-header">
-      <div class="panel-title">FAQ — Escala Funcional de Atividades de Pfeffer</div>
-      <div class="panel-desc">10 atividades instrumentais, pontuadas de 0 a 3. <b>≥6 pontos</b> sugere comprometimento funcional significativo. Máximo: 30</div>
-    </div>
-    <div class="score-hero">
-      <div>
-        <div class="score-label">Pontuação total</div>
-        <div class="score-number" id="faq-score">0<span class="score-max">/30</span></div>
-      </div>
-      <div class="score-right">
-        <div class="score-label">Classificação</div>
-        <div class="score-interp" id="faq-interp">—</div>
-      </div>
-    </div>
-    <div class="items-wrap" id="faq-items"></div>
-    <div class="btn-row">
-      <button class="btn btn-primary" onclick="saveScale('faq')">✓ Salvar avaliação</button>
-      <button class="btn" onclick="clearScale('faq')">Limpar</button>
-    </div>
-  </div>
-
-  <!-- ══════════════════ MEEM ══════════════════ -->
-  <div class="panel" id="panel-mmse">
-    <div class="panel-header">
-      <div class="panel-title">MEEM — Mini-Exame do Estado Mental</div>
-      <div class="panel-desc">Avaliação cognitiva breve. Máximo: 30 pontos. Ponto de corte sugerido: <b>≥27</b> normal · <b>21–26</b> leve · <b>10–20</b> moderado · <b>≤9</b> grave</div>
-    </div>
-    <div class="score-hero">
-      <div>
-        <div class="score-label">Pontuação total</div>
-        <div class="score-number" id="mmse-score">0<span class="score-max">/30</span></div>
-      </div>
-      <div class="score-right">
-        <div class="score-label">Classificação</div>
-        <div class="score-interp" id="mmse-interp">—</div>
-      </div>
-    </div>
-    <div class="items-wrap" id="mmse-items"></div>
-    <div class="btn-row">
-      <button class="btn btn-primary" onclick="saveScale('mmse')">✓ Salvar avaliação</button>
-      <button class="btn" onclick="clearScale('mmse')">Limpar</button>
-    </div>
-  </div>
-
-  <!-- ══════════════════ GDS ══════════════════ -->
-  <div class="panel" id="panel-gds">
-    <div class="panel-header">
-      <div class="panel-title">GDS-15 — Escala de Depressão Geriátrica</div>
-      <div class="panel-desc">Versão curta com 15 questões sim/não. <b>0–4</b> normal · <b>5–8</b> depressão leve · <b>9–11</b> moderada · <b>12–15</b> grave</div>
-    </div>
-    <div class="score-hero">
-      <div>
-        <div class="score-label">Pontuação total</div>
-        <div class="score-number" id="gds-score">0<span class="score-max">/15</span></div>
-      </div>
-      <div class="score-right">
-        <div class="score-label">Classificação</div>
-        <div class="score-interp" id="gds-interp">—</div>
-      </div>
-    </div>
-    <div class="items-wrap" id="gds-items"></div>
-    <div class="btn-row">
-      <button class="btn btn-primary" onclick="saveScale('gds')">✓ Salvar avaliação</button>
-      <button class="btn" onclick="clearScale('gds')">Limpar</button>
-    </div>
-  </div>
-
-  <!-- ══════════════════ EVOLUÇÃO ══════════════════ -->
-  <div class="panel" id="panel-evolucao">
-    <div class="panel-header">
-      <div class="panel-title">Gráfico de Evolução</div>
-      <div class="panel-desc">Acompanhe a progressão do paciente ao longo das avaliações salvas.</div>
-    </div>
-
-    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:1.25rem">
-      <div class="field-group" style="flex:1;min-width:180px">
-        <label class="field-label">Paciente</label>
-        <select class="field-input" id="evo-patient" onchange="renderEvo()">
-          <option value="">— Selecione um paciente —</option>
-        </select>
-      </div>
-      <div class="field-group" style="flex:1;min-width:180px">
-        <label class="field-label">Escala</label>
-        <select class="field-input" id="evo-scale" onchange="renderEvo()">
-          <option value="">— Todas as escalas —</option>
-          <option>Índice de Barthel</option>
-          <option>MIF</option>
-          <option>Berg</option>
-          <option>MRC Força</option>
-          <option>IMS Motricidade</option>
-          <option>CPAx</option>
-          <option>FOIS</option>
-          <option>DOSS</option>
-          <option>Katz</option>
-          <option>ECF</option>
-          <option>FAQ Pfeffer</option>
-          <option>MEEM</option>
-          <option>GDS-15</option>
-        </select>
-      </div>
-    </div>
-
-    <div id="evo-empty" style="text-align:center;padding:3rem 1rem;color:var(--text3);font-size:14px">
-      Salve pelo menos 2 avaliações do mesmo paciente para ver a evolução.
-    </div>
-
-    <div id="evo-content" style="display:none">
-      <!-- CARDS DE RESUMO -->
-      <div id="evo-cards" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:1.5rem"></div>
-
-      <!-- GRÁFICO PRINCIPAL -->
-      <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.25rem;margin-bottom:1rem;box-shadow:var(--shadow)">
-        <div style="font-size:13px;font-weight:500;color:var(--text2);margin-bottom:1rem" id="evo-chart-title">Evolução das pontuações</div>
-        <div style="position:relative;height:280px">
-          <canvas id="evo-chart"></canvas>
-        </div>
-      </div>
-
-      <!-- TABELA DE EVOLUÇÃO -->
-      <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow)">
-        <table class="eval-table" id="evo-table">
-          <thead><tr><th>Data</th><th>Escala</th><th>Pontos</th><th>Δ Variação</th><th>Classificação</th></tr></thead>
-          <tbody id="evo-tbody"></tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-
-  <!-- ══════════════════ HISTÓRICO ══════════════════ -->
-  <div class="panel" id="panel-history">
-    <div class="panel-header">
-      <div class="panel-title">Histórico de Avaliações</div>
-      <div class="panel-desc">Todas as avaliações registradas nesta sessão, organizadas por paciente.</div>
-    </div>
-    <div id="history-content">
-      <div class="history-empty">Nenhuma avaliação salva ainda.<br>Preencha uma escala e clique em <b>Salvar avaliação</b>.</div>
-    </div>
-    <div class="btn-row">
-      <button class="btn btn-danger btn-sm" onclick="clearHistory()">Limpar histórico</button>
-    </div>
-  </div>
-
-  <!-- ══════════════════ EXPORTAR ══════════════════ -->
-  <div class="panel" id="panel-export">
-    <div class="panel-header">
-      <div class="panel-title">Exportar Dados</div>
-      <div class="panel-desc">Baixe os registros em diferentes formatos para uso em prontuários ou planilhas.</div>
-    </div>
-    <div class="export-grid">
-      <div class="export-card" onclick="exportCSV()">
-        <div class="export-card-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#003087" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
-        <div class="export-card-title">Planilha CSV</div>
-        <div class="export-card-desc">Abre no Excel, Google Sheets e LibreOffice. Inclui todos os registros do histórico.</div>
-      </div>
-      <div class="export-card" onclick="exportTXT()">
-        <div class="export-card-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#003087" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
-        <div class="export-card-title">Relatório em texto</div>
-        <div class="export-card-desc">Resumo formatado por paciente, pronto para colar no prontuário eletrônico.</div>
-      </div>
-      <div class="export-card" onclick="window.print()">
-        <div class="export-card-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#003087" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg></div>
-        <div class="export-card-title">Imprimir / PDF</div>
-        <div class="export-card-desc">Gera PDF via impressão do navegador. Ideal para arquivamento físico.</div>
-      </div>
-      <div class="export-card" onclick="exportJSON()">
-        <div class="export-card-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#003087" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
-        <div class="export-card-title">JSON (dados brutos)</div>
-        <div class="export-card-desc">Para integração com sistemas eletrônicos e bancos de dados.</div>
-      </div>
-    </div>
-    <div id="export-preview" style="margin-top:1rem"></div>
-  </div>
-
-  <!-- ══════════════════ FAROL ══════════════════ -->
-  <div class="panel" id="panel-farol">
-    <div class="panel-header">
-      <div class="panel-title">FAROL · Score de Alta Segura</div>
-      <div class="panel-desc">Donzé · Forster · NEWS2 — Decisão de seguimento pós-alta em 30 dias. Ferramenta de apoio clínico.</div>
-    </div>
-
-    <!-- IDENTIFICAÇÃO -->
-    <div class="farol-card" style="margin-bottom:12px">
-      <div class="farol-block-title">Identificação</div>
-      <div style="display:grid;grid-template-columns:2fr 1fr 1fr;gap:8px">
-        <div class="field-group"><label class="field-label">Prontuário / ID</label><input class="field-input" id="f-ptid" placeholder="000000"/></div>
-        <div class="field-group"><label class="field-label">Idade</label><input class="field-input" id="f-age" type="number" placeholder="—"/></div>
-        <div class="field-group"><label class="field-label">Unidade</label><input class="field-input" id="f-unit" placeholder="Ex: CM 4º"/></div>
-      </div>
-    </div>
-
-    <!-- RESULTADO STICKY -->
-    <div class="farol-result-bar" id="farol-result-bar">
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px">
-        <div class="farol-score-cell">
-          <div class="farol-score-label">HOSPITAL</div>
-          <div class="farol-score-num" id="fr-hospital">0<span class="farol-score-max">/13</span></div>
-          <div class="farol-score-sub" id="fr-hospital-band">—</div>
-        </div>
-        <div class="farol-score-cell">
-          <div class="farol-score-label">Prontidão</div>
-          <div class="farol-score-num" id="fr-readiness">0<span class="farol-score-max">/9</span></div>
-          <div class="farol-score-sub" id="fr-readiness-sub">—</div>
-        </div>
-        <div class="farol-score-cell">
-          <div class="farol-score-label">Forster</div>
-          <div class="farol-score-num" id="fr-forster" style="color:var(--accent2)">0<span class="farol-score-max">/7</span></div>
-          <div class="farol-score-sub" id="fr-forster-sub">—</div>
-        </div>
-      </div>
-      <div id="farol-rec-chip" class="farol-chip farol-chip-idle">Aguardando dados</div>
-      <div id="farol-rec-title" class="farol-rec-title"></div>
-      <div id="farol-rec-followup" class="farol-rec-followup"></div>
-      <div id="farol-rec-detail" class="farol-rec-detail"></div>
-      <div id="farol-actions-wrap" style="display:none;margin-top:10px;padding-top:10px;border-top:0.5px solid var(--border)">
-        <div class="farol-score-label" style="margin-bottom:6px">Ações recomendadas</div>
-        <ul id="farol-actions-list" style="display:flex;flex-direction:column;gap:4px"></ul>
-      </div>
-      <button onclick="farolCopyProntuario()" id="farol-copy-btn" style="margin-top:10px;width:100%;padding:9px;border-radius:var(--radius);border:1px solid var(--border2);background:var(--surface);font-size:13px;font-weight:500;cursor:pointer;color:var(--text);display:flex;align-items:center;justify-content:center;gap:6px">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-        Copiar resumo para prontuário
-      </button>
-    </div>
-
-    <!-- HOSPITAL SCORE -->
-    <div class="farol-card">
-      <div class="farol-block-title">HOSPITAL Score <span class="farol-ref">Donzé et al. · JAMA Intern Med 2013</span></div>
-      <div class="farol-subtitle">Prediz readmissão potencialmente evitável em 30 dias. Máx: 13 pts.</div>
-      <div id="farol-hospital-items"></div>
-      <div style="margin-top:10px;padding-top:10px;border-top:0.5px solid var(--border)">
-        <div class="farol-score-label" style="margin-bottom:6px">Internações no último ano</div>
-        <div id="farol-prior-items"></div>
-      </div>
-    </div>
-
-    <!-- PRONTIDÃO -->
-    <div class="farol-card">
-      <div class="farol-block-title">Prontidão para Alta <span class="farol-ref">Gate fisiológico + operacional</span></div>
-      <div class="farol-subtitle">Cada critério não atingido é um gap e pondera contra a alta.</div>
-      <div id="farol-readiness-items"></div>
-    </div>
-
-    <!-- FORSTER -->
-    <div class="farol-card" style="border-color:rgba(193,125,60,.3)">
-      <div class="farol-block-title" style="color:var(--accent2)">Gatilhos de Evento Adverso Pós-Alta <span class="farol-ref" style="color:var(--text3)">Forster et al. · Ann Intern Med 2003</span></div>
-      <div class="farol-subtitle">Marque os presentes na alta. Cada gatilho aumenta o risco de evento adverso em 3 semanas.</div>
-      <div id="farol-forster-items"></div>
-    </div>
-
-    <div style="font-size:11px;color:var(--text3);margin-top:6px;line-height:1.5">
-      FAROL é ferramenta de apoio à decisão clínica. A indicação final deve considerar julgamento clínico, preferência do paciente e recursos disponíveis. · Smith GB et al. NEWS2 — RCP. Resuscitation 2013.
-    </div>
-
-    <div class="btn-row">
-      <button class="btn" onclick="farolReset()">Limpar FAROL</button>
-    </div>
-  </div>
-
-</main>
-</div>
-
-<style>
-/* ── FAROL ── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:15px;line-height:1.6}
+.site-header{background:var(--accent);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:60px;position:sticky;top:0;z-index:100;box-shadow:0 1px 0 rgba(255,255,255,.08)}
+.header-sub{font-size:12px;color:rgba(255,255,255,.55);font-weight:300}
+.mobile-scale-indicator{display:none;font-size:12px;color:rgba(255,255,255,.7)}
+.app-layout{display:grid;grid-template-columns:240px 1fr;min-height:calc(100vh - 60px)}
+.sidebar{background:var(--surface);border-right:1px solid var(--border);padding:1.5rem 0;position:sticky;top:60px;height:calc(100vh - 60px);overflow-y:auto}
+.sidebar-section{padding:0 1rem .5rem;font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin-top:1rem}
+.sidebar-section:first-child{margin-top:0}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 1.25rem;font-size:14px;color:var(--text2);cursor:pointer;border-left:3px solid transparent;transition:all .15s;user-select:none}
+.nav-item:hover{background:var(--surface2);color:var(--text)}
+.nav-item.active{background:var(--accent-light);color:var(--accent);border-left-color:var(--accent);font-weight:500}
+.nav-icon{width:22px;height:22px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;background:var(--surface2);color:var(--text2);flex-shrink:0}
+.nav-item.active .nav-icon{background:var(--accent);color:#fff}
+.nav-badge{margin-left:auto;font-size:10px;background:var(--surface2);color:var(--text3);padding:2px 7px;border-radius:20px}
+.nav-item.active .nav-badge{background:var(--accent);color:#fff}
+.main{padding:2rem;max-width:860px}
+.patient-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.25rem 1.5rem;margin-bottom:1.75rem;box-shadow:var(--shadow)}
+.patient-card-title{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);margin-bottom:12px}
+.patient-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:10px}
+.field-group{display:flex;flex-direction:column;gap:4px}
+.field-label{font-size:11px;color:var(--text3);font-weight:500}
+.field-input{padding:8px 12px;border:1px solid var(--border);border-radius:var(--radius);font-family:inherit;font-size:14px;color:var(--text);background:var(--bg);transition:border-color .15s;width:100%}
+.field-input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(0,48,135,.1)}
+.panel{display:none}.panel.active{display:block;animation:fadeIn .2s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.panel-header{margin-bottom:1.5rem}
+.panel-title{font-family:'DM Serif Display',serif;font-size:26px;color:var(--text);line-height:1.2;margin-bottom:6px}
+.panel-desc{font-size:13px;color:var(--text2);line-height:1.5}
+.score-hero{background:var(--accent);border-radius:var(--radius-lg);padding:1.5rem 2rem;display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;box-shadow:var(--shadow-lg)}
+.score-number{font-family:'DM Serif Display',serif;font-size:56px;color:#fff;line-height:1}
+.score-max{font-size:20px;color:rgba(255,255,255,.45)}
+.score-label{font-size:12px;color:rgba(255,255,255,.6);margin-bottom:4px}
+.score-interp{background:rgba(255,255,255,.15);color:#fff;padding:6px 14px;border-radius:20px;font-size:13px;font-weight:500;margin-top:8px;display:inline-block}
+.score-right{text-align:right}
+.items-wrap{display:flex;flex-direction:column;gap:8px;margin-bottom:1.5rem}
+.scale-item{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1rem 1.25rem;box-shadow:var(--shadow);transition:border-color .15s}
+.scale-item:has(input:checked){border-color:var(--accent)}
+.item-title{font-size:14px;font-weight:500;margin-bottom:10px;color:var(--text)}
+.item-subtitle{font-size:11px;color:var(--text3);margin-bottom:8px}
+.section-label{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);padding:6px 0 2px;margin-top:8px}
+.opts{display:flex;flex-direction:column;gap:5px}
+.opt{display:flex;align-items:flex-start;gap:10px;padding:7px 10px;border-radius:7px;cursor:pointer;font-size:13px;color:var(--text2);transition:background .1s;border:1px solid transparent}
+.opt:hover{background:var(--surface2)}
+.opt:has(input:checked){background:var(--accent-light);color:var(--accent);border-color:rgba(0,48,135,.2);font-weight:500}
+.opt input{margin-top:2px;flex-shrink:0;accent-color:var(--accent)}
+.opts-row{flex-direction:row;flex-wrap:wrap;gap:6px}
+.opts-row .opt{padding:5px 12px}
+.mif-select{width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:7px;font-family:inherit;font-size:13px;background:var(--bg);color:var(--text);cursor:pointer}
+.mif-select:focus{outline:none;border-color:var(--accent)}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--border)}
+.btn{padding:10px 20px;border-radius:var(--radius);font-family:inherit;font-size:14px;font-weight:500;cursor:pointer;transition:all .15s;border:1px solid var(--border2);background:var(--surface);color:var(--text)}
+.btn:hover{background:var(--surface2)}
+.btn-primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.btn-primary:hover{background:#002070}
+.btn-export{background:var(--accent2-light);color:var(--accent2);border-color:rgba(0,102,204,.3)}
+.btn-danger{background:var(--danger-light);color:var(--danger);border-color:rgba(184,50,50,.2)}
+.history-empty{text-align:center;padding:3rem 2rem;color:var(--text3);font-size:14px}
+.pt-group{margin-bottom:1.5rem}
+.pt-group-header{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.pt-avatar{width:36px;height:36px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;flex-shrink:0}
+.pt-name{font-weight:500;font-size:15px}
+.pt-id{font-size:12px;color:var(--text3)}
+.eval-table{width:100%;border-collapse:collapse;font-size:13px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
+.eval-table th{padding:10px 14px;text-align:left;background:var(--surface2);color:var(--text3);font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;border-bottom:1px solid var(--border)}
+.eval-table td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text)}
+.eval-table tr:last-child td{border-bottom:none}
+.eval-table tr:hover td{background:var(--surface2)}
+.export-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1rem}
+.export-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.25rem 1.5rem;cursor:pointer;transition:all .15s;box-shadow:var(--shadow)}
+.export-card:hover{border-color:var(--accent);box-shadow:var(--shadow-lg)}
+.export-card-icon{margin-bottom:8px}
+.export-card-title{font-weight:500;font-size:15px;margin-bottom:4px}
+.export-card-desc{font-size:12px;color:var(--text2)}
+/* FAROL */
 .farol-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.1rem 1.25rem;margin-bottom:12px;box-shadow:var(--shadow)}
 .farol-block-title{font-size:13px;font-weight:600;color:var(--accent);margin-bottom:3px}
 .farol-ref{font-size:10px;font-weight:400;color:var(--text3);margin-left:6px}
@@ -1209,7 +105,7 @@ body {
 .farol-check-row{display:flex;align-items:flex-start;gap:10px;padding:8px 12px;border-radius:var(--radius);border:1px solid var(--border);margin-bottom:6px;cursor:pointer;transition:all .15s;background:var(--bg);user-select:none}
 .farol-check-row:hover{border-color:var(--border2)}
 .farol-check-row.checked{border-color:var(--accent);background:var(--accent-light)}
-.farol-check-row.checked-amber{border-color:rgba(193,125,60,.5);background:var(--accent2-light)}
+.farol-check-row.checked-amber{border-color:rgba(0,102,204,.5);background:var(--accent2-light)}
 .farol-check-icon{flex-shrink:0;margin-top:1px}
 .farol-check-label{flex:1;font-size:13px;color:var(--text2);line-height:1.4}
 .farol-check-row.checked .farol-check-label{color:var(--accent);font-weight:500}
@@ -1219,7 +115,6 @@ body {
 .farol-radio-row{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:var(--radius);border:1px solid var(--border);margin-bottom:6px;cursor:pointer;transition:all .15s;background:var(--bg)}
 .farol-radio-row:hover{border-color:var(--border2)}
 .farol-radio-row.checked{border-color:var(--accent);background:var(--accent-light)}
-.farol-radio-row .farol-check-label{color:var(--text2)}
 .farol-radio-row.checked .farol-check-label{color:var(--accent);font-weight:500}
 .farol-radio-dot{width:16px;height:16px;border-radius:50%;border:1.5px solid var(--border2);display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .farol-radio-row.checked .farol-radio-dot{border-color:var(--accent)}
@@ -1235,8 +130,7 @@ body {
 .farol-chip-idle{background:var(--surface2);color:var(--text3)}
 .farol-chip-low{background:var(--accent-light);color:var(--accent)}
 .farol-chip-moderate{background:var(--accent2-light);color:var(--accent2)}
-.farol-chip-high{background:var(--danger-light);color:var(--danger)}
-.farol-chip-hold{background:var(--danger);color:#fff}
+.farol-chip-high,.farol-chip-hold{background:var(--danger-light);color:var(--danger)}
 .farol-rec-title{font-size:16px;font-weight:600;color:var(--text);margin-bottom:3px}
 .farol-rec-title.low{color:var(--accent)}
 .farol-rec-title.moderate{color:var(--accent2)}
@@ -1245,333 +139,535 @@ body {
 .farol-rec-detail{font-size:12px;color:var(--text3);line-height:1.4}
 .farol-action-item{display:flex;align-items:flex-start;gap:8px;font-size:12.5px;color:var(--text2);line-height:1.4;padding:4px 0}
 .farol-action-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0;margin-top:5px}
-.farol-result-bar .farol-result-topbar{height:3px;border-radius:3px 3px 0 0;margin:-1.1rem -1.25rem 12px;background:var(--accent)}
-.farol-result-topbar.moderate{background:var(--accent2)}
-.farol-result-topbar.high,.farol-result-topbar.hold{background:var(--danger)}
-.farol-result-topbar.idle,.farol-result-topbar.low{background:var(--accent)}
-</style>
-<style>
-.install-banner{
-  position:fixed;bottom:80px;left:50%;transform:translateX(-50%);
-  background:var(--accent);color:#fff;
-  border-radius:var(--radius-lg);
-  padding:12px 16px;
-  display:none;align-items:center;gap:12px;
-  box-shadow:var(--shadow-lg);
-  z-index:300;width:calc(100% - 2rem);max-width:420px;
-  animation:slideUp .3s ease;
-}
-@keyframes slideUp{from{opacity:0;transform:translateX(-50%) translateY(12px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+/* MOBILE */
+.mobile-bottom-nav{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--surface);border-top:1px solid var(--border);z-index:200;padding:6px 0 env(safe-area-inset-bottom,6px);box-shadow:0 -2px 16px rgba(0,0,0,.08)}
+.mbn-scroll{display:flex;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;gap:2px;padding:0 6px}
+.mbn-scroll::-webkit-scrollbar{display:none}
+.mbn-item{display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 10px;border-radius:var(--radius);cursor:pointer;flex-shrink:0;min-width:56px;transition:background .15s}
+.mbn-item:active{background:var(--surface2)}
+.mbn-item.active{background:var(--accent-light)}
+.mbn-icon{width:28px;height:28px;border-radius:8px;background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--text2);transition:all .15s}
+.mbn-item.active .mbn-icon{background:var(--accent);color:#fff}
+.mbn-label{font-size:9px;color:var(--text3);text-align:center;line-height:1.2;white-space:nowrap}
+.mbn-item.active .mbn-label{color:var(--accent);font-weight:600}
+.install-banner{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:var(--accent);color:#fff;border-radius:var(--radius-lg);padding:12px 16px;display:none;align-items:center;gap:12px;box-shadow:var(--shadow-lg);z-index:300;width:calc(100% - 2rem);max-width:420px}
 .install-banner-text{flex:1;font-size:13px;line-height:1.4}
 .install-banner-text b{display:block;font-size:14px;margin-bottom:2px}
 .install-banner-btns{display:flex;gap:6px;flex-shrink:0}
 .ibtn{padding:7px 14px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;border:none}
 .ibtn-install{background:#fff;color:var(--accent)}
 .ibtn-dismiss{background:rgba(255,255,255,.2);color:#fff}
-.offline-pill{
-  display:none;position:fixed;top:70px;left:50%;transform:translateX(-50%);
-  background:#b83232;color:#fff;padding:6px 16px;border-radius:20px;
-  font-size:12px;font-weight:500;z-index:400;box-shadow:var(--shadow);
+.offline-pill{display:none;position:fixed;top:70px;left:50%;transform:translateX(-50%);background:#b83232;color:#fff;padding:6px 16px;border-radius:20px;font-size:12px;font-weight:500;z-index:400}
+.toast{position:fixed;bottom:2rem;right:2rem;background:var(--text);color:#fff;padding:12px 20px;border-radius:var(--radius);font-size:14px;font-weight:500;box-shadow:var(--shadow-lg);opacity:0;transform:translateY(8px);transition:all .2s;pointer-events:none;z-index:999}
+.toast.show{opacity:1;transform:translateY(0)}
+@media(max-width:768px){
+  .app-layout{grid-template-columns:1fr}
+  .sidebar{display:none}
+  .main{padding:1rem;padding-bottom:100px}
+  .patient-grid{grid-template-columns:1fr}
+  .score-number{font-size:40px}
+  .export-grid{grid-template-columns:1fr}
+  .mobile-bottom-nav{display:block}
+  .mobile-scale-indicator{display:block}
+  .header-sub{display:none}
+  .score-hero{flex-direction:column;gap:10px;align-items:flex-start}
+  .score-right{text-align:left}
+  .btn-row{flex-direction:column}
+  .btn-row .btn{width:100%}
 }
+@media print{.site-header,.sidebar,.mobile-bottom-nav{display:none}.app-layout{grid-template-columns:1fr}.main{padding:0}}
 </style>
-
-<!-- BANNER DE INSTALAÇÃO -->
-<div class="install-banner" id="install-banner">
-  <div class="install-banner-text">
-    <b>Instalar App · Rede D'Or</b>
-    Funciona offline, sem internet
+</head>
+<body>
+<header class="site-header">
+  <div style="display:flex;align-items:center;gap:12px">
+    <div style="background:#fff;border-radius:8px;padding:4px 10px;display:flex;align-items:center">
+      <img src="data:image/png;base64,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" alt="Rede D'Or" style="height:26px;width:auto;display:block"/>
+    </div>
+    <div style="width:1px;height:28px;background:rgba(255,255,255,.2)"></div>
+    <div style="line-height:1.2">
+      <div style="font-size:13px;font-weight:600;color:#fff">Escalas de Reabilitação</div>
+      <div style="font-size:10px;color:rgba(255,255,255,.6);font-weight:300">Unidade de Reabilitação</div>
+    </div>
   </div>
-  <div class="install-banner-btns">
-    <button class="ibtn ibtn-install" onclick="installApp()">Instalar</button>
-    <button class="ibtn ibtn-dismiss" onclick="dismissBanner()">✕</button>
+  <div class="mobile-scale-indicator" id="mobile-scale-name">Barthel</div>
+</header>
+
+<div class="app-layout">
+<aside class="sidebar">
+  <div class="sidebar-section">Funcionais / AVD</div>
+  <div class="nav-item active" id="nav-barthel" onclick="go('barthel')"><div class="nav-icon">B</div>Índice de Barthel<span class="nav-badge" id="nb-barthel">—</span></div>
+  <div class="nav-item" id="nav-mif" onclick="go('mif')"><div class="nav-icon">M</div>MIF<span class="nav-badge" id="nb-mif">—</span></div>
+  <div class="nav-item" id="nav-faq" onclick="go('faq')"><div class="nav-icon">F</div>FAQ Pfeffer<span class="nav-badge" id="nb-faq">—</span></div>
+  <div class="nav-item" id="nav-katz" onclick="go('katz')"><div class="nav-icon">KZ</div>Katz<span class="nav-badge" id="nb-katz">—</span></div>
+  <div class="nav-item" id="nav-ecf" onclick="go('ecf')"><div class="nav-icon">EC</div>ECF<span class="nav-badge" id="nb-ecf">—</span></div>
+  <div class="sidebar-section">Mobilidade / Equilíbrio</div>
+  <div class="nav-item" id="nav-berg" onclick="go('berg')"><div class="nav-icon">E</div>Berg (Equilíbrio)<span class="nav-badge" id="nb-berg">—</span></div>
+  <div class="nav-item" id="nav-ims" onclick="go('ims')"><div class="nav-icon">I</div>IMS Motricidade<span class="nav-badge" id="nb-ims">—</span></div>
+  <div class="sidebar-section">Força / UTI</div>
+  <div class="nav-item" id="nav-mrc" onclick="go('mrc')"><div class="nav-icon">R</div>MRC Força<span class="nav-badge" id="nb-mrc">—</span></div>
+  <div class="nav-item" id="nav-cpax" onclick="go('cpax')"><div class="nav-icon">CP</div>CPAx (UTI)<span class="nav-badge" id="nb-cpax">—</span></div>
+  <div class="sidebar-section">Deglutição</div>
+  <div class="nav-item" id="nav-fois" onclick="go('fois')"><div class="nav-icon">FO</div>FOIS<span class="nav-badge" id="nb-fois">—</span></div>
+  <div class="nav-item" id="nav-doss" onclick="go('doss')"><div class="nav-icon">DO</div>DOSS<span class="nav-badge" id="nb-doss">—</span></div>
+  <div class="sidebar-section">Cognição / Humor</div>
+  <div class="nav-item" id="nav-mmse" onclick="go('mmse')"><div class="nav-icon">C</div>MEEM<span class="nav-badge" id="nb-mmse">—</span></div>
+  <div class="nav-item" id="nav-gds" onclick="go('gds')"><div class="nav-icon">D</div>GDS-15<span class="nav-badge" id="nb-gds">—</span></div>
+  <div class="sidebar-section">Dados</div>
+  <div class="nav-item" id="nav-history" onclick="go('history')"><div class="nav-icon">H</div>Histórico<span class="nav-badge" id="nb-history">0</span></div>
+  <div class="nav-item" id="nav-evolucao" onclick="go('evolucao')"><div class="nav-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></div>Evolução</div>
+  <div class="nav-item" id="nav-export" onclick="go('export')"><div class="nav-icon">↓</div>Exportar</div>
+  <div class="sidebar-section">Alta Segura</div>
+  <div class="nav-item" id="nav-farol" onclick="go('farol')"><div class="nav-icon">FL</div>FAROL · Alta</div>
+</aside>
+
+<main class="main">
+<div class="patient-card">
+  <div class="patient-card-title">Identificação do Paciente</div>
+  <div class="patient-grid">
+    <div class="field-group"><label class="field-label">Nome completo</label><input class="field-input" id="pt-name" placeholder="Nome do paciente"/></div>
+    <div class="field-group"><label class="field-label">Prontuário / ID</label><input class="field-input" id="pt-id" placeholder="N° prontuário"/></div>
+    <div class="field-group"><label class="field-label">Data de avaliação</label><input class="field-input" type="date" id="pt-date"/></div>
+    <div class="field-group"><label class="field-label">Avaliador</label><input class="field-input" id="pt-eval" placeholder="Profissional"/></div>
   </div>
 </div>
 
-<!-- PILL OFFLINE -->
+<div class="panel" id="panel-barthel">
+  <div class="panel-header">
+    <div class="panel-title">Índice de Barthel</div>
+    <div class="panel-desc">Avalia independência nas AVDs. <b>0–20</b> dependência total · <b>21–60</b> grave · <b>61–90</b> moderada · <b>91–99</b> leve · <b>100</b> independente</div>
+  </div>
+  <div class="score-hero">
+    <div><div class="score-label">Pontuação total</div><div class="score-number" id="barthel-score">0<span class="score-max">/100</span></div></div>
+    <div class="score-right"><div class="score-label">Classificação</div><div class="score-interp" id="barthel-interp">—</div></div>
+  </div>
+  
+  <div class="items-wrap" id="barthel-items"></div>
+  <div class="btn-row">
+    <button class="btn btn-primary" onclick="saveScale('barthel')">✓ Salvar avaliação</button>
+    <button class="btn" onclick="clearScale('barthel')">Limpar</button>
+  </div>
+</div><div class="panel" id="panel-mif"><div class="panel-header"><div class="panel-title">MIF — Medida de Independência Funcional</div><div class="panel-desc">18 itens de 1 (dep. total) a 7 (independência completa). Mín: 18 · Máx: 126</div></div>
+  <div class="score-hero"><div><div class="score-label">Pontuação total</div><div class="score-number" id="mif-score">18<span class="score-max">/126</span></div></div><div class="score-right"><div class="score-label">Classificação</div><div class="score-interp" id="mif-interp">—</div></div></div>
+  <div class="items-wrap" id="mif-items"></div>
+  <div class="btn-row"><button class="btn btn-primary" onclick="saveScale('mif')">✓ Salvar avaliação</button><button class="btn" onclick="clearScale('mif')">Limpar</button></div>
+</div>
+<div class="panel" id="panel-faq">
+  <div class="panel-header">
+    <div class="panel-title">FAQ — Escala Funcional de Pfeffer</div>
+    <div class="panel-desc">10 atividades, 0–3 cada. <b>≥6</b> comprometimento funcional. Máx: 30</div>
+  </div>
+  <div class="score-hero">
+    <div><div class="score-label">Pontuação total</div><div class="score-number" id="faq-score">0<span class="score-max">/30</span></div></div>
+    <div class="score-right"><div class="score-label">Classificação</div><div class="score-interp" id="faq-interp">—</div></div>
+  </div>
+  
+  <div class="items-wrap" id="faq-items"></div>
+  <div class="btn-row">
+    <button class="btn btn-primary" onclick="saveScale('faq')">✓ Salvar avaliação</button>
+    <button class="btn" onclick="clearScale('faq')">Limpar</button>
+  </div>
+</div>
+<div class="panel" id="panel-katz">
+  <div class="panel-header">
+    <div class="panel-title">Índice de Katz — AVDs</div>
+    <div class="panel-desc">6 funções básicas. 1=independente · 0=dependente. <b>6</b>=independência total · <b>≤2</b>=dependência grave</div>
+  </div>
+  <div class="score-hero">
+    <div><div class="score-label">Pontuação total</div><div class="score-number" id="katz-score">0<span class="score-max">/6</span></div></div>
+    <div class="score-right"><div class="score-label">Classificação</div><div class="score-interp" id="katz-interp">—</div></div>
+  </div>
+  
+  <div class="items-wrap" id="katz-items"></div>
+  <div class="btn-row">
+    <button class="btn btn-primary" onclick="saveScale('katz')">✓ Salvar avaliação</button>
+    <button class="btn" onclick="clearScale('katz')">Limpar</button>
+  </div>
+</div>
+<div class="panel" id="panel-ecf">
+  <div class="panel-header">
+    <div class="panel-title">ECF — Escala de Comprometimento Funcional</div>
+    <div class="panel-desc">7 níveis: <b>1</b>=dependência total · <b>7</b>=independência plena</div>
+  </div>
+  <div class="score-hero">
+    <div><div class="score-label">Pontuação total</div><div class="score-number" id="ecf-score">—<span class="score-max">/7</span></div></div>
+    <div class="score-right"><div class="score-label">Classificação</div><div class="score-interp" id="ecf-interp">—</div></div>
+  </div>
+  
+  <div class="items-wrap" id="ecf-items"></div>
+  <div class="btn-row">
+    <button class="btn btn-primary" onclick="saveScale('ecf')">✓ Salvar avaliação</button>
+    <button class="btn" onclick="clearScale('ecf')">Limpar</button>
+  </div>
+</div>
+<div class="panel" id="panel-berg">
+  <div class="panel-header">
+    <div class="panel-title">Escala de Equilíbrio de Berg</div>
+    <div class="panel-desc">14 tarefas, 0–4 cada. <b>0–20</b> alto risco · <b>21–40</b> médio risco · <b>41–56</b> baixo risco de queda</div>
+  </div>
+  <div class="score-hero">
+    <div><div class="score-label">Pontuação total</div><div class="score-number" id="berg-score">0<span class="score-max">/56</span></div></div>
+    <div class="score-right"><div class="score-label">Classificação</div><div class="score-interp" id="berg-interp">—</div></div>
+  </div>
+  
+  <div class="items-wrap" id="berg-items"></div>
+  <div class="btn-row">
+    <button class="btn btn-primary" onclick="saveScale('berg')">✓ Salvar avaliação</button>
+    <button class="btn" onclick="clearScale('berg')">Limpar</button>
+  </div>
+</div>
+<div class="panel" id="panel-ims">
+  <div class="panel-header">
+    <div class="panel-title">IMS — Índice de Motricidade (Motricity Index)</div>
+    <div class="panel-desc">12 grupos musculares, 4 membros. Pontos: 0·9·14·19·22·25 + 1 por membro. Máx 100/membro</div>
+  </div>
+  <div class="score-hero">
+    <div><div class="score-label">Pontuação total</div><div class="score-number" id="ims-score">0<span class="score-max">/200</span></div></div>
+    <div class="score-right"><div class="score-label">Classificação</div><div class="score-interp" id="ims-interp">—</div></div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:1rem">
+  <div style="background:var(--surface2);border-radius:var(--radius);padding:8px 12px;text-align:center"><div class="score-label">MMSS Dir.</div><div style="font-size:22px;font-weight:600" id="ims-usd">0</div></div>
+  <div style="background:var(--surface2);border-radius:var(--radius);padding:8px 12px;text-align:center"><div class="score-label">MMSS Esq.</div><div style="font-size:22px;font-weight:600" id="ims-use">0</div></div>
+  <div style="background:var(--surface2);border-radius:var(--radius);padding:8px 12px;text-align:center"><div class="score-label">MMII Dir.</div><div style="font-size:22px;font-weight:600" id="ims-lid">0</div></div>
+  <div style="background:var(--surface2);border-radius:var(--radius);padding:8px 12px;text-align:center"><div class="score-label">MMII Esq.</div><div style="font-size:22px;font-weight:600" id="ims-lie">0</div></div>
+</div>
+  <div class="items-wrap" id="ims-items"></div>
+  <div class="btn-row">
+    <button class="btn btn-primary" onclick="saveScale('ims')">✓ Salvar avaliação</button>
+    <button class="btn" onclick="clearScale('ims')">Limpar</button>
+  </div>
+</div>
+<div class="panel" id="panel-mrc">
+  <div class="panel-header">
+    <div class="panel-title">Escala MRC de Força Muscular</div>
+    <div class="panel-desc">12 grupos bilaterais. 0=sem contração · 5=força normal. Máx: 60. Abaixo de 48 sugere fraqueza (UCI-AW)</div>
+  </div>
+  <div class="score-hero">
+    <div><div class="score-label">Pontuação total</div><div class="score-number" id="mrc-score">0<span class="score-max">/60</span></div></div>
+    <div class="score-right"><div class="score-label">Classificação</div><div class="score-interp" id="mrc-interp">—</div></div>
+  </div>
+  
+  <div class="items-wrap" id="mrc-items"></div>
+  <div class="btn-row">
+    <button class="btn btn-primary" onclick="saveScale('mrc')">✓ Salvar avaliação</button>
+    <button class="btn" onclick="clearScale('mrc')">Limpar</button>
+  </div>
+</div>
+<div class="panel" id="panel-cpax">
+  <div class="panel-header">
+    <div class="panel-title">CPAx — Chelsea Critical Care Physical Assessment</div>
+    <div class="panel-desc">11 domínios UTI, 0–5 cada. Máx: <b>55</b>. Quanto maior melhor.</div>
+  </div>
+  <div class="score-hero">
+    <div><div class="score-label">Pontuação total</div><div class="score-number" id="cpax-score">0<span class="score-max">/55</span></div></div>
+    <div class="score-right"><div class="score-label">Classificação</div><div class="score-interp" id="cpax-interp">—</div></div>
+  </div>
+  
+  <div class="items-wrap" id="cpax-items"></div>
+  <div class="btn-row">
+    <button class="btn btn-primary" onclick="saveScale('cpax')">✓ Salvar avaliação</button>
+    <button class="btn" onclick="clearScale('cpax')">Limpar</button>
+  </div>
+</div>
+<div class="panel" id="panel-fois">
+  <div class="panel-header">
+    <div class="panel-title">FOIS — Functional Oral Intake Scale</div>
+    <div class="panel-desc">7 níveis de ingestão oral. 1=nada por VO · 7=VO total sem restrições</div>
+  </div>
+  <div class="score-hero">
+    <div><div class="score-label">Pontuação total</div><div class="score-number" id="fois-score">—<span class="score-max">/7</span></div></div>
+    <div class="score-right"><div class="score-label">Classificação</div><div class="score-interp" id="fois-interp">—</div></div>
+  </div>
+  
+  <div class="items-wrap" id="fois-items"></div>
+  <div class="btn-row">
+    <button class="btn btn-primary" onclick="saveScale('fois')">✓ Salvar avaliação</button>
+    <button class="btn" onclick="clearScale('fois')">Limpar</button>
+  </div>
+</div>
+<div class="panel" id="panel-doss">
+  <div class="panel-header">
+    <div class="panel-title">DOSS — Dysphagia Outcome and Severity Scale</div>
+    <div class="panel-desc">7 níveis de disfagia. 1=dependente de SNE · 7=deglutição normal</div>
+  </div>
+  <div class="score-hero">
+    <div><div class="score-label">Pontuação total</div><div class="score-number" id="doss-score">—<span class="score-max">/7</span></div></div>
+    <div class="score-right"><div class="score-label">Classificação</div><div class="score-interp" id="doss-interp">—</div></div>
+  </div>
+  
+  <div class="items-wrap" id="doss-items"></div>
+  <div class="btn-row">
+    <button class="btn btn-primary" onclick="saveScale('doss')">✓ Salvar avaliação</button>
+    <button class="btn" onclick="clearScale('doss')">Limpar</button>
+  </div>
+</div>
+<div class="panel" id="panel-mmse">
+  <div class="panel-header">
+    <div class="panel-title">MEEM — Mini-Exame do Estado Mental</div>
+    <div class="panel-desc">Máx: 30 pts. <b>≥27</b> normal · <b>21–26</b> leve · <b>10–20</b> moderado · <b>≤9</b> grave</div>
+  </div>
+  <div class="score-hero">
+    <div><div class="score-label">Pontuação total</div><div class="score-number" id="mmse-score">0<span class="score-max">/30</span></div></div>
+    <div class="score-right"><div class="score-label">Classificação</div><div class="score-interp" id="mmse-interp">—</div></div>
+  </div>
+  
+  <div class="items-wrap" id="mmse-items"></div>
+  <div class="btn-row">
+    <button class="btn btn-primary" onclick="saveScale('mmse')">✓ Salvar avaliação</button>
+    <button class="btn" onclick="clearScale('mmse')">Limpar</button>
+  </div>
+</div>
+<div class="panel" id="panel-gds">
+  <div class="panel-header">
+    <div class="panel-title">GDS-15 — Escala de Depressão Geriátrica</div>
+    <div class="panel-desc">15 questões sim/não. <b>0–4</b> normal · <b>5–8</b> leve · <b>9–11</b> moderada · <b>12–15</b> grave</div>
+  </div>
+  <div class="score-hero">
+    <div><div class="score-label">Pontuação total</div><div class="score-number" id="gds-score">0<span class="score-max">/15</span></div></div>
+    <div class="score-right"><div class="score-label">Classificação</div><div class="score-interp" id="gds-interp">—</div></div>
+  </div>
+  
+  <div class="items-wrap" id="gds-items"></div>
+  <div class="btn-row">
+    <button class="btn btn-primary" onclick="saveScale('gds')">✓ Salvar avaliação</button>
+    <button class="btn" onclick="clearScale('gds')">Limpar</button>
+  </div>
+</div>
+<div class="panel" id="panel-history">
+  <div class="panel-header"><div class="panel-title">Histórico de Avaliações</div><div class="panel-desc">Todas as avaliações registradas, organizadas por paciente.</div></div>
+  <div id="history-content"><div class="history-empty">Nenhuma avaliação salva ainda.<br>Preencha uma escala e clique em <b>Salvar avaliação</b>.</div></div>
+  <div class="btn-row"><button class="btn btn-danger" onclick="clearHistory()">Limpar histórico</button></div>
+</div>
+
+<div class="panel" id="panel-evolucao">
+  <div class="panel-header"><div class="panel-title">Gráfico de Evolução</div><div class="panel-desc">Progressão do paciente ao longo das avaliações.</div></div>
+  <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:1.25rem">
+    <div class="field-group" style="flex:1;min-width:180px"><label class="field-label">Paciente</label>
+      <select class="field-input" id="evo-patient" onchange="renderEvo()"><option value="">— Selecione —</option></select></div>
+    <div class="field-group" style="flex:1;min-width:180px"><label class="field-label">Escala</label>
+      <select class="field-input" id="evo-scale" onchange="renderEvo()">
+        <option value="">— Todas —</option>
+        <option>Índice de Barthel</option><option>MIF</option><option>Berg</option>
+        <option>MRC Força</option><option>IMS Motricidade</option><option>CPAx</option>
+        <option>FOIS</option><option>DOSS</option><option>Katz</option><option>ECF</option>
+        <option>FAQ Pfeffer</option><option>MEEM</option><option>GDS-15</option>
+      </select></div>
+  </div>
+  <div id="evo-empty" style="text-align:center;padding:3rem 1rem;color:var(--text3);font-size:14px">Salve pelo menos 2 avaliações do mesmo paciente para ver a evolução.</div>
+  <div id="evo-content" style="display:none">
+    <div id="evo-cards" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:1.5rem"></div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.25rem;margin-bottom:1rem;box-shadow:var(--shadow)">
+      <div style="font-size:13px;font-weight:500;color:var(--text2);margin-bottom:1rem" id="evo-chart-title">Evolução</div>
+      <div style="position:relative;height:280px"><canvas id="evo-chart"></canvas></div>
+    </div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow)">
+      <table class="eval-table"><thead><tr><th>Data</th><th>Escala</th><th>Pontos</th><th>Δ</th><th>Classificação</th></tr></thead>
+      <tbody id="evo-tbody"></tbody></table>
+    </div>
+  </div>
+</div>
+
+<div class="panel" id="panel-export">
+  <div class="panel-header"><div class="panel-title">Exportar Dados</div><div class="panel-desc">Baixe os registros para uso em prontuários ou planilhas.</div></div>
+  <div class="export-grid">
+    <div class="export-card" onclick="exportCSV()"><div class="export-card-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#003087" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div><div class="export-card-title">Planilha CSV</div><div class="export-card-desc">Excel, Google Sheets, LibreOffice.</div></div>
+    <div class="export-card" onclick="exportTXT()"><div class="export-card-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#003087" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div><div class="export-card-title">Relatório .txt</div><div class="export-card-desc">Colar no prontuário eletrônico.</div></div>
+    <div class="export-card" onclick="window.print()"><div class="export-card-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#003087" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg></div><div class="export-card-title">Imprimir / PDF</div><div class="export-card-desc">Via impressão do navegador.</div></div>
+    <div class="export-card" onclick="exportJSON()"><div class="export-card-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#003087" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div><div class="export-card-title">JSON</div><div class="export-card-desc">Integração com sistemas.</div></div>
+  </div>
+</div>
+
+<div class="panel" id="panel-farol">
+  <div class="panel-header"><div class="panel-title">FAROL · Score de Alta Segura</div><div class="panel-desc">Donzé · Forster · NEWS2 — Decisão de seguimento pós-alta em 30 dias.</div></div>
+  <div class="farol-card" style="margin-bottom:12px">
+    <div class="farol-block-title">Identificação</div>
+    <div style="display:grid;grid-template-columns:2fr 1fr 1fr;gap:8px">
+      <div class="field-group"><label class="field-label">Prontuário</label><input class="field-input" id="f-ptid" placeholder="000000"/></div>
+      <div class="field-group"><label class="field-label">Idade</label><input class="field-input" id="f-age" type="number" placeholder="—"/></div>
+      <div class="field-group"><label class="field-label">Unidade</label><input class="field-input" id="f-unit" placeholder="CM 4º"/></div>
+    </div>
+  </div>
+  <div class="farol-result-bar" id="farol-result-bar">
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px">
+      <div class="farol-score-cell"><div class="farol-score-label">HOSPITAL</div><div class="farol-score-num" id="fr-hospital">0<span class="farol-score-max">/13</span></div><div class="farol-score-sub" id="fr-hospital-band">—</div></div>
+      <div class="farol-score-cell"><div class="farol-score-label">Prontidão</div><div class="farol-score-num" id="fr-readiness">0<span class="farol-score-max">/9</span></div><div class="farol-score-sub" id="fr-readiness-sub">—</div></div>
+      <div class="farol-score-cell"><div class="farol-score-label">Forster</div><div class="farol-score-num" id="fr-forster" style="color:var(--accent2)">0<span class="farol-score-max">/7</span></div><div class="farol-score-sub" id="fr-forster-sub">—</div></div>
+    </div>
+    <div id="farol-rec-chip" class="farol-chip farol-chip-idle">Aguardando dados</div>
+    <div id="farol-rec-title" class="farol-rec-title"></div>
+    <div id="farol-rec-followup" class="farol-rec-followup"></div>
+    <div id="farol-rec-detail" class="farol-rec-detail"></div>
+    <div id="farol-actions-wrap" style="display:none;margin-top:10px;padding-top:10px;border-top:0.5px solid var(--border)">
+      <div class="farol-score-label" style="margin-bottom:6px">Ações recomendadas</div>
+      <ul id="farol-actions-list" style="display:flex;flex-direction:column;gap:4px"></ul>
+    </div>
+    <button onclick="farolCopyProntuario()" id="farol-copy-btn" style="margin-top:10px;width:100%;padding:9px;border-radius:var(--radius);border:1px solid var(--border2);background:var(--surface);font-size:13px;font-weight:500;cursor:pointer;color:var(--text)">📋 Copiar resumo para prontuário</button>
+  </div>
+  <div class="farol-card"><div class="farol-block-title">HOSPITAL Score <span class="farol-ref">Donzé et al. · JAMA Intern Med 2013</span></div><div class="farol-subtitle">Prediz readmissão evitável em 30 dias. Máx: 13 pts.</div><div id="farol-hospital-items"></div>
+    <div style="margin-top:10px;padding-top:10px;border-top:0.5px solid var(--border)"><div class="farol-score-label" style="margin-bottom:6px">Internações no último ano</div><div id="farol-prior-items"></div></div>
+  </div>
+  <div class="farol-card"><div class="farol-block-title">Prontidão para Alta <span class="farol-ref">Gate fisiológico + operacional</span></div><div class="farol-subtitle">Cada critério não atingido é um gap.</div><div id="farol-readiness-items"></div></div>
+  <div class="farol-card" style="border-color:rgba(0,102,204,.3)"><div class="farol-block-title" style="color:var(--accent2)">Gatilhos de Evento Adverso Pós-Alta <span class="farol-ref" style="color:var(--text3)">Forster et al. · Ann Intern Med 2003</span></div><div class="farol-subtitle">Marque os presentes na alta.</div><div id="farol-forster-items"></div></div>
+  <div style="font-size:11px;color:var(--text3);margin-top:6px;line-height:1.5">FAROL é ferramenta de apoio clínico. A indicação final deve considerar julgamento clínico e recursos disponíveis.</div>
+  <div class="btn-row"><button class="btn" onclick="farolReset()">Limpar FAROL</button></div>
+</div>
+
+</main>
+</div>
+
+<!-- MOBILE NAV -->
+<nav class="mobile-bottom-nav"><div class="mbn-scroll">
+  <div class="mbn-item active" id="mbn-barthel" onclick="go('barthel')"><div class="mbn-icon">B</div><div class="mbn-label">Barthel</div></div>
+  <div class="mbn-item" id="mbn-mif" onclick="go('mif')"><div class="mbn-icon">MIF</div><div class="mbn-label">MIF</div></div>
+  <div class="mbn-item" id="mbn-faq" onclick="go('faq')"><div class="mbn-icon">FAQ</div><div class="mbn-label">Pfeffer</div></div>
+  <div class="mbn-item" id="mbn-katz" onclick="go('katz')"><div class="mbn-icon">KZ</div><div class="mbn-label">Katz</div></div>
+  <div class="mbn-item" id="mbn-ecf" onclick="go('ecf')"><div class="mbn-icon">ECF</div><div class="mbn-label">ECF</div></div>
+  <div class="mbn-item" id="mbn-berg" onclick="go('berg')"><div class="mbn-icon">Bg</div><div class="mbn-label">Berg</div></div>
+  <div class="mbn-item" id="mbn-ims" onclick="go('ims')"><div class="mbn-icon">IMS</div><div class="mbn-label">Motric.</div></div>
+  <div class="mbn-item" id="mbn-mrc" onclick="go('mrc')"><div class="mbn-icon">MRC</div><div class="mbn-label">Força</div></div>
+  <div class="mbn-item" id="mbn-cpax" onclick="go('cpax')"><div class="mbn-icon">CPx</div><div class="mbn-label">CPAx</div></div>
+  <div class="mbn-item" id="mbn-fois" onclick="go('fois')"><div class="mbn-icon">FO</div><div class="mbn-label">FOIS</div></div>
+  <div class="mbn-item" id="mbn-doss" onclick="go('doss')"><div class="mbn-icon">DO</div><div class="mbn-label">DOSS</div></div>
+  <div class="mbn-item" id="mbn-mmse" onclick="go('mmse')"><div class="mbn-icon">MM</div><div class="mbn-label">MEEM</div></div>
+  <div class="mbn-item" id="mbn-gds" onclick="go('gds')"><div class="mbn-icon">GDS</div><div class="mbn-label">GDS-15</div></div>
+  <div class="mbn-item" id="mbn-history" onclick="go('history')"><div class="mbn-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div class="mbn-label">Histórico</div></div>
+  <div class="mbn-item" id="mbn-evolucao" onclick="go('evolucao')"><div class="mbn-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></div><div class="mbn-label">Evolução</div></div>
+  <div class="mbn-item" id="mbn-export" onclick="go('export')"><div class="mbn-icon">↓</div><div class="mbn-label">Exportar</div></div>
+  <div class="mbn-item" id="mbn-farol" onclick="go('farol')"><div class="mbn-icon">FL</div><div class="mbn-label">FAROL</div></div>
+</div></nav>
+
+<div class="toast" id="toast"></div>
+<div class="install-banner" id="install-banner">
+  <div class="install-banner-text"><b>Instalar App · Rede D'Or</b>Funciona offline, sem internet</div>
+  <div class="install-banner-btns"><button class="ibtn ibtn-install" onclick="installApp()">Instalar</button><button class="ibtn ibtn-dismiss" onclick="dismissBanner()">✕</button></div>
+</div>
 <div class="offline-pill" id="offline-pill">● Sem internet — dados salvos localmente</div>
 
 <script>
-window.addEventListener('online', ()=>{ document.getElementById('offline-pill').style.display='none'; });
-window.addEventListener('offline',()=>{ document.getElementById('offline-pill').style.display='block'; });
+window.addEventListener('online',()=>{document.getElementById('offline-pill').style.display='none';});
+window.addEventListener('offline',()=>{document.getElementById('offline-pill').style.display='block';});
 if(!navigator.onLine) document.getElementById('offline-pill').style.display='block';
 </script>
-
-<!-- MOBILE BOTTOM NAV -->
-<nav class="mobile-bottom-nav">
-  <div class="mbn-scroll">
-    <div class="mbn-item active" onclick="go('barthel')" id="mbn-barthel">
-      <div class="mbn-icon">B</div>
-      <div class="mbn-label">Barthel</div>
-    </div>
-    <div class="mbn-item" onclick="go('mif')" id="mbn-mif">
-      <div class="mbn-icon">MIF</div>
-      <div class="mbn-label">MIF</div>
-    </div>
-    <div class="mbn-item" onclick="go('berg')" id="mbn-berg">
-      <div class="mbn-icon">Bg</div>
-      <div class="mbn-label">Berg</div>
-    </div>
-    <div class="mbn-item" onclick="go('mrc')" id="mbn-mrc">
-      <div class="mbn-icon">MRC</div>
-      <div class="mbn-label">Força</div>
-    </div>
-    <div class="mbn-item" onclick="go('ims')" id="mbn-ims">
-      <div class="mbn-icon">IMS</div>
-      <div class="mbn-label">Motric.</div>
-    </div>
-    <div class="mbn-item" onclick="go('cpax')" id="mbn-cpax">
-      <div class="mbn-icon">CPx</div>
-      <div class="mbn-label">CPAx</div>
-    </div>
-    <div class="mbn-item" onclick="go('fois')" id="mbn-fois">
-      <div class="mbn-icon">FO</div>
-      <div class="mbn-label">FOIS</div>
-    </div>
-    <div class="mbn-item" onclick="go('doss')" id="mbn-doss">
-      <div class="mbn-icon">DO</div>
-      <div class="mbn-label">DOSS</div>
-    </div>
-    <div class="mbn-item" onclick="go('katz')" id="mbn-katz">
-      <div class="mbn-icon">KZ</div>
-      <div class="mbn-label">Katz</div>
-    </div>
-    <div class="mbn-item" onclick="go('ecf')" id="mbn-ecf">
-      <div class="mbn-icon">ECF</div>
-      <div class="mbn-label">ECF</div>
-    </div>
-    <div class="mbn-item" onclick="go('faq')" id="mbn-faq">
-      <div class="mbn-icon">FAQ</div>
-      <div class="mbn-label">Pfeffer</div>
-    </div>
-    <div class="mbn-item" onclick="go('mmse')" id="mbn-mmse">
-      <div class="mbn-icon">MM</div>
-      <div class="mbn-label">MEEM</div>
-    </div>
-    <div class="mbn-item" onclick="go('gds')" id="mbn-gds">
-      <div class="mbn-icon">GDS</div>
-      <div class="mbn-label">GDS-15</div>
-    </div>
-    <div class="mbn-item" onclick="go('history')" id="mbn-history">
-      <div class="mbn-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></div>
-      <div class="mbn-label">Histórico</div>
-    </div>
-    <div class="mbn-item" onclick="go('evolucao')" id="mbn-evolucao">
-      <div class="mbn-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></div>
-      <div class="mbn-label">Evolução</div>
-    </div>
-    <div class="mbn-item" onclick="go('export')" id="mbn-export">
-      <div class="mbn-icon">↓</div>
-      <div class="mbn-label">Exportar</div>
-    </div>
-    <div class="mbn-item" onclick="go('farol')" id="mbn-farol">
-      <div class="mbn-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
-      <div class="mbn-label">FAROL</div>
-    </div>
-  </div>
-</nav>
-
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script>
-// ─── DATA ───────────────────────────────────────────────────────────────────
+
+// ── DATA ─────────────────────────────────────────────────────────────────────
 const BD=[
-  {id:'ali',label:'Alimentação',opts:[{v:0,t:'Incapaz'},{v:5,t:'Necessita ajuda (cortar, passar manteiga, etc.)'},{v:10,t:'Independente (inclui adaptações)'}]},
-  {id:'ban',label:'Banho',opts:[{v:0,t:'Dependente'},{v:5,t:'Independente (chuveiro/banheira, sem ajuda)'}]},
-  {id:'hig',label:'Higiene pessoal',opts:[{v:0,t:'Necessita ajuda'},{v:5,t:'Independente (face, cabelo, dentes, barba)'}]},
-  {id:'ves',label:'Vestir-se',opts:[{v:0,t:'Dependente'},{v:5,t:'Necessita ajuda, mas faz metade sozinho'},{v:10,t:'Independente (botões, fechos, cadarços)'}]},
-  {id:'int',label:'Intestino',opts:[{v:0,t:'Incontinente ou necessita enema'},{v:5,t:'Acidentes ocasionais'},{v:10,t:'Continente'}]},
-  {id:'bex',label:'Bexiga',opts:[{v:0,t:'Incontinente ou sondado sem manejo'},{v:5,t:'Acidentes ocasionais (máx. 1×/dia)'},{v:10,t:'Continente (>7 dias)'}]},
-  {id:'toi',label:'Uso do vaso sanitário',opts:[{v:0,t:'Dependente'},{v:5,t:'Necessita alguma ajuda'},{v:10,t:'Independente (sentar/levantar, vestir, limpar)'}]},
-  {id:'tra',label:'Transferência leito/cadeira',opts:[{v:0,t:'Incapaz — sem equilíbrio sentado'},{v:5,t:'Grande ajuda (1–2 pessoas), mas pode sentar'},{v:10,t:'Pequena ajuda (verbal ou física)'},{v:15,t:'Independente'}]},
-  {id:'dea',label:'Deambulação',opts:[{v:0,t:'Imóvel'},{v:5,t:'Independente em cadeira de rodas (≥50m)'},{v:10,t:'Caminha com ajuda de uma pessoa ≥50m'},{v:15,t:'Independente ≥50m (pode usar auxiliar)'}]},
-  {id:'esc',label:'Subir escadas',opts:[{v:0,t:'Incapaz'},{v:5,t:'Necessita ajuda (verbal, física ou dispositivo)'},{v:10,t:'Independente (com ou sem dispositivo)'}]}
+  {id:'ali',label:'Alimentação',opts:[{v:0,t:'0 — Incapaz'},{v:5,t:'5 — Necessita ajuda (cortar, etc.)'},{v:10,t:'10 — Independente'}]},
+  {id:'ban',label:'Banho',opts:[{v:0,t:'0 — Dependente'},{v:5,t:'5 — Independente'}]},
+  {id:'hig',label:'Higiene pessoal',opts:[{v:0,t:'0 — Necessita ajuda'},{v:5,t:'5 — Independente (face, cabelo, dentes)'}]},
+  {id:'ves',label:'Vestir-se',opts:[{v:0,t:'0 — Dependente'},{v:5,t:'5 — Necessita ajuda, faz metade sozinho'},{v:10,t:'10 — Independente'}]},
+  {id:'int',label:'Intestino',opts:[{v:0,t:'0 — Incontinente / enema'},{v:5,t:'5 — Acidentes ocasionais'},{v:10,t:'10 — Continente'}]},
+  {id:'bex',label:'Bexiga',opts:[{v:0,t:'0 — Incontinente / sondado'},{v:5,t:'5 — Acidentes ocasionais'},{v:10,t:'10 — Continente (> 7 dias)'}]},
+  {id:'toi',label:'Uso do vaso sanitário',opts:[{v:0,t:'0 — Dependente'},{v:5,t:'5 — Necessita alguma ajuda'},{v:10,t:'10 — Independente'}]},
+  {id:'tra',label:'Transferência leito/cadeira',opts:[{v:0,t:'0 — Incapaz'},{v:5,t:'5 — Grande ajuda (2 pessoas)'},{v:10,t:'10 — Pequena ajuda'},{v:15,t:'15 — Independente'}]},
+  {id:'dea',label:'Deambulação',opts:[{v:0,t:'0 — Imóvel'},{v:5,t:'5 — Independente em cadeira de rodas'},{v:10,t:'10 — Caminha com ajuda'},{v:15,t:'15 — Independente ≥ 50m'}]},
+  {id:'esc',label:'Subir escadas',opts:[{v:0,t:'0 — Incapaz'},{v:5,t:'5 — Necessita ajuda'},{v:10,t:'10 — Independente'}]}
 ];
 
 const MIF_SECTIONS=[
-  {s:'Autocuidado',items:[
-    {id:'ali',label:'Alimentação'},{id:'acu',label:'Higiene pessoal'},{id:'ban',label:'Banho'},
-    {id:'vup',label:'Vestir-se — parte superior'},{id:'vin',label:'Vestir-se — parte inferior'},{id:'toi',label:'Uso do vaso sanitário'}
-  ]},
-  {s:'Controle de esfíncteres',items:[
-    {id:'ves',label:'Bexiga'},{id:'int',label:'Intestino'}
-  ]},
-  {s:'Mobilidade — Transferências',items:[
-    {id:'tlc',label:'Leito / cadeira / cadeira de rodas'},{id:'tto',label:'Vaso sanitário'},{id:'tba',label:'Banheiro / Chuveiro'}
-  ]},
-  {s:'Mobilidade — Locomoção',items:[
-    {id:'lcm',label:'Marcha / cadeira de rodas'},{id:'les',label:'Escadas'}
-  ]},
-  {s:'Comunicação',items:[
-    {id:'com',label:'Compreensão'},{id:'exp',label:'Expressão'}
-  ]},
-  {s:'Cognição social',items:[
-    {id:'int2',label:'Interação social'},{id:'pro',label:'Resolução de problemas'},{id:'mem',label:'Memória'}
-  ]}
+  {s:'Autocuidado',items:[{id:'ali',label:'Alimentação'},{id:'hig',label:'Higiene pessoal'},{id:'ban',label:'Banho'},{id:'vup',label:'Vestir parte superior'},{id:'vin',label:'Vestir parte inferior'},{id:'toi',label:'Uso do vaso sanitário'}]},
+  {s:'Esfíncteres',items:[{id:'ves',label:'Bexiga'},{id:'int',label:'Intestino'}]},
+  {s:'Transferências',items:[{id:'tlc',label:'Leito/cadeira/cadeira de rodas'},{id:'tto',label:'Vaso sanitário'},{id:'tba',label:'Banheiro/Chuveiro'}]},
+  {s:'Locomoção',items:[{id:'lcm',label:'Marcha/cadeira de rodas'},{id:'les',label:'Escadas'}]},
+  {s:'Comunicação',items:[{id:'com',label:'Compreensão'},{id:'exp',label:'Expressão'}]},
+  {s:'Cognição social',items:[{id:'int2',label:'Interação social'},{id:'pro',label:'Resolução de problemas'},{id:'mem',label:'Memória'}]}
 ];
+const MIF_LEVELS=[{v:7,t:'7 — Independência completa'},{v:6,t:'6 — Independência modificada (dispositivo)'},{v:5,t:'5 — Supervisão/preparo'},{v:4,t:'4 — Ajuda mínima (≥75%)'},{v:3,t:'3 — Ajuda moderada (50–74%)'},{v:2,t:'2 — Ajuda máxima (25–49%)'},{v:1,t:'1 — Ajuda total (<25%)'}];
 
-const MIF_LEVELS=[
-  {v:7,t:'7 — Independência completa (sem restrições)'},
-  {v:6,t:'6 — Independência modificada (usa dispositivo)'},
-  {v:5,t:'5 — Supervisão ou preparo'},
-  {v:4,t:'4 — Ajuda mínima (≥75% da tarefa)'},
-  {v:3,t:'3 — Ajuda moderada (50–74%)'},
-  {v:2,t:'2 — Ajuda máxima (25–49%)'},
-  {v:1,t:'1 — Ajuda total (<25%)'}
-];
+const FAQ=['Escrever cheques, pagar contas, controlar finanças','Fazer compras (mantimentos, roupas)','Aquecer água, fazer café, desligar o fogão','Preparar uma refeição completa','Acompanhar notícias e acontecimentos','Compreender, discutir e votar','Lembrar compromissos e medicamentos','Sair sozinho de carro ou ônibus','Passear pelo bairro e voltar para casa','Ficar sozinho em casa com segurança'];
 
-const BERG=[
-  {id:'b1',label:'1. Posição sentada → em pé',opts:[{v:0,t:'0 — Necessita ajuda moderada/máxima'},{v:1,t:'1 — Necessita ajuda mínima'},{v:2,t:'2 — Capaz após várias tentativas'},{v:3,t:'3 — Capaz com ajuda das mãos'},{v:4,t:'4 — Capaz sem usar as mãos, estável'}]},
-  {id:'b2',label:'2. Ficar em pé sem apoio (2 min)',opts:[{v:0,t:'0 — Incapaz de ficar 30s sem apoio'},{v:1,t:'1 — Várias tentativas para 30s'},{v:2,t:'2 — Capaz por 30s sob supervisão'},{v:3,t:'3 — Capaz por 1 min com segurança'},{v:4,t:'4 — Capaz por 2 min com segurança'}]},
-  {id:'b3',label:'3. Sentado sem apoio, pés no chão',opts:[{v:0,t:'0 — Incapaz de manter 10s'},{v:1,t:'1 — Capaz por 10s'},{v:2,t:'2 — Capaz por 30s'},{v:3,t:'3 — Capaz por 1 min com supervisão'},{v:4,t:'4 — Capaz por 2 min, seguro'}]},
-  {id:'b4',label:'4. Em pé → sentado',opts:[{v:0,t:'0 — Necessita ajuda para sentar'},{v:1,t:'1 — Senta, mas descida descontrolada'},{v:2,t:'2 — Usa pernas contra a cadeira'},{v:3,t:'3 — Controla com as mãos'},{v:4,t:'4 — Senta com segurança, uso mínimo das mãos'}]},
-  {id:'b5',label:'5. Transferências',opts:[{v:0,t:'0 — Duas pessoas ou supervisão constante'},{v:1,t:'1 — Uma pessoa de suporte'},{v:2,t:'2 — Dica verbal ou supervisão'},{v:3,t:'3 — Uso mínimo das mãos'},{v:4,t:'4 — Pequeno uso das mãos'}]},
-  {id:'b6',label:'6. Em pé sem apoio, olhos fechados',opts:[{v:0,t:'0 — Necessita ajuda para não cair'},{v:1,t:'1 — Incapaz de manter 3s, mas estável'},{v:2,t:'2 — Capaz por 3s'},{v:3,t:'3 — Capaz por 10s, com supervisão'},{v:4,t:'4 — Capaz por 10s com segurança'}]},
-  {id:'b7',label:'7. Em pé com pés juntos',opts:[{v:0,t:'0 — Necessita ajuda para posição'},{v:1,t:'1 — Necessita ajuda, aguenta 15s'},{v:2,t:'2 — Capaz por 1 min com supervisão'},{v:3,t:'3 — Capaz por 1 min sem supervisão'},{v:4,t:'4 — Capaz por >1 min, independente'}]},
-  {id:'b8',label:'8. Alcançar à frente (braço estendido)',opts:[{v:0,t:'0 — Perde equilíbrio ao tentar'},{v:1,t:'1 — Alcança, necessita supervisão'},{v:2,t:'2 — Alcança >5cm com segurança'},{v:3,t:'3 — Alcança >12cm'},{v:4,t:'4 — Alcança >25cm com segurança'}]},
-  {id:'b9',label:'9. Pegar objeto do chão (em pé)',opts:[{v:0,t:'0 — Incapaz / necessita ajuda'},{v:1,t:'1 — Incapaz — fica a 1–5cm do objeto'},{v:2,t:'2 — Incapaz de pegar, necessita supervisão'},{v:3,t:'3 — Capaz com supervisão'},{v:4,t:'4 — Capaz com segurança'}]},
-  {id:'b10',label:'10. Virar-se para olhar para trás',opts:[{v:0,t:'0 — Necessita ajuda para não perder equilíbrio'},{v:1,t:'1 — Supervisão ao virar'},{v:2,t:'2 — Lado mais fraco — supervisão'},{v:3,t:'3 — Lado mais forte — sem perda'},{v:4,t:'4 — Ambos os lados, boa transferência de peso'}]},
-  {id:'b11',label:'11. Girar 360° (ambos os sentidos)',opts:[{v:0,t:'0 — Necessita ajuda ao girar'},{v:1,t:'1 — Supervisão próxima'},{v:2,t:'2 — Lento (>4s) em ambos os sentidos'},{v:3,t:'3 — ≤4s, apenas para um lado'},{v:4,t:'4 — ≤4s para ambos os sentidos, seguro'}]},
-  {id:'b12',label:'12. Apoio alternado dos pés no degrau',opts:[{v:0,t:'0 — Necessita ajuda para não cair'},{v:1,t:'1 — Completa >2 passos, supervisão'},{v:2,t:'2 — Completa 4 passos, supervisão'},{v:3,t:'3 — Completa 8 passos, supervisão mínima'},{v:4,t:'4 — Completa 8 passos com segurança'}]},
-  {id:'b13',label:'13. Em pé com um pé à frente (tandem)',opts:[{v:0,t:'0 — Perde equilíbrio ao pisar'},{v:1,t:'1 — Necessita ajuda para dar o passo'},{v:2,t:'2 — Passos pequenos, 30s independente'},{v:3,t:'3 — Pé à frente, mantém 30s'},{v:4,t:'4 — Tandem por 30s sem ajuda'}]},
-  {id:'b14',label:'14. Apoio unipodal',opts:[{v:0,t:'0 — Incapaz ou cai'},{v:1,t:'1 — Tenta erguer o pé, não mantém 3s'},{v:2,t:'2 — Ergue pé, não mantém 3s'},{v:3,t:'3 — Mantém ≥5s'},{v:4,t:'4 — Mantém >10s com segurança'}]}
-];
-
-const MRC_ITENS=[
-  'Abd. ombro D','Abd. ombro E','Flex. cotovelo D','Flex. cotovelo E',
-  'Ext. punho D','Ext. punho E','Ext. joelho (Q) D','Ext. joelho (Q) E',
-  'Dorsifl. tornozelo D','Dorsifl. tornozelo E','Flex. quadril D','Flex. quadril E'
-];
-const MRC_OPTS=[0,1,2,3,4,5].map(v=>({v,t:`${v} — ${['Sem contração','Contração sem movimento','Movimento c/ grav. eliminada','Contra gravidade','Contra resist. parcial','Força normal'][v]}`}));
-
-// ── IMS — Motricity Index ──────────────────────────────────────────────────
-const IMS_PTS=[{v:0,t:'0 — Sem movimento'},{v:9,t:'9 — Palpável, sem movimento'},{v:14,t:'14 — Movimento c/ gravidade eliminada'},{v:19,t:'19 — Movimento contra gravidade'},{v:22,t:'22 — Movimento contra resistência'},{v:25,t:'25 — Força normal'}];
-const IMS_GRUPOS=[
-  {id:'usd1',label:'Pinça (polegar-indicador) — Direito',membro:'usd'},
-  {id:'usd2',label:'Flexão de cotovelo — Direito',membro:'usd'},
-  {id:'usd3',label:'Abdução de ombro — Direito',membro:'usd'},
-  {id:'use1',label:'Pinça (polegar-indicador) — Esquerdo',membro:'use'},
-  {id:'use2',label:'Flexão de cotovelo — Esquerdo',membro:'use'},
-  {id:'use3',label:'Abdução de ombro — Esquerdo',membro:'use'},
-  {id:'lid1',label:'Dorsiflexão de tornozelo — Direito',membro:'lid'},
-  {id:'lid2',label:'Extensão de joelho — Direito',membro:'lid'},
-  {id:'lid3',label:'Flexão de quadril — Direito',membro:'lid'},
-  {id:'lie1',label:'Dorsiflexão de tornozelo — Esquerdo',membro:'lie'},
-  {id:'lie2',label:'Extensão de joelho — Esquerdo',membro:'lie'},
-  {id:'lie3',label:'Flexão de quadril — Esquerdo',membro:'lie'},
-];
-
-// ── CPAx ──────────────────────────────────────────────────────────────────
-const CPAX_ITEMS=[
-  {id:'cp1',label:'Tosse',opts:[
-    {v:0,t:'0 — Sem tosse volitiva'},{v:1,t:'1 — Tosse audível, mas ineficaz'},{v:2,t:'2 — Tosse fraca, mas eficaz'},{v:3,t:'3 — Tosse moderada (limpa vias aéreas)'},{v:4,t:'4 — Tosse forte com esforço'},{v:5,t:'5 — Tosse forte e eficaz'}
-  ]},
-  {id:'cp2',label:'Respiração espontânea',opts:[
-    {v:0,t:'0 — Ventilação mecânica invasiva total'},{v:1,t:'1 — VMI + respiração espontânea'},{v:2,t:'2 — CPAP/VNI'},{v:3,t:'3 — O₂ por máscara/cateter, FR > 20'},{v:4,t:'4 — O₂ suplementar, FR ≤ 20'},{v:5,t:'5 — Ar ambiente, FR ≤ 20'}
-  ]},
-  {id:'cp3',label:'Força muscular periférica (MMSS)',opts:[
-    {v:0,t:'0 — MRC 0 bilateralmente'},{v:1,t:'1 — MRC 1–2'},{v:2,t:'2 — MRC 3'},{v:3,t:'3 — MRC 4 (fraqueza moderada)'},{v:4,t:'4 — MRC 4 (fraqueza leve)'},{v:5,t:'5 — MRC 5 (força normal)'}
-  ]},
-  {id:'cp4',label:'Força muscular periférica (MMII)',opts:[
-    {v:0,t:'0 — MRC 0 bilateralmente'},{v:1,t:'1 — MRC 1–2'},{v:2,t:'2 — MRC 3'},{v:3,t:'3 — MRC 4 (fraqueza moderada)'},{v:4,t:'4 — MRC 4 (fraqueza leve)'},{v:5,t:'5 — MRC 5 (força normal)'}
-  ]},
-  {id:'cp5',label:'Mobilidade no leito',opts:[
-    {v:0,t:'0 — Imóvel no leito, dependente total'},{v:1,t:'1 — Mobilização passiva (2+ pessoas)'},{v:2,t:'2 — Mobilização ativa assistida (2 pessoas)'},{v:3,t:'3 — Mobilização ativa assistida (1 pessoa)'},{v:4,t:'4 — Mobilização ativa com supervisão'},{v:5,t:'5 — Mobilização ativa independente'}
-  ]},
-  {id:'cp6',label:'Supino para sentado na beira do leito',opts:[
-    {v:0,t:'0 — Incapaz — sem controle de tronco'},{v:1,t:'1 — Assistência total (2+ pessoas)'},{v:2,t:'2 — Assistência de 2 pessoas'},{v:3,t:'3 — Assistência de 1 pessoa'},{v:4,t:'4 — Supervisão ou dica verbal'},{v:5,t:'5 — Independente'}
-  ]},
-  {id:'cp7',label:'Equilíbrio sentado dinâmico',opts:[
-    {v:0,t:'0 — Sem equilíbrio sentado'},{v:1,t:'1 — Sentado apoiado (2+ pessoas)'},{v:2,t:'2 — Sentado apoiado (1 pessoa)'},{v:3,t:'3 — Sentado com apoio mínimo'},{v:4,t:'4 — Sentado sem apoio com supervisão'},{v:5,t:'5 — Sentado independente com alcance'}
-  ]},
-  {id:'cp8',label:'Transferência leito/cadeira',opts:[
-    {v:0,t:'0 — Incapaz de transferir'},{v:1,t:'1 — Transferência passiva (cadeira/maca)'},{v:2,t:'2 — Auxílio máximo (2 pessoas)'},{v:3,t:'3 — Auxílio de 1 pessoa'},{v:4,t:'4 — Supervisão / assistência mínima'},{v:5,t:'5 — Independente'}
-  ]},
-  {id:'cp9',label:'Ortostatismo',opts:[
-    {v:0,t:'0 — Incapaz — sem tolerância'},{v:1,t:'1 — Em pé passivo (plano inclinado)'},{v:2,t:'2 — Em pé com auxílio máximo'},{v:3,t:'3 — Em pé com auxílio de 1 pessoa'},{v:4,t:'4 — Em pé com supervisão'},{v:5,t:'5 — Em pé independente'}
-  ]},
-  {id:'cp10',label:'Marcha / locomoção',opts:[
-    {v:0,t:'0 — Não deambula'},{v:1,t:'1 — Marcha no leito (step in place) c/ auxílio'},{v:2,t:'2 — Marcha < 10m c/ auxílio de 2 pessoas'},{v:3,t:'3 — Marcha ≥ 10m c/ 1 pessoa'},{v:4,t:'4 — Marcha ≥ 10m com supervisão'},{v:5,t:'5 — Marcha ≥ 10m independente'}
-  ]},
-  {id:'cp11',label:'Escadas',opts:[
-    {v:0,t:'0 — Incapaz'},{v:1,t:'1 — 1–2 degraus c/ auxílio máximo'},{v:2,t:'2 — 1 lance c/ auxílio de 2 pessoas'},{v:3,t:'3 — 1 lance c/ 1 pessoa'},{v:4,t:'4 — 1 lance com supervisão'},{v:5,t:'5 — 1 lance independente'}
-  ]},
-];
-
-// ── FOIS ──────────────────────────────────────────────────────────────────
-const FOIS_LEVELS=[
-  {v:1,t:'Nível 1 — Nada por via oral'},
-  {v:2,t:'Nível 2 — Alimento via sonda dependente, mínima VO (prazer/paladar)'},
-  {v:3,t:'Nível 3 — Suplemento via sonda + VO consistente e textura'},
-  {v:4,t:'Nível 4 — Total VO de uma única consistência'},
-  {v:5,t:'Nível 5 — Total VO de múltiplas consistências, necessita preparo especial'},
-  {v:6,t:'Nível 6 — Total VO sem restrições, mas com estratégias compensatórias'},
-  {v:7,t:'Nível 7 — Total VO sem restrições e sem estratégias compensatórias'},
-];
-
-// ── DOSS ──────────────────────────────────────────────────────────────────
-const DOSS_LEVELS=[
-  {v:1,t:'Nível 1 — Disfagia grave: dependente de SNE, sem alimentação oral segura'},
-  {v:2,t:'Nível 2 — Disfagia grave: mínima VO por prazer, alta supervisão'},
-  {v:3,t:'Nível 3 — Disfagia moderada-grave: dependente de textura e supervisão total'},
-  {v:4,t:'Nível 4 — Disfagia moderada: dependente de textura e/ou supervisão'},
-  {v:5,t:'Nível 5 — Disfagia leve-moderada: necessita supervisão esporádica e adaptações'},
-  {v:6,t:'Nível 6 — Disfagia leve: independente com estratégias e/ou restrição mínima'},
-  {v:7,t:'Nível 7 — Normal: deglutição funcional, sem restrições'},
-];
-
-// ── KATZ ──────────────────────────────────────────────────────────────────
 const KATZ_ITEMS=[
   {id:'kz1',label:'Banho — lava-se completamente sem assistência'},
   {id:'kz2',label:'Vestir-se — pega roupas e veste-se sem assistência'},
-  {id:'kz3',label:'Uso do vaso sanitário — vai, usa, ajusta roupas e retorna sem assistência'},
-  {id:'kz4',label:'Transferência — senta/levanta da cama e cadeira sem assistência'},
+  {id:'kz3',label:'Uso do vaso sanitário — vai, usa e retorna sem assistência'},
+  {id:'kz4',label:'Transferência — senta/levanta da cama/cadeira sem assistência'},
   {id:'kz5',label:'Continência — controla completamente bexiga e intestino'},
-  {id:'kz6',label:'Alimentação — leva comida à boca sem assistência (exceto cortar)'},
+  {id:'kz6',label:'Alimentação — leva comida à boca sem assistência'}
 ];
 
-// ── ECF ──────────────────────────────────────────────────────────────────
 const ECF_LEVELS=[
-  {v:1,t:'Nível 1 — Dependência total: necessita assistência em todas as atividades'},
-  {v:2,t:'Nível 2 — Dependência grave: realiza < 25% das tarefas, necessita máxima assistência'},
-  {v:3,t:'Nível 3 — Dependência moderada: realiza 25–50% das tarefas com assistência'},
-  {v:4,t:'Nível 4 — Dependência leve: realiza > 50% das tarefas, necessita alguma assistência'},
-  {v:5,t:'Nível 5 — Supervisão: realiza tarefas com supervisão ou dica verbal'},
-  {v:6,t:'Nível 6 — Independência modificada: independente com adaptação ou dispositivo'},
-  {v:7,t:'Nível 7 — Independência plena: sem restrições funcionais'},
+  {v:1,t:'1 — Dependência total: assistência em todas as atividades'},
+  {v:2,t:'2 — Dependência grave: realiza < 25% das tarefas'},
+  {v:3,t:'3 — Dependência moderada: realiza 25–50% das tarefas'},
+  {v:4,t:'4 — Dependência leve: realiza > 50%, necessita alguma assistência'},
+  {v:5,t:'5 — Supervisão: realiza com supervisão ou dica verbal'},
+  {v:6,t:'6 — Independência modificada: independente com adaptação/dispositivo'},
+  {v:7,t:'7 — Independência plena: sem restrições funcionais'}
 ];
 
-const FAQ=[
-  'Escrever cheques, pagar contas, controlar finanças',
-  'Fazer compras (mantimentos, roupas)',
-  'Aquecer água, fazer café, desligar o fogão',
-  'Preparar uma refeição completa',
-  'Acompanhar notícias e acontecimentos',
-  'Compreender, discutir e participar de votações',
-  'Lembrar compromissos e medicamentos',
-  'Sair sozinho de carro ou ônibus',
-  'Passear pelo bairro e voltar para casa',
-  'Ficar sozinho em casa com segurança'
+const BERG=[
+  {id:'b1',label:'1. Sentado → em pé',opts:[{v:0,t:'0 — Necessita ajuda máxima'},{v:1,t:'1 — Necessita ajuda mínima'},{v:2,t:'2 — Capaz após várias tentativas'},{v:3,t:'3 — Capaz com ajuda das mãos'},{v:4,t:'4 — Capaz sem usar as mãos'}]},
+  {id:'b2',label:'2. Em pé sem apoio (2 min)',opts:[{v:0,t:'0 — Incapaz de manter 30s'},{v:1,t:'1 — Várias tentativas para 30s'},{v:2,t:'2 — Capaz 30s sob supervisão'},{v:3,t:'3 — Capaz 1 min seguro'},{v:4,t:'4 — Capaz 2 min seguro'}]},
+  {id:'b3',label:'3. Sentado sem apoio (2 min)',opts:[{v:0,t:'0 — Incapaz 10s'},{v:1,t:'1 — Capaz 10s'},{v:2,t:'2 — Capaz 30s'},{v:3,t:'3 — Capaz 1 min c/ supervisão'},{v:4,t:'4 — Capaz 2 min seguro'}]},
+  {id:'b4',label:'4. Em pé → sentado',opts:[{v:0,t:'0 — Necessita ajuda'},{v:1,t:'1 — Senta, descida descontrolada'},{v:2,t:'2 — Usa pernas contra a cadeira'},{v:3,t:'3 — Controla com as mãos'},{v:4,t:'4 — Seguro, mínimo uso das mãos'}]},
+  {id:'b5',label:'5. Transferências',opts:[{v:0,t:'0 — Duas pessoas ou supervisão total'},{v:1,t:'1 — Uma pessoa'},{v:2,t:'2 — Dica verbal ou supervisão'},{v:3,t:'3 — Mínimo uso das mãos'},{v:4,t:'4 — Seguro com pequeno uso das mãos'}]},
+  {id:'b6',label:'6. Em pé, olhos fechados',opts:[{v:0,t:'0 — Necessita ajuda'},{v:1,t:'1 — Incapaz 3s, mas estável'},{v:2,t:'2 — Capaz 3s'},{v:3,t:'3 — Capaz 10s c/ supervisão'},{v:4,t:'4 — Capaz 10s seguro'}]},
+  {id:'b7',label:'7. Em pé com pés juntos',opts:[{v:0,t:'0 — Necessita ajuda'},{v:1,t:'1 — Necessita ajuda, aguenta 15s'},{v:2,t:'2 — Capaz 1 min c/ supervisão'},{v:3,t:'3 — Capaz 1 min sem supervisão'},{v:4,t:'4 — Capaz > 1 min independente'}]},
+  {id:'b8',label:'8. Alcançar à frente (braço estendido)',opts:[{v:0,t:'0 — Perde equilíbrio'},{v:1,t:'1 — Alcança c/ supervisão'},{v:2,t:'2 — Alcança > 5cm'},{v:3,t:'3 — Alcança > 12cm'},{v:4,t:'4 — Alcança > 25cm'}]},
+  {id:'b9',label:'9. Pegar objeto do chão',opts:[{v:0,t:'0 — Incapaz / necessita ajuda'},{v:1,t:'1 — Fica a 1–5cm do objeto'},{v:2,t:'2 — Incapaz de pegar, c/ supervisão'},{v:3,t:'3 — Capaz c/ supervisão'},{v:4,t:'4 — Capaz seguro'}]},
+  {id:'b10',label:'10. Virar para olhar para trás',opts:[{v:0,t:'0 — Necessita ajuda'},{v:1,t:'1 — Supervisão ao virar'},{v:2,t:'2 — Lado mais fraco c/ supervisão'},{v:3,t:'3 — Lado mais forte sem perda'},{v:4,t:'4 — Ambos os lados, boa transferência'}]},
+  {id:'b11',label:'11. Girar 360°',opts:[{v:0,t:'0 — Necessita ajuda'},{v:1,t:'1 — Supervisão próxima'},{v:2,t:'2 — Lento (> 4s) em ambos'},{v:3,t:'3 — ≤ 4s, apenas um lado'},{v:4,t:'4 — ≤ 4s ambos os lados, seguro'}]},
+  {id:'b12',label:'12. Apoio alternado no degrau',opts:[{v:0,t:'0 — Necessita ajuda'},{v:1,t:'1 — > 2 passos c/ supervisão'},{v:2,t:'2 — 4 passos c/ supervisão'},{v:3,t:'3 — 8 passos c/ supervisão mínima'},{v:4,t:'4 — 8 passos seguro'}]},
+  {id:'b13',label:'13. Um pé à frente (tandem)',opts:[{v:0,t:'0 — Perde equilíbrio'},{v:1,t:'1 — Necessita ajuda'},{v:2,t:'2 — Passos pequenos, 30s independente'},{v:3,t:'3 — Pé à frente, mantém 30s'},{v:4,t:'4 — Tandem 30s sem ajuda'}]},
+  {id:'b14',label:'14. Apoio unipodal',opts:[{v:0,t:'0 — Incapaz / cai'},{v:1,t:'1 — Tenta, não mantém 3s'},{v:2,t:'2 — Ergue pé, não mantém 3s'},{v:3,t:'3 — Mantém ≥ 5s'},{v:4,t:'4 — Mantém > 10s'}]}
 ];
 
-const MMSE=[
-  {s:'Orientação temporal (5 pts)',items:[
-    {id:'ano',label:'Ano',max:1},{id:'mes',label:'Mês',max:1},{id:'dia',label:'Dia da semana',max:1},
-    {id:'dom',label:'Dia do mês',max:1},{id:'est',label:'Estação do ano',max:1}
-  ]},
-  {s:'Orientação espacial (5 pts)',items:[
-    {id:'pai',label:'País',max:1},{id:'uf',label:'Estado',max:1},{id:'cid',label:'Cidade',max:1},
-    {id:'loc',label:'Local (hospital/clínica)',max:1},{id:'and',label:'Andar / seção',max:1}
-  ]},
-  {s:'Memória imediata (3 pts)',items:[{id:'m3',label:'Repetição de 3 palavras',max:3}]},
-  {s:'Atenção e cálculo (5 pts)',items:[{id:'m5',label:'100−7 repetido 5 vezes',max:5}]},
-  {s:'Memória de evocação (3 pts)',items:[{id:'me',label:'Recordação das 3 palavras',max:3}]},
-  {s:'Linguagem (9 pts)',items:[
-    {id:'nom',label:'Nomeação (2 objetos)',max:2},{id:'rep',label:'Repetição de frase',max:1},
-    {id:'cmd',label:'Comando de 3 estágios',max:3},{id:'lei',label:'Leitura e execução',max:1},
-    {id:'esc',label:'Escrita de frase',max:1},{id:'cop',label:'Cópia de pentágonos',max:1}
-  ]}
+const IMS_PTS=[{v:0,t:'0 — Sem movimento'},{v:9,t:'9 — Palpável, sem movimento'},{v:14,t:'14 — Movimento c/ grav. eliminada'},{v:19,t:'19 — Contra gravidade'},{v:22,t:'22 — Contra resistência'},{v:25,t:'25 — Força normal'}];
+const IMS_GRUPOS=[
+  {id:'usd1',label:'Pinça polegar-indicador — Direito',membro:'usd'},{id:'usd2',label:'Flexão de cotovelo — Direito',membro:'usd'},{id:'usd3',label:'Abdução de ombro — Direito',membro:'usd'},
+  {id:'use1',label:'Pinça polegar-indicador — Esquerdo',membro:'use'},{id:'use2',label:'Flexão de cotovelo — Esquerdo',membro:'use'},{id:'use3',label:'Abdução de ombro — Esquerdo',membro:'use'},
+  {id:'lid1',label:'Dorsiflexão tornozelo — Direito',membro:'lid'},{id:'lid2',label:'Extensão de joelho — Direito',membro:'lid'},{id:'lid3',label:'Flexão de quadril — Direito',membro:'lid'},
+  {id:'lie1',label:'Dorsiflexão tornozelo — Esquerdo',membro:'lie'},{id:'lie2',label:'Extensão de joelho — Esquerdo',membro:'lie'},{id:'lie3',label:'Flexão de quadril — Esquerdo',membro:'lie'}
 ];
 
-const GDS=[
+const MRC_ITENS=['Abd. ombro D','Abd. ombro E','Flex. cotovelo D','Flex. cotovelo E','Ext. punho D','Ext. punho E','Ext. joelho D','Ext. joelho E','Dorsifl. tornozelo D','Dorsifl. tornozelo E','Flex. quadril D','Flex. quadril E'];
+const MRC_OPTS=[0,1,2,3,4,5].map(v=>({v,t:v+' — '+['Sem contração','Contração sem movimento','Movimento c/ grav. eliminada','Contra gravidade','Contra resist. parcial','Força normal'][v]}));
+
+const CPAX_ITEMS=[
+  {id:'cp1',label:'Tosse',opts:[{v:0,t:'0 — Sem tosse volitiva'},{v:1,t:'1 — Audível, ineficaz'},{v:2,t:'2 — Fraca, eficaz'},{v:3,t:'3 — Moderada, limpa vias'},{v:4,t:'4 — Forte com esforço'},{v:5,t:'5 — Forte e eficaz'}]},
+  {id:'cp2',label:'Respiração espontânea',opts:[{v:0,t:'0 — VMI total'},{v:1,t:'1 — VMI + espontânea'},{v:2,t:'2 — CPAP/VNI'},{v:3,t:'3 — O₂ c/ máscara, FR > 20'},{v:4,t:'4 — O₂ suplementar, FR ≤ 20'},{v:5,t:'5 — Ar ambiente, FR ≤ 20'}]},
+  {id:'cp3',label:'Força MMSS',opts:[{v:0,t:'0 — MRC 0'},{v:1,t:'1 — MRC 1–2'},{v:2,t:'2 — MRC 3'},{v:3,t:'3 — MRC 4 (fraqueza moderada)'},{v:4,t:'4 — MRC 4 (fraqueza leve)'},{v:5,t:'5 — MRC 5 (normal)'}]},
+  {id:'cp4',label:'Força MMII',opts:[{v:0,t:'0 — MRC 0'},{v:1,t:'1 — MRC 1–2'},{v:2,t:'2 — MRC 3'},{v:3,t:'3 — MRC 4 (moderada)'},{v:4,t:'4 — MRC 4 (leve)'},{v:5,t:'5 — MRC 5 (normal)'}]},
+  {id:'cp5',label:'Mobilidade no leito',opts:[{v:0,t:'0 — Imóvel, dependente total'},{v:1,t:'1 — Passiva (2+ pessoas)'},{v:2,t:'2 — Ativa assistida (2 pessoas)'},{v:3,t:'3 — Ativa assistida (1 pessoa)'},{v:4,t:'4 — Ativa c/ supervisão'},{v:5,t:'5 — Ativa independente'}]},
+  {id:'cp6',label:'Supino → sentado beira leito',opts:[{v:0,t:'0 — Incapaz'},{v:1,t:'1 — Assistência total (2+)'},{v:2,t:'2 — 2 pessoas'},{v:3,t:'3 — 1 pessoa'},{v:4,t:'4 — Supervisão/dica'},{v:5,t:'5 — Independente'}]},
+  {id:'cp7',label:'Equilíbrio sentado dinâmico',opts:[{v:0,t:'0 — Sem equilíbrio'},{v:1,t:'1 — Apoiado (2+)'},{v:2,t:'2 — Apoiado (1)'},{v:3,t:'3 — Apoio mínimo'},{v:4,t:'4 — Sem apoio c/ supervisão'},{v:5,t:'5 — Independente c/ alcance'}]},
+  {id:'cp8',label:'Transferência leito/cadeira',opts:[{v:0,t:'0 — Incapaz'},{v:1,t:'1 — Passiva'},{v:2,t:'2 — Auxílio máximo (2)'},{v:3,t:'3 — Auxílio (1)'},{v:4,t:'4 — Supervisão mínima'},{v:5,t:'5 — Independente'}]},
+  {id:'cp9',label:'Ortostatismo',opts:[{v:0,t:'0 — Incapaz'},{v:1,t:'1 — Passivo (plano inclinado)'},{v:2,t:'2 — Auxílio máximo'},{v:3,t:'3 — Auxílio de 1 pessoa'},{v:4,t:'4 — Supervisão'},{v:5,t:'5 — Independente'}]},
+  {id:'cp10',label:'Marcha / locomoção',opts:[{v:0,t:'0 — Não deambula'},{v:1,t:'1 — Step in place c/ auxílio'},{v:2,t:'2 — < 10m c/ 2 pessoas'},{v:3,t:'3 — ≥ 10m c/ 1 pessoa'},{v:4,t:'4 — ≥ 10m c/ supervisão'},{v:5,t:'5 — ≥ 10m independente'}]},
+  {id:'cp11',label:'Escadas',opts:[{v:0,t:'0 — Incapaz'},{v:1,t:'1 — 1–2 degraus c/ auxílio'},{v:2,t:'2 — 1 lance c/ 2 pessoas'},{v:3,t:'3 — 1 lance c/ 1 pessoa'},{v:4,t:'4 — 1 lance c/ supervisão'},{v:5,t:'5 — 1 lance independente'}]}
+];
+
+const FOIS_LEVELS=[
+  {v:1,t:'Nível 1 — Nada por via oral'},
+  {v:2,t:'Nível 2 — Mínima VO por prazer/paladar (dependente de sonda)'},
+  {v:3,t:'Nível 3 — Suplemento via sonda + VO com consistência específica'},
+  {v:4,t:'Nível 4 — Total VO de uma única consistência'},
+  {v:5,t:'Nível 5 — Total VO de múltiplas consistências com preparo especial'},
+  {v:6,t:'Nível 6 — Total VO sem restrições, mas com estratégias compensatórias'},
+  {v:7,t:'Nível 7 — Total VO sem restrições e sem estratégias compensatórias'}
+];
+
+const DOSS_LEVELS=[
+  {v:1,t:'Nível 1 — Disfagia grave: dependente de SNE, sem VO segura'},
+  {v:2,t:'Nível 2 — Disfagia grave: mínima VO por prazer, supervisão total'},
+  {v:3,t:'Nível 3 — Disfagia moderada-grave: dependente de textura e supervisão total'},
+  {v:4,t:'Nível 4 — Disfagia moderada: dependente de textura e/ou supervisão'},
+  {v:5,t:'Nível 5 — Disfagia leve-moderada: supervisão esporádica e adaptações'},
+  {v:6,t:'Nível 6 — Disfagia leve: independente com estratégias e/ou restrição mínima'},
+  {v:7,t:'Nível 7 — Normal: deglutição funcional, sem restrições'}
+];
+
+const MMSE_DATA=[
+  {s:'Orientação temporal (5)',items:[{id:'ano',label:'Ano',max:1},{id:'mes',label:'Mês',max:1},{id:'dia',label:'Dia da semana',max:1},{id:'dom',label:'Dia do mês',max:1},{id:'est',label:'Estação do ano',max:1}]},
+  {s:'Orientação espacial (5)',items:[{id:'pai',label:'País',max:1},{id:'uf',label:'Estado',max:1},{id:'cid',label:'Cidade',max:1},{id:'loc',label:'Local',max:1},{id:'and',label:'Andar/seção',max:1}]},
+  {s:'Memória imediata (3)',items:[{id:'m3',label:'Repetição de 3 palavras',max:3}]},
+  {s:'Atenção e cálculo (5)',items:[{id:'m5',label:'100−7 repetido 5 vezes',max:5}]},
+  {s:'Memória de evocação (3)',items:[{id:'me',label:'Recordação das 3 palavras',max:3}]},
+  {s:'Linguagem (9)',items:[{id:'nom',label:'Nomeação (2 objetos)',max:2},{id:'rep',label:'Repetição de frase',max:1},{id:'cmd',label:'Comando 3 estágios',max:3},{id:'lei',label:'Leitura',max:1},{id:'esc',label:'Escrita',max:1},{id:'cop',label:'Cópia pentágonos',max:1}]}
+];
+
+const GDS_DATA=[
   {label:'Está satisfeito(a) com a sua vida?',inv:true},
   {label:'Abandonou muitas atividades e interesses?',inv:false},
   {label:'Sente que sua vida está vazia?',inv:false},
@@ -1589,402 +685,400 @@ const GDS=[
   {label:'A maioria das pessoas está melhor do que você?',inv:false}
 ];
 
-// ─── FORÇAR LIMPEZA DE CACHE ANTIGO ─────────────────────────────────────────
-if('caches' in window){
-  caches.keys().then(keys=>keys.forEach(k=>{
-    if(k!=='reabscale-v3') caches.delete(k);
-  }));
+// ── STATE ─────────────────────────────────────────────────────────────────────
+let history = [];
+let liveScores = {barthel:0,mif:18,faq:0,katz:0,ecf:0,berg:0,ims:0,mrc:0,cpax:0,fois:0,doss:0,mmse:0,gds:0};
+
+// ── PERSISTENCE ───────────────────────────────────────────────────────────────
+const DB_KEY = 'reabscale_v3';
+function saveDB() { try { localStorage.setItem(DB_KEY, JSON.stringify(history)); } catch(e){} }
+function loadDB() { try { const r=localStorage.getItem(DB_KEY); if(r) history=JSON.parse(r); } catch(e){ history=[]; } }
+
+// ── HELPERS ───────────────────────────────────────────────────────────────────
+function radio(name, opts, cb, row) {
+  var cls = row ? 'opts opts-row' : 'opts';
+  var html = '<div class="' + cls + '">';
+  for (var i=0; i<opts.length; i++) {
+    html += '<label class="opt"><input type="radio" name="' + name + '" value="' + opts[i].v + '" onchange="' + cb + '"><span>' + opts[i].t + '</span></label>';
+  }
+  html += '</div>';
+  return html;
 }
 
-// ─── STATE ──────────────────────────────────────────────────────────────────
-let history=[];
-let liveScores={barthel:0,mif:18,berg:0,mrc:0,ims:0,cpax:0,fois:0,doss:0,katz:0,ecf:0,faq:0,mmse:0,gds:0};
-
-// ─── PERSISTÊNCIA (localStorage) ────────────────────────────────────────────
-const DB_KEY='reabscale_v1';
-function saveDB(){
-  try{ localStorage.setItem(DB_KEY, JSON.stringify(history)); }
-  catch(e){ console.warn('localStorage cheio ou indisponível', e); }
-}
-function loadDB(){
-  try{
-    const raw=localStorage.getItem(DB_KEY);
-    if(raw){ history=JSON.parse(raw); }
-  } catch(e){ history=[]; }
+function setScore(name, val, max, interp) {
+  liveScores[name] = val;
+  document.getElementById(name+'-score').innerHTML = val + '<span class="score-max">/' + max + '</span>';
+  document.getElementById(name+'-interp').textContent = interp;
+  document.getElementById('nb-'+name).textContent = val;
 }
 
-// ─── BUILD ──────────────────────────────────────────────────────────────────
-function radio(name,opts,cb,row=false){
-  return `<div class="opts${row?' opts-row':''}">`+opts.map(o=>`
-    <label class="opt">
-      <input type="radio" name="${name}" value="${o.v}" onchange="${cb}">
-      <span>${o.t}</span>
-    </label>`).join('')+'</div>';
+// ── BUILD FUNCTIONS ───────────────────────────────────────────────────────────
+function buildBarthel() {
+  var html = '';
+  for (var i=0; i<BD.length; i++) {
+    html += '<div class="scale-item"><div class="item-title">' + BD[i].label + '</div>' + radio('b_'+BD[i].id, BD[i].opts, 'calcBarthel()') + '</div>';
+  }
+  document.getElementById('barthel-items').innerHTML = html;
 }
 
-function buildBarthel(){
-  document.getElementById('barthel-items').innerHTML=BD.map(it=>`
-    <div class="scale-item">
-      <div class="item-title">${it.label}</div>
-      ${radio('b_'+it.id,it.opts,'calcBarthel()')}
-    </div>`).join('');
+function buildMIF() {
+  var html = '';
+  for (var s=0; s<MIF_SECTIONS.length; s++) {
+    var sec = MIF_SECTIONS[s];
+    html += '<div class="section-label">' + sec.s + '</div>';
+    for (var i=0; i<sec.items.length; i++) {
+      var it = sec.items[i];
+      html += '<div class="scale-item"><div class="item-title">' + it.label + '</div><div class="item-subtitle">1=dep. total · 7=independência completa</div>';
+      html += '<select class="mif-select" id="mif_' + it.id + '" onchange="calcMIF()"><option value="">— selecione —</option>';
+      for (var l=0; l<MIF_LEVELS.length; l++) {
+        html += '<option value="' + MIF_LEVELS[l].v + '">' + MIF_LEVELS[l].t + '</option>';
+      }
+      html += '</select></div>';
+    }
+  }
+  document.getElementById('mif-items').innerHTML = html;
 }
 
-function buildMIF(){
-  let html='';
-  MIF_SECTIONS.forEach(sec=>{
-    html+=`<div class="section-label">${sec.s}</div>`;
-    sec.items.forEach(it=>{
-      html+=`<div class="scale-item">
-        <div class="item-title">${it.label}</div>
-        <div class="item-subtitle">1 = dependência total · 7 = independência completa</div>
-        <select class="mif-select" id="mif_${it.id}" onchange="calcMIF()">
-          <option value="">— selecione —</option>
-          ${MIF_LEVELS.map(l=>`<option value="${l.v}">${l.t}</option>`).join('')}
-        </select>
-      </div>`;
-    });
-  });
-  document.getElementById('mif-items').innerHTML=html;
+function buildFAQ() {
+  var opts = [{v:0,t:'0 — Normal'},{v:1,t:'1 — Com dificuldade, mas sozinho'},{v:2,t:'2 — Necessita ajuda'},{v:3,t:'3 — Incapaz'}];
+  var html = '';
+  for (var i=0; i<FAQ.length; i++) {
+    html += '<div class="scale-item"><div class="item-title">' + (i+1) + '. ' + FAQ[i] + '</div>' + radio('faq_'+i, opts, 'calcFAQ()') + '</div>';
+  }
+  document.getElementById('faq-items').innerHTML = html;
 }
 
-function buildBerg(){
-  document.getElementById('berg-items').innerHTML=BERG.map(it=>`
-    <div class="scale-item">
-      <div class="item-title">${it.label}</div>
-      ${radio('bg_'+it.id,it.opts,'calcBerg()')}
-    </div>`).join('');
+function buildKATZ() {
+  var opts = [{v:1,t:'1 — Independente'},{v:0,t:'0 — Dependente'}];
+  var html = '';
+  for (var i=0; i<KATZ_ITEMS.length; i++) {
+    html += '<div class="scale-item"><div class="item-title">' + KATZ_ITEMS[i].label + '</div>' + radio('katz_'+KATZ_ITEMS[i].id, opts, 'calcKATZ()', true) + '</div>';
+  }
+  document.getElementById('katz-items').innerHTML = html;
 }
 
-function buildMRC(){
-  document.getElementById('mrc-items').innerHTML=MRC_ITENS.map((label,i)=>`
-    <div class="scale-item">
-      <div class="item-title">${label}</div>
-      ${radio('mrc_'+i,MRC_OPTS,'calcMRC()',true)}
-    </div>`).join('');
+function buildECF() {
+  var html = '';
+  for (var i=0; i<ECF_LEVELS.length; i++) {
+    html += '<div class="scale-item">' + radio('ecf_niv', [ECF_LEVELS[i]], 'calcECF()') + '</div>';
+  }
+  document.getElementById('ecf-items').innerHTML = html;
 }
 
-function buildIMS(){
-  const sections={usd:'MMSS Direito',use:'MMSS Esquerdo',lid:'MMII Direito',lie:'MMII Esquerdo'};
-  let html='';
-  Object.entries(sections).forEach(([mem,label])=>{
-    html+=`<div class="section-label">${label}</div>`;
-    IMS_GRUPOS.filter(g=>g.membro===mem).forEach(g=>{
-      html+=`<div class="scale-item">
-        <div class="item-title">${g.label}</div>
-        <div class="item-subtitle">Pontuação: 0 · 9 · 14 · 19 · 22 · 25</div>
-        ${radio('ims_'+g.id,IMS_PTS,'calcIMS()')}
-      </div>`;
-    });
-  });
-  document.getElementById('ims-items').innerHTML=html;
+function buildBerg() {
+  var html = '';
+  for (var i=0; i<BERG.length; i++) {
+    html += '<div class="scale-item"><div class="item-title">' + BERG[i].label + '</div>' + radio('bg_'+BERG[i].id, BERG[i].opts, 'calcBerg()') + '</div>';
+  }
+  document.getElementById('berg-items').innerHTML = html;
 }
 
-function calcIMS(){
-  const membros={usd:0,use:0,lid:0,lie:0};
-  IMS_GRUPOS.forEach(g=>{
-    const r=document.querySelector(`input[name="ims_${g.id}"]:checked`);
-    if(r) membros[g.membro]+=+r.value;
-  });
-  // Soma +1 a cada membro (se pelo menos 1 item avaliado)
-  ['usd','use','lid','lie'].forEach(m=>{if(membros[m]>0||true) membros[m]+=1;});
-  // Clamp a 100 por membro
-  Object.keys(membros).forEach(m=>{membros[m]=Math.min(membros[m],100);});
+function buildIMS() {
+  var sections = {usd:'MMSS Direito',use:'MMSS Esquerdo',lid:'MMII Direito',lie:'MMII Esquerdo'};
+  var html = '';
+  var keys = ['usd','use','lid','lie'];
+  for (var k=0; k<keys.length; k++) {
+    var mem = keys[k];
+    html += '<div class="section-label">' + sections[mem] + '</div>';
+    for (var i=0; i<IMS_GRUPOS.length; i++) {
+      if (IMS_GRUPOS[i].membro === mem) {
+        html += '<div class="scale-item"><div class="item-title">' + IMS_GRUPOS[i].label + '</div><div class="item-subtitle">0 · 9 · 14 · 19 · 22 · 25</div>' + radio('ims_'+IMS_GRUPOS[i].id, IMS_PTS, 'calcIMS()') + '</div>';
+      }
+    }
+  }
+  document.getElementById('ims-items').innerHTML = html;
+}
+
+function buildMRC() {
+  var html = '';
+  for (var i=0; i<MRC_ITENS.length; i++) {
+    html += '<div class="scale-item"><div class="item-title">' + MRC_ITENS[i] + '</div>' + radio('mrc_'+i, MRC_OPTS, 'calcMRC()', true) + '</div>';
+  }
+  document.getElementById('mrc-items').innerHTML = html;
+}
+
+function buildCPAx() {
+  var html = '';
+  for (var i=0; i<CPAX_ITEMS.length; i++) {
+    html += '<div class="scale-item"><div class="item-title">' + CPAX_ITEMS[i].label + '</div>' + radio('cpax_'+CPAX_ITEMS[i].id, CPAX_ITEMS[i].opts, 'calcCPAx()') + '</div>';
+  }
+  document.getElementById('cpax-items').innerHTML = html;
+}
+
+function buildFOIS() {
+  var html = '';
+  for (var i=0; i<FOIS_LEVELS.length; i++) {
+    html += '<div class="scale-item">' + radio('fois_niv', [FOIS_LEVELS[i]], 'calcFOIS()') + '</div>';
+  }
+  document.getElementById('fois-items').innerHTML = html;
+}
+
+function buildDOSS() {
+  var html = '';
+  for (var i=0; i<DOSS_LEVELS.length; i++) {
+    html += '<div class="scale-item">' + radio('doss_niv', [DOSS_LEVELS[i]], 'calcDOSS()') + '</div>';
+  }
+  document.getElementById('doss-items').innerHTML = html;
+}
+
+function buildMMSE() {
+  var html = '';
+  for (var s=0; s<MMSE_DATA.length; s++) {
+    var sec = MMSE_DATA[s];
+    html += '<div class="section-label">' + sec.s + '</div>';
+    for (var i=0; i<sec.items.length; i++) {
+      var it = sec.items[i];
+      var opts = [];
+      for (var v=0; v<=it.max; v++) opts.push({v:v,t:''+v});
+      html += '<div class="scale-item"><div class="item-title">' + it.label + ' (0–' + it.max + ')</div>' + radio('ms_'+it.id, opts, 'calcMMSE()', true) + '</div>';
+    }
+  }
+  document.getElementById('mmse-items').innerHTML = html;
+}
+
+function buildGDS() {
+  var html = '';
+  for (var i=0; i<GDS_DATA.length; i++) {
+    var it = GDS_DATA[i];
+    var opts = it.inv ? [{v:0,t:'Sim'},{v:1,t:'Não'}] : [{v:1,t:'Sim'},{v:0,t:'Não'}];
+    html += '<div class="scale-item"><div class="item-title">' + (i+1) + '. ' + it.label + '</div>' + radio('gds_'+i, opts, 'calcGDS()', true) + '</div>';
+  }
+  document.getElementById('gds-items').innerHTML = html;
+}
+
+// ── CALC FUNCTIONS ────────────────────────────────────────────────────────────
+function calcBarthel() {
+  var s=0;
+  for (var i=0; i<BD.length; i++) {
+    var r=document.querySelector('input[name="b_'+BD[i].id+'"]:checked');
+    if(r) s+=parseInt(r.value);
+  }
+  var t=s<=20?'Dependência total':s<=60?'Dependência grave':s<=90?'Dependência moderada':s<=99?'Dependência leve':'Independente';
+  setScore('barthel',s,100,t);
+}
+
+function calcMIF() {
+  var s=0;
+  for (var sec=0; sec<MIF_SECTIONS.length; sec++) {
+    for (var i=0; i<MIF_SECTIONS[sec].items.length; i++) {
+      var el=document.getElementById('mif_'+MIF_SECTIONS[sec].items[i].id);
+      s += (el&&el.value) ? parseInt(el.value) : 1;
+    }
+  }
+  var t=s<=36?'Dependência total':s<=54?'Dep. modificada':s<=72?'Assist. modificada':s<=108?'Supervisão':s<=125?'Independ. modificada':'Independência completa';
+  setScore('mif',s,126,t);
+}
+
+function calcFAQ() {
+  var s=0;
+  for (var i=0; i<FAQ.length; i++) {
+    var r=document.querySelector('input[name="faq_'+i+'"]:checked');
+    if(r) s+=parseInt(r.value);
+  }
+  var t=s<6?'Sem comprometimento significativo':'Comprometimento funcional (≥6)';
+  setScore('faq',s,30,t);
+}
+
+function calcKATZ() {
+  var s=0;
+  for (var i=0; i<KATZ_ITEMS.length; i++) {
+    var r=document.querySelector('input[name="katz_'+KATZ_ITEMS[i].id+'"]:checked');
+    if(r) s+=parseInt(r.value);
+  }
+  var t=s===6?'Independência total':s>=4?'Dependência leve':s>=2?'Dependência moderada':'Dependência grave';
+  setScore('katz',s,6,t);
+}
+
+function calcECF() {
+  var r=document.querySelector('input[name="ecf_niv"]:checked');
+  var v=r?parseInt(r.value):0;
+  var descs=['','Dependência total','Dependência grave','Dependência moderada','Dependência leve','Supervisão','Independência modificada','Independência plena'];
+  document.getElementById('ecf-score').innerHTML=(v||'—')+'<span class="score-max">/7</span>';
+  document.getElementById('ecf-interp').textContent=v?descs[v]:'—';
+  document.getElementById('nb-ecf').textContent=v||'—';
+  liveScores['ecf']=v;
+}
+
+function calcBerg() {
+  var s=0;
+  for (var i=0; i<BERG.length; i++) {
+    var r=document.querySelector('input[name="bg_'+BERG[i].id+'"]:checked');
+    if(r) s+=parseInt(r.value);
+  }
+  var t=s<=20?'Alto risco de queda':s<=40?'Médio risco de queda':'Baixo risco de queda';
+  setScore('berg',s,56,t);
+}
+
+function calcIMS() {
+  var membros={usd:0,use:0,lid:0,lie:0};
+  for (var i=0; i<IMS_GRUPOS.length; i++) {
+    var r=document.querySelector('input[name="ims_'+IMS_GRUPOS[i].id+'"]:checked');
+    if(r) membros[IMS_GRUPOS[i].membro]+=parseInt(r.value);
+  }
+  var keys=['usd','use','lid','lie'];
+  for (var k=0; k<keys.length; k++) { membros[keys[k]]=Math.min(membros[keys[k]]+1,100); }
   document.getElementById('ims-usd').textContent=membros.usd;
   document.getElementById('ims-use').textContent=membros.use;
   document.getElementById('ims-lid').textContent=membros.lid;
   document.getElementById('ims-lie').textContent=membros.lie;
-  const total=membros.usd+membros.use+membros.lid+membros.lie;
-  const t=total<=80?'Comprometimento grave':total<=130?'Comprometimento moderado':total<=170?'Comprometimento leve':'Função preservada';
+  var total=membros.usd+membros.use+membros.lid+membros.lie;
+  var t=total<=80?'Comprometimento grave':total<=130?'Comprometimento moderado':total<=170?'Comprometimento leve':'Função preservada';
   setScore('ims',total,200,t);
 }
 
-function buildCPAx(){
-  document.getElementById('cpax-items').innerHTML=CPAX_ITEMS.map(it=>`
-    <div class="scale-item">
-      <div class="item-title">${it.label}</div>
-      ${radio('cpax_'+it.id,it.opts,'calcCPAx()')}
-    </div>`).join('');
-}
-function calcCPAx(){
-  let s=CPAX_ITEMS.reduce((a,it)=>{const r=document.querySelector(`input[name="cpax_${it.id}"]:checked`);return a+(r?+r.value:0);},0);
-  const t=s<=10?'Comprometimento muito grave':s<=22?'Comprometimento grave':s<=33?'Comprometimento moderado':s<=44?'Comprometimento leve':'Boa função física';
-  setScore('cpax',s,55,t);
-}
-
-function buildFOIS(){
-  document.getElementById('fois-items').innerHTML=FOIS_LEVELS.map(l=>'<div class="scale-item">'+radio('fois_niv',[{v:l.v,t:l.t}],'calcFOIS()')+'</div>').join('');
-}
-function calcFOIS(){
-  const r=document.querySelector('input[name="fois_niv"]:checked');
-  const v=r?+r.value:0;
-  const descs=['','Nada por via oral','Mínima VO (paladar)','Sonda + VO c/ restrição','VO única consistência','VO múltiplas consistências (preparo especial)','VO sem restrição c/ estratégias','VO sem restrição'];
-  document.getElementById('fois-score').innerHTML=`${v||'—'}<span class="score-max">/7</span>`;
-  document.getElementById('fois-interp').textContent=v?descs[v]:'—';
-  liveScores['fois']=v;
-  if(v) document.getElementById('nb-fois').textContent=v;
-}
-
-function buildDOSS(){
-  document.getElementById('doss-items').innerHTML=DOSS_LEVELS.map(l=>'<div class="scale-item">'+radio('doss_niv',[{v:l.v,t:l.t}],'calcDOSS()')+'</div>').join('');
-}
-function calcDOSS(){
-  const r=document.querySelector('input[name="doss_niv"]:checked');
-  const v=r?+r.value:0;
-  const descs=['','Disfagia grave (SNE)','Disfagia grave (mínima VO)','Disfagia mod-grave','Disfagia moderada','Disfagia leve-moderada','Disfagia leve','Normal'];
-  document.getElementById('doss-score').innerHTML=`${v||'—'}<span class="score-max">/7</span>`;
-  document.getElementById('doss-interp').textContent=v?descs[v]:'—';
-  liveScores['doss']=v;
-  if(v) document.getElementById('nb-doss').textContent=v;
-}
-
-function buildKATZ(){
-  const opts=[{v:1,t:'1 — Independente'},{v:0,t:'0 — Dependente'}];
-  document.getElementById('katz-items').innerHTML=KATZ_ITEMS.map(it=>`
-    <div class="scale-item">
-      <div class="item-title">${it.label}</div>
-      ${radio('katz_'+it.id,opts,'calcKATZ()',true)}
-    </div>`).join('');
-}
-function calcKATZ(){
-  let s=KATZ_ITEMS.reduce((a,it)=>{const r=document.querySelector(`input[name="katz_${it.id}"]:checked`);return a+(r?+r.value:0);},0);
-  const t=s===6?'Independência total':s>=4?'Dependência leve':s>=2?'Dependência moderada':'Dependência grave';
-  setScore('katz',s,6,t);
-}
-
-function buildECF(){
-  document.getElementById('ecf-items').innerHTML=ECF_LEVELS.map(l=>'<div class="scale-item">'+radio('ecf_niv',[{v:l.v,t:l.t}],'calcECF()')+'</div>').join('');
-}
-function calcECF(){
-  const r=document.querySelector('input[name="ecf_niv"]:checked');
-  const v=r?+r.value:0;
-  const descs=['','Dependência total','Dependência grave','Dependência moderada','Dependência leve','Supervisão','Independência modificada','Independência plena'];
-  document.getElementById('ecf-score').innerHTML=`${v||'—'}<span class="score-max">/7</span>`;
-  document.getElementById('ecf-interp').textContent=v?descs[v]:'—';
-  liveScores['ecf']=v;
-  if(v) document.getElementById('nb-ecf').textContent=v;
-}
-  const opts=[{v:0,t:'0 — Normal'},{v:1,t:'1 — Com dificuldade, mas sozinho'},{v:2,t:'2 — Necessita ajuda'},{v:3,t:'3 — Incapaz'}];
-  document.getElementById('faq-items').innerHTML=FAQ.map((label,i)=>`
-    <div class="scale-item">
-      <div class="item-title">${i+1}. ${label}</div>
-      ${radio('faq_'+i,opts,'calcFAQ()')}
-    </div>`).join('');
-}
-
-function buildMMSE(){
-  let html='';
-  MMSE.forEach(sec=>{
-    html+=`<div class="section-label">${sec.s}</div>`;
-    sec.items.forEach(it=>{
-      const opts=Array.from({length:it.max+1},(_,i)=>({v:i,t:`${i}`}));
-      html+=`<div class="scale-item">
-        <div class="item-title">${it.label} <span style="color:var(--text3);font-weight:400">(0–${it.max})</span></div>
-        ${radio('ms_'+it.id,opts,'calcMMSE()',true)}
-      </div>`;
-    });
-  });
-  document.getElementById('mmse-items').innerHTML=html;
-}
-
-function buildGDS(){
-  document.getElementById('gds-items').innerHTML=GDS.map((it,i)=>{
-    const opts=it.inv?[{v:0,t:'Sim'},{v:1,t:'Não'}]:[{v:1,t:'Sim'},{v:0,t:'Não'}];
-    return `<div class="scale-item">
-      <div class="item-title">${i+1}. ${it.label}</div>
-      ${radio('gds_'+i,opts,'calcGDS()',true)}
-    </div>`;
-  }).join('');
-}
-
-// ─── CALC ────────────────────────────────────────────────────────────────────
-function setScore(name,val,max,interp){
-  liveScores[name]=val;
-  document.getElementById(`${name}-score`).innerHTML=`${val}<span class="score-max">/${max}</span>`;
-  document.getElementById(`${name}-interp`).textContent=interp;
-  document.getElementById(`nb-${name}`).textContent=val;
-}
-
-function calcBarthel(){
-  let s=BD.reduce((a,it)=>{const r=document.querySelector(`input[name="b_${it.id}"]:checked`);return a+(r?+r.value:0);},0);
-  const t=s<=20?'Dependência total':s<=60?'Dependência grave':s<=90?'Dependência moderada':s<=99?'Dependência leve':'Independente';
-  setScore('barthel',s,100,t);
-}
-
-function calcMIF(){
-  let s=0;
-  MIF_SECTIONS.forEach(sec=>sec.items.forEach(it=>{const el=document.getElementById('mif_'+it.id);s+=el&&el.value?+el.value:1;}));
-  const t=s<=36?'Dependência total':s<=54?'Dep. modificada':s<=72?'Assist. modificada':s<=108?'Supervisão':s<=125?'Independ. modificada':'Independência completa';
-  setScore('mif',s,126,t);
-}
-
-function calcBerg(){
-  let s=BERG.reduce((a,it)=>{const r=document.querySelector(`input[name="bg_${it.id}"]:checked`);return a+(r?+r.value:0);},0);
-  const t=s<=20?'Alto risco de queda':s<=40?'Médio risco de queda':'Baixo risco de queda';
-  setScore('berg',s,56,t);
-}
-
-function calcMRC(){
-  let s=MRC_ITENS.reduce((a,_,i)=>{const r=document.querySelector(`input[name="mrc_${i}"]:checked`);return a+(r?+r.value:0);},0);
-  const t=s<36?'Fraqueza grave (UCI-AW)':s<48?'Fraqueza moderada':s<60?'Fraqueza leve':'Força preservada';
+function calcMRC() {
+  var s=0;
+  for (var i=0; i<MRC_ITENS.length; i++) {
+    var r=document.querySelector('input[name="mrc_'+i+'"]:checked');
+    if(r) s+=parseInt(r.value);
+  }
+  var t=s<36?'Fraqueza grave (UCI-AW)':s<48?'Fraqueza moderada':s<60?'Fraqueza leve':'Força preservada';
   setScore('mrc',s,60,t);
 }
 
-function buildFAQ(){
-  const opts=[{v:0,t:'0 — Normal'},{v:1,t:'1 — Com dificuldade, mas sozinho'},{v:2,t:'2 — Necessita ajuda'},{v:3,t:'3 — Incapaz'}];
-  document.getElementById('faq-items').innerHTML=FAQ.map((label,i)=>`
-    <div class="scale-item">
-      <div class="item-title">${i+1}. ${label}</div>
-      ${radio('faq_'+i,opts,'calcFAQ()')}
-    </div>`).join('');
+function calcCPAx() {
+  var s=0;
+  for (var i=0; i<CPAX_ITEMS.length; i++) {
+    var r=document.querySelector('input[name="cpax_'+CPAX_ITEMS[i].id+'"]:checked');
+    if(r) s+=parseInt(r.value);
+  }
+  var t=s<=10?'Comprometimento muito grave':s<=22?'Comprometimento grave':s<=33?'Comprometimento moderado':s<=44?'Comprometimento leve':'Boa função física';
+  setScore('cpax',s,55,t);
 }
 
-function calcFAQ(){
-  let s=FAQ.reduce((a,_,i)=>{const r=document.querySelector(`input[name="faq_${i}"]:checked`);return a+(r?+r.value:0);},0);
-  const t=s<6?'Sem comprometimento significativo':'Comprometimento funcional (≥6)';
-  setScore('faq',s,30,t);
+function calcFOIS() {
+  var r=document.querySelector('input[name="fois_niv"]:checked');
+  var v=r?parseInt(r.value):0;
+  var descs=['','Nada por via oral','Mínima VO (paladar)','Sonda + VO c/ restrição','VO única consistência','VO múltiplas consistências','VO sem restrição c/ estratégias','VO sem restrição'];
+  document.getElementById('fois-score').innerHTML=(v||'—')+'<span class="score-max">/7</span>';
+  document.getElementById('fois-interp').textContent=v?descs[v]:'—';
+  document.getElementById('nb-fois').textContent=v||'—';
+  liveScores['fois']=v;
 }
 
-function calcMMSE(){
-  let s=MMSE.reduce((a,sec)=>a+sec.items.reduce((b,it)=>{const r=document.querySelector(`input[name="ms_${it.id}"]:checked`);return b+(r?+r.value:0);},0),0);
-  const t=s>=27?'Normal':s>=21?'Comprometimento leve':s>=10?'Comprometimento moderado':'Comprometimento grave';
+function calcDOSS() {
+  var r=document.querySelector('input[name="doss_niv"]:checked');
+  var v=r?parseInt(r.value):0;
+  var descs=['','Disfagia grave (SNE)','Disfagia grave (mínima VO)','Disfagia mod-grave','Disfagia moderada','Disfagia leve-moderada','Disfagia leve','Normal'];
+  document.getElementById('doss-score').innerHTML=(v||'—')+'<span class="score-max">/7</span>';
+  document.getElementById('doss-interp').textContent=v?descs[v]:'—';
+  document.getElementById('nb-doss').textContent=v||'—';
+  liveScores['doss']=v;
+}
+
+function calcMMSE() {
+  var s=0;
+  for (var sec=0; sec<MMSE_DATA.length; sec++) {
+    for (var i=0; i<MMSE_DATA[sec].items.length; i++) {
+      var r=document.querySelector('input[name="ms_'+MMSE_DATA[sec].items[i].id+'"]:checked');
+      if(r) s+=parseInt(r.value);
+    }
+  }
+  var t=s>=27?'Normal':s>=21?'Comprometimento leve':s>=10?'Comprometimento moderado':'Comprometimento grave';
   setScore('mmse',s,30,t);
 }
 
-function calcGDS(){
-  let s=GDS.reduce((a,_,i)=>{const r=document.querySelector(`input[name="gds_${i}"]:checked`);return a+(r?+r.value:0);},0);
-  const t=s<=4?'Normal':s<=8?'Depressão leve':s<=11?'Depressão moderada':'Depressão grave';
+function calcGDS() {
+  var s=0;
+  for (var i=0; i<GDS_DATA.length; i++) {
+    var r=document.querySelector('input[name="gds_'+i+'"]:checked');
+    if(r) s+=parseInt(r.value);
+  }
+  var t=s<=4?'Normal':s<=8?'Depressão leve':s<=11?'Depressão moderada':'Depressão grave';
   setScore('gds',s,15,t);
 }
 
-// ─── SAVE / CLEAR ────────────────────────────────────────────────────────────
-const NAMES={barthel:'Índice de Barthel',mif:'MIF',berg:'Berg',mrc:'MRC Força',ims:'IMS Motricidade',cpax:'CPAx',fois:'FOIS',doss:'DOSS',katz:'Katz',ecf:'ECF',faq:'FAQ Pfeffer',mmse:'MEEM',gds:'GDS-15'};
+// ── SAVE / CLEAR ──────────────────────────────────────────────────────────────
+var NAMES={barthel:'Índice de Barthel',mif:'MIF',faq:'FAQ Pfeffer',katz:'Katz',ecf:'ECF',berg:'Berg',ims:'IMS Motricidade',mrc:'MRC Força',cpax:'CPAx',fois:'FOIS',doss:'DOSS',mmse:'MEEM',gds:'GDS-15'};
 
-function saveScale(name){
-  const pt=document.getElementById('pt-name').value.trim()||'Paciente não informado';
-  const id=document.getElementById('pt-id').value.trim()||'—';
-  const date=document.getElementById('pt-date').value||new Date().toISOString().slice(0,10);
-  const eval_=document.getElementById('pt-eval').value.trim()||'—';
-  history.unshift({date,patient:pt,pid:id,evaluator:eval_,scale:NAMES[name],score:liveScores[name],interp:document.getElementById(`${name}-interp`).textContent,ts:new Date().toLocaleTimeString('pt-BR')});
+function saveScale(name) {
+  var pt=document.getElementById('pt-name').value.trim()||'Paciente não informado';
+  var id=document.getElementById('pt-id').value.trim()||'—';
+  var date=document.getElementById('pt-date').value||new Date().toISOString().slice(0,10);
+  var eval_=document.getElementById('pt-eval').value.trim()||'—';
+  history.unshift({date:date,patient:pt,pid:id,evaluator:eval_,scale:NAMES[name],score:liveScores[name],interp:document.getElementById(name+'-interp').textContent,ts:new Date().toLocaleTimeString('pt-BR')});
   saveDB();
   document.getElementById('nb-history').textContent=history.length;
   renderHistory();
   if(document.getElementById('panel-evolucao').classList.contains('active')) populateEvoSelects();
-  toast(`✓ ${NAMES[name]} salvo — ${liveScores[name]} pts`);
+  toast('✓ '+NAMES[name]+' salvo — '+liveScores[name]+' pts');
 }
 
-function clearScale(name){
-  document.querySelectorAll(`#panel-${name} input[type=radio]`).forEach(r=>r.checked=false);
-  document.querySelectorAll(`#panel-${name} select`).forEach(s=>s.value='');
-  if(name==='barthel')calcBarthel();
-  if(name==='mif')calcMIF();
-  if(name==='berg')calcBerg();
-  if(name==='mrc')calcMRC();
-  if(name==='ims')calcIMS();
-  if(name==='cpax')calcCPAx();
-  if(name==='fois')calcFOIS();
-  if(name==='doss')calcDOSS();
-  if(name==='katz')calcKATZ();
-  if(name==='ecf')calcECF();
-  if(name==='faq')calcFAQ();
-  if(name==='mmse')calcMMSE();
-  if(name==='gds')calcGDS();
+function clearScale(name) {
+  var inputs=document.querySelectorAll('#panel-'+name+' input[type=radio]');
+  for(var i=0;i<inputs.length;i++) inputs[i].checked=false;
+  var selects=document.querySelectorAll('#panel-'+name+' select');
+  for(var i=0;i<selects.length;i++) selects[i].value='';
+  var fns={barthel:calcBarthel,mif:calcMIF,faq:calcFAQ,katz:calcKATZ,ecf:calcECF,berg:calcBerg,ims:calcIMS,mrc:calcMRC,cpax:calcCPAx,fois:calcFOIS,doss:calcDOSS,mmse:calcMMSE,gds:calcGDS};
+  if(fns[name]) fns[name]();
 }
 
-// ─── HISTORY ─────────────────────────────────────────────────────────────────
-function renderHistory(){
-  const c=document.getElementById('history-content');
+// ── HISTORY ───────────────────────────────────────────────────────────────────
+function renderHistory() {
+  var c=document.getElementById('history-content');
   if(!history.length){c.innerHTML='<div class="history-empty">Nenhuma avaliação salva ainda.<br>Preencha uma escala e clique em <b>Salvar avaliação</b>.</div>';return;}
-  const byPt={};
-  history.forEach(h=>{const k=h.pid+'|'+h.patient;if(!byPt[k])byPt[k]={patient:h.patient,pid:h.pid,evals:[]};byPt[k].evals.push(h);});
-  c.innerHTML=Object.values(byPt).map(p=>`
-    <div class="pt-group">
-      <div class="pt-group-header">
-        <div class="pt-avatar">${p.patient.split(' ').slice(0,2).map(w=>w[0]).join('').toUpperCase().slice(0,2)}</div>
-        <div><div class="pt-name">${p.patient}</div><div class="pt-id">Prontuário: ${p.pid}</div></div>
-      </div>
-      <table class="eval-table">
-        <thead><tr><th>Data</th><th>Hora</th><th>Escala</th><th>Pontos</th><th>Classificação</th><th>Avaliador</th></tr></thead>
-        <tbody>${p.evals.map(e=>`<tr><td>${e.date}</td><td>${e.ts}</td><td>${e.scale}</td><td><strong>${e.score}</strong></td><td>${e.interp}</td><td>${e.evaluator}</td></tr>`).join('')}</tbody>
-      </table>
-    </div>`).join('');
-}
-
-function clearHistory(){
-  if(history.length&&confirm('Apagar todo o histórico permanentemente? Esta ação não pode ser desfeita.')){
-    history=[];
-    saveDB();
-    document.getElementById('nb-history').textContent=0;
-    renderHistory();
+  var byPt={};
+  for(var i=0;i<history.length;i++){var h=history[i];var k=h.pid+'|'+h.patient;if(!byPt[k])byPt[k]={patient:h.patient,pid:h.pid,evals:[]};byPt[k].evals.push(h);}
+  var html='';
+  var pts=Object.values(byPt);
+  for(var p=0;p<pts.length;p++){
+    var pt=pts[p];
+    var initials=pt.patient.split(' ').slice(0,2).map(function(w){return w[0];}).join('').toUpperCase().slice(0,2);
+    html+='<div class="pt-group"><div class="pt-group-header"><div class="pt-avatar">'+initials+'</div><div><div class="pt-name">'+pt.patient+'</div><div class="pt-id">Prontuário: '+pt.pid+'</div></div></div>';
+    html+='<table class="eval-table"><thead><tr><th>Data</th><th>Hora</th><th>Escala</th><th>Pontos</th><th>Classificação</th><th>Avaliador</th></tr></thead><tbody>';
+    for(var e=0;e<pt.evals.length;e++){var ev=pt.evals[e];html+='<tr><td>'+ev.date+'</td><td>'+ev.ts+'</td><td>'+ev.scale+'</td><td><strong>'+ev.score+'</strong></td><td>'+ev.interp+'</td><td>'+ev.evaluator+'</td></tr>';}
+    html+='</tbody></table></div>';
   }
+  c.innerHTML=html;
 }
 
-// ─── EXPORT ──────────────────────────────────────────────────────────────────
+function clearHistory(){if(history.length&&confirm('Apagar todo o histórico permanentemente?')){history=[];saveDB();document.getElementById('nb-history').textContent=0;renderHistory();}}
+
+// ── EXPORT ────────────────────────────────────────────────────────────────────
+function dl(content,filename,type){var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([content],{type:type}));a.download=filename;a.click();}
+function today(){return new Date().toISOString().slice(0,10);}
 function exportCSV(){
   if(!history.length){toast('Nenhuma avaliação salva.');return;}
-  const rows=[['Data','Hora','Paciente','Prontuário','Avaliador','Escala','Pontuação','Classificação']];
-  history.forEach(h=>rows.push([h.date,h.ts,h.patient,h.pid,h.evaluator,h.scale,h.score,h.interp]));
-  const csv=rows.map(r=>r.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n');
-  dl('\uFEFF'+csv,'reabscale_'+today()+'.csv','text/csv;charset=utf-8');
-  toast('CSV exportado com sucesso!');
+  var rows=[['Data','Hora','Paciente','Prontuário','Avaliador','Escala','Pontuação','Classificação']];
+  for(var i=0;i<history.length;i++){var h=history[i];rows.push([h.date,h.ts,h.patient,h.pid,h.evaluator,h.scale,h.score,h.interp]);}
+  var csv=rows.map(function(r){return r.map(function(v){return '"'+String(v).replace(/"/g,'""')+'"';}).join(',');}).join('\n');
+  dl('\uFEFF'+csv,'reabscale_'+today()+'.csv','text/csv;charset=utf-8');toast('CSV exportado!');
 }
-
 function exportTXT(){
   if(!history.length){toast('Nenhuma avaliação salva.');return;}
-  const byPt={};
-  history.forEach(h=>{const k=h.pid;if(!byPt[k])byPt[k]={patient:h.patient,pid:h.pid,evals:[]};byPt[k].evals.push(h);});
-  let txt='REABSCALE — RELATÓRIO DE AVALIAÇÃO\n'+'='.repeat(50)+'\nGerado em: '+new Date().toLocaleString('pt-BR')+'\n\n';
-  Object.values(byPt).forEach(p=>{
-    txt+=`PACIENTE: ${p.patient}\nPRONTUÁRIO: ${p.pid}\n${'-'.repeat(40)}\n`;
-    p.evals.forEach(e=>txt+=`  ${e.scale.padEnd(22)} | ${String(e.score).padStart(3)} pts | ${e.interp} | ${e.date} | Avaliador: ${e.evaluator}\n`);
-    txt+='\n';
-  });
-  dl(txt,'reabscale_relatorio_'+today()+'.txt','text/plain;charset=utf-8');
-  toast('Relatório exportado!');
+  var txt='REABSCALE · REDE D\'OR\nGerado: '+new Date().toLocaleString('pt-BR')+'\n\n';
+  for(var i=0;i<history.length;i++){var h=history[i];txt+=h.scale+': '+h.score+' pts — '+h.interp+' ('+h.date+')\n';}
+  dl(txt,'reabscale_'+today()+'.txt','text/plain;charset=utf-8');toast('Relatório exportado!');
 }
-
 function exportJSON(){
   if(!history.length){toast('Nenhuma avaliação salva.');return;}
-  dl(JSON.stringify(history,null,2),'reabscale_'+today()+'.json','application/json');
-  toast('JSON exportado!');
+  dl(JSON.stringify(history,null,2),'reabscale_'+today()+'.json','application/json');toast('JSON exportado!');
 }
 
-function dl(content,filename,type){
-  const a=document.createElement('a');
-  a.href=URL.createObjectURL(new Blob([content],{type}));
-  a.download=filename;
-  a.click();
-}
+// ── NAV ───────────────────────────────────────────────────────────────────────
+var NAV_LABELS={barthel:'Barthel',mif:'MIF',faq:'Pfeffer',katz:'Katz',ecf:'ECF',berg:'Berg',ims:'IMS',mrc:'MRC',cpax:'CPAx',fois:'FOIS',doss:'DOSS',mmse:'MEEM',gds:'GDS-15',history:'Histórico',evolucao:'Evolução',export:'Exportar',farol:'FAROL'};
 
-function today(){return new Date().toISOString().slice(0,10);}
-
-// ─── NAV ─────────────────────────────────────────────────────────────────────
-const NAV_LABELS={barthel:'Barthel',mif:'MIF',faq:'Pfeffer',berg:'Berg',ims:'IMS Motric.',mrc:'MRC Força',cpax:'CPAx',fois:'FOIS',doss:'DOSS',katz:'Katz',ecf:'ECF',mmse:'MEEM',gds:'GDS-15',history:'Histórico',evolucao:'Evolução',export:'Exportar'};
-
-function go(name){
-  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
-  document.querySelectorAll('.mbn-item').forEach(n=>n.classList.remove('active'));
-  document.getElementById('panel-'+name).classList.add('active');
-  const sidebarNav=document.getElementById('nav-'+name);
-  if(sidebarNav) sidebarNav.classList.add('active');
-  const mbn=document.getElementById('mbn-'+name);
-  if(mbn){
-    mbn.classList.add('active');
-    mbn.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
-  }
-  const ind=document.getElementById('mobile-scale-name');
+function go(name) {
+  var panels=document.querySelectorAll('.panel');
+  for(var i=0;i<panels.length;i++) panels[i].classList.remove('active');
+  var navItems=document.querySelectorAll('.nav-item');
+  for(var i=0;i<navItems.length;i++) navItems[i].classList.remove('active');
+  var mbnItems=document.querySelectorAll('.mbn-item');
+  for(var i=0;i<mbnItems.length;i++) mbnItems[i].classList.remove('active');
+  var panel=document.getElementById('panel-'+name);
+  if(panel) panel.classList.add('active');
+  var nav=document.getElementById('nav-'+name);
+  if(nav) nav.classList.add('active');
+  var mbn=document.getElementById('mbn-'+name);
+  if(mbn){mbn.classList.add('active');mbn.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});}
+  var ind=document.getElementById('mobile-scale-name');
   if(ind) ind.textContent=NAV_LABELS[name]||'';
   if(name==='evolucao') populateEvoSelects();
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
-// ─── TOAST ───────────────────────────────────────────────────────────────────
-function toast(msg){
-  const t=document.getElementById('toast');
-  t.textContent=msg;t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),2800);
-}
+// ── TOAST ─────────────────────────────────────────────────────────────────────
+function toast(msg){var t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(function(){t.classList.remove('show');},2800);}
 
 // ─── EVOLUÇÃO ────────────────────────────────────────────────────────────────
 const SCALE_MAXES={'Índice de Barthel':100,'MIF':126,'Berg':56,'MRC Força':60,'IMS Motricidade':200,'CPAx':55,'FOIS':7,'DOSS':7,'Katz':6,'ECF':7,'FAQ Pfeffer':30,'MEEM':30,'GDS-15':15};
@@ -2420,6 +1514,47 @@ NAV_LABELS['farol']='FAROL · Alta';
 // Build FAROL on init
 buildFarolItems();
 farolCalc();
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+loadDB();
+document.getElementById('pt-date').value = new Date().toISOString().slice(0,10);
+buildBarthel();
+buildMIF();
+buildFAQ();
+buildKATZ();
+buildECF();
+buildBerg();
+buildIMS();
+buildMRC();
+buildCPAx();
+buildFOIS();
+buildDOSS();
+buildMMSE();
+buildGDS();
+buildFarolItems();
+farolCalc();
+if(history.length){
+  document.getElementById('nb-history').textContent=history.length;
+  renderHistory();
+}
+
+// PWA
+var deferredPrompt=null;
+window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();deferredPrompt=e;var b=document.getElementById('install-banner');if(b)b.style.display='flex';});
+window.addEventListener('appinstalled',function(){var b=document.getElementById('install-banner');if(b)b.style.display='none';deferredPrompt=null;toast('✓ App instalado!');});
+function installApp(){if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(function(){deferredPrompt=null;});}}
+function dismissBanner(){var b=document.getElementById('install-banner');if(b)b.style.display='none';localStorage.setItem('reabscale_banner','1');}
+if(localStorage.getItem('reabscale_banner')==='1'){var b=document.getElementById('install-banner');if(b)b.style.display='none';}
+
+// Service Worker
+if('serviceWorker' in navigator){
+  var swCode='const CACHE="reabscale-v3";self.addEventListener("install",function(e){e.waitUntil(caches.open(CACHE).then(function(c){return c.addAll([self.registration.scope]).catch(function(){});}).then(function(){return self.skipWaiting();}));});self.addEventListener("activate",function(e){e.waitUntil(caches.keys().then(function(ks){return Promise.all(ks.filter(function(k){return k!==CACHE;}).map(function(k){return caches.delete(k);}));}).then(function(){return self.clients.claim();}));});self.addEventListener("fetch",function(e){e.respondWith(caches.match(e.request).then(function(r){return r||fetch(e.request).then(function(res){if(res&&res.status===200&&e.request.method==="GET"){var c=res.clone();caches.open(CACHE).then(function(cache){cache.put(e.request,c);});}return res;}).catch(function(){return caches.match(self.registration.scope);});}));});';
+  var blob=new Blob([swCode],{type:'application/javascript'});
+  navigator.serviceWorker.register(URL.createObjectURL(blob),{scope:'./'}).catch(function(e){console.warn('SW:',e);});
+}
+
+NAV_LABELS['farol']='FAROL · Alta';
+
 </script>
 </body>
 </html>
