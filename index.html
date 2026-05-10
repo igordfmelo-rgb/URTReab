@@ -1713,10 +1713,7 @@ function calcCPAx(){
 }
 
 function buildFOIS(){
-  document.getElementById('fois-items').innerHTML=`<div class="items-wrap">${FOIS_LEVELS.map(l=>`
-    <div class="scale-item">
-      ${radio('fois_niv',[{v:l.v,t:l.t}],'calcFOIS()')}
-    </div>`).join('')}</div>`;
+  document.getElementById('fois-items').innerHTML=FOIS_LEVELS.map(l=>'<div class="scale-item">'+radio('fois_niv',[{v:l.v,t:l.t}],'calcFOIS()')+'</div>').join('');
 }
 function calcFOIS(){
   const r=document.querySelector('input[name="fois_niv"]:checked');
@@ -1729,10 +1726,7 @@ function calcFOIS(){
 }
 
 function buildDOSS(){
-  document.getElementById('doss-items').innerHTML=`<div class="items-wrap">${DOSS_LEVELS.map(l=>`
-    <div class="scale-item">
-      ${radio('doss_niv',[{v:l.v,t:l.t}],'calcDOSS()')}
-    </div>`).join('')}</div>`;
+  document.getElementById('doss-items').innerHTML=DOSS_LEVELS.map(l=>'<div class="scale-item">'+radio('doss_niv',[{v:l.v,t:l.t}],'calcDOSS()')+'</div>').join('');
 }
 function calcDOSS(){
   const r=document.querySelector('input[name="doss_niv"]:checked');
@@ -1759,10 +1753,7 @@ function calcKATZ(){
 }
 
 function buildECF(){
-  document.getElementById('ecf-items').innerHTML=`<div class="items-wrap">${ECF_LEVELS.map(l=>`
-    <div class="scale-item">
-      ${radio('ecf_niv',[{v:l.v,t:l.t}],'calcECF()')}
-    </div>`).join('')}</div>`;
+  document.getElementById('ecf-items').innerHTML=ECF_LEVELS.map(l=>'<div class="scale-item">'+radio('ecf_niv',[{v:l.v,t:l.t}],'calcECF()')+'</div>').join('');
 }
 function calcECF(){
   const r=document.querySelector('input[name="ecf_niv"]:checked');
@@ -1837,6 +1828,15 @@ function calcMRC(){
   let s=MRC_ITENS.reduce((a,_,i)=>{const r=document.querySelector(`input[name="mrc_${i}"]:checked`);return a+(r?+r.value:0);},0);
   const t=s<36?'Fraqueza grave (UCI-AW)':s<48?'Fraqueza moderada':s<60?'Fraqueza leve':'Força preservada';
   setScore('mrc',s,60,t);
+}
+
+function buildFAQ(){
+  const opts=[{v:0,t:'0 — Normal'},{v:1,t:'1 — Com dificuldade, mas sozinho'},{v:2,t:'2 — Necessita ajuda'},{v:3,t:'3 — Incapaz'}];
+  document.getElementById('faq-items').innerHTML=FAQ.map((label,i)=>`
+    <div class="scale-item">
+      <div class="item-title">${i+1}. ${label}</div>
+      ${radio('faq_'+i,opts,'calcFAQ()')}
+    </div>`).join('');
 }
 
 function calcFAQ(){
