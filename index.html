@@ -1589,6 +1589,13 @@ const GDS=[
   {label:'A maioria das pessoas está melhor do que você?',inv:false}
 ];
 
+// ─── FORÇAR LIMPEZA DE CACHE ANTIGO ─────────────────────────────────────────
+if('caches' in window){
+  caches.keys().then(keys=>keys.forEach(k=>{
+    if(k!=='reabscale-v3') caches.delete(k);
+  }));
+}
+
 // ─── STATE ──────────────────────────────────────────────────────────────────
 let history=[];
 let liveScores={barthel:0,mif:18,berg:0,mrc:0,ims:0,cpax:0,fois:0,doss:0,katz:0,ecf:0,faq:0,mmse:0,gds:0};
@@ -2114,7 +2121,7 @@ if(history.length){
 // ─── SERVICE WORKER (offline) ────────────────────────────────────────────────
 if('serviceWorker' in navigator){
   const swCode=`
-const CACHE='reabscale-v1';
+const CACHE='reabscale-v3';
 const ASSETS=[
   self.registration.scope,
   'https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap',
