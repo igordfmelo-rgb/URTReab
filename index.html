@@ -347,13 +347,13 @@ const GDS_DATA=[
 ];
 
 // ── STATE ─────────────────────────────────────────────────────────────────────
-let history = [];
-let liveScores = {barthel:0,mif:18,faq:0,katz:0,ecf:0,berg:0,ims:0,mrc:0,cpax:0,fois:0,doss:0,mmse:0,gds:0};
+var history = [];
+var liveScores = {barthel:0,mif:18,faq:0,katz:0,ecf:0,berg:0,ims:0,mrc:0,cpax:0,fois:0,doss:0,mmse:0,gds:0};
 
 // ── PERSISTENCE ───────────────────────────────────────────────────────────────
-const DB_KEY = 'reabscale_v3';
+var DB_KEY = 'reabscale_v3';
 function saveDB() { try { localStorage.setItem(DB_KEY, JSON.stringify(history)); } catch(e){} }
-function loadDB() { try { const r=localStorage.getItem(DB_KEY); if(r) history=JSON.parse(r); } catch(e){ history=[]; } }
+function loadDB() { try { var r=localStorage.getItem(DB_KEY); if(r) history=JSON.parse(r); } catch(e){ history=[]; } }
 
 // ── HELPERS ───────────────────────────────────────────────────────────────────
 function radio(name, opts, cb, row) {
@@ -742,19 +742,19 @@ function go(name) {
 function toast(msg){var t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(function(){t.classList.remove('show');},2800);}
 
 // ─── EVOLUÇÃO ────────────────────────────────────────────────────────────────
-const SCALE_MAXES={'Índice de Barthel':100,'MIF':126,'Berg':56,'MRC Força':60,'IMS Motricidade':200,'CPAx':55,'FOIS':7,'DOSS':7,'Katz':6,'ECF':7,'FAQ Pfeffer':30,'MEEM':30,'GDS-15':15};
-const SCALE_COLORS={'Índice de Barthel':'#003087','MIF':'#2563eb','Berg':'#7c3aed','MRC Força':'#c17d3c','IMS Motricidade':'#0891b2','CPAx':'#0e7490','FOIS':'#0d9488','DOSS':'#0f766e','Katz':'#7c3aed','ECF':'#6d28d9','FAQ Pfeffer':'#dc2626','MEEM':'#059669','GDS-15':'#db2777'};
+var SCALE_MAXES={'Índice de Barthel':100,'MIF':126,'Berg':56,'MRC Força':60,'IMS Motricidade':200,'CPAx':55,'FOIS':7,'DOSS':7,'Katz':6,'ECF':7,'FAQ Pfeffer':30,'MEEM':30,'GDS-15':15};
+var SCALE_COLORS={'Índice de Barthel':'#003087','MIF':'#2563eb','Berg':'#7c3aed','MRC Força':'#c17d3c','IMS Motricidade':'#0891b2','CPAx':'#0e7490','FOIS':'#0d9488','DOSS':'#0f766e','Katz':'#7c3aed','ECF':'#6d28d9','FAQ Pfeffer':'#dc2626','MEEM':'#059669','GDS-15':'#db2777'};
 
-let evoChart=null;
+var evoChart=null;
 
 function populateEvoSelects(){
-  const sel=document.getElementById('evo-patient');
-  const cur=sel.value;
-  const pts={};
-  history.forEach(h=>{const k=h.pid+'|'+h.patient;if(!pts[k])pts[k]=h.patient;});
+  var sel=document.getElementById('evo-patient');
+  var cur=sel.value;
+  var pts={};
+  history.forEach(h=>{var k=h.pid+'|'+h.patient;if(!pts[k])pts[k]=h.patient;});
   sel.innerHTML='<option value="">— Selecione um paciente —</option>';
   Object.entries(pts).forEach(([k,name])=>{
-    const o=document.createElement('option');
+    var o=document.createElement('option');
     o.value=k; o.textContent=name;
     if(k===cur)o.selected=true;
     sel.appendChild(o);
@@ -763,14 +763,14 @@ function populateEvoSelects(){
 }
 
 function renderEvo(){
-  const ptKey=document.getElementById('evo-patient').value;
-  const scaleSel=document.getElementById('evo-scale').value;
-  const empty=document.getElementById('evo-empty');
-  const content=document.getElementById('evo-content');
+  var ptKey=document.getElementById('evo-patient').value;
+  var scaleSel=document.getElementById('evo-scale').value;
+  var empty=document.getElementById('evo-empty');
+  var content=document.getElementById('evo-content');
 
   if(!ptKey){empty.style.display='block';content.style.display='none';return;}
 
-  let evals=history.filter(h=>(h.pid+'|'+h.patient)===ptKey);
+  var evals=history.filter(h=>(h.pid+'|'+h.patient)===ptKey);
   if(scaleSel) evals=evals.filter(h=>h.scale===scaleSel);
   evals=evals.slice().reverse(); // cronológico
 
@@ -778,20 +778,20 @@ function renderEvo(){
   empty.style.display='none';content.style.display='block';
 
   // Agrupar por escala
-  const byScale={};
+  var byScale={};
   evals.forEach(e=>{if(!byScale[e.scale])byScale[e.scale]=[];byScale[e.scale].push(e);});
-  const scaleNames=Object.keys(byScale);
+  var scaleNames=Object.keys(byScale);
 
   // ── CARDS de resumo ──
-  const cardsEl=document.getElementById('evo-cards');
+  var cardsEl=document.getElementById('evo-cards');
   cardsEl.innerHTML=scaleNames.map(sc=>{
-    const arr=byScale[sc];
-    const first=arr[0].score, last=arr[arr.length-1].score;
-    const delta=last-first;
-    const max=SCALE_MAXES[sc]||100;
-    const pct=Math.round((last/max)*100);
-    const sign=delta>0?'+':'';
-    const col=delta>0?'#003087':delta<0?'#b83232':'#6b6560';
+    var arr=byScale[sc];
+    var first=arr[0].score, last=arr[arr.length-1].score;
+    var delta=last-first;
+    var max=SCALE_MAXES[sc]||100;
+    var pct=Math.round((last/max)*100);
+    var sign=delta>0?'+':'';
+    var col=delta>0?'#003087':delta<0?'#b83232':'#6b6560';
     return `<div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1rem;box-shadow:var(--shadow)">
       <div style="font-size:11px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">${sc}</div>
       <div style="font-size:28px;font-weight:600;color:var(--text);line-height:1">${last}<span style="font-size:14px;color:var(--text3)">/${max}</span></div>
@@ -804,14 +804,14 @@ function renderEvo(){
   }).join('');
 
   // ── GRÁFICO ──
-  const allDates=[...new Set(evals.map(e=>e.date))].sort();
+  var allDates=[...new Set(evals.map(e=>e.date))].sort();
   document.getElementById('evo-chart-title').textContent=
     `Evolução — ${document.getElementById('evo-patient').options[document.getElementById('evo-patient').selectedIndex].text}`;
 
-  const datasets=scaleNames.map(sc=>{
-    const arr=byScale[sc];
-    const max=SCALE_MAXES[sc]||100;
-    const dataMap={};
+  var datasets=scaleNames.map(sc=>{
+    var arr=byScale[sc];
+    var max=SCALE_MAXES[sc]||100;
+    var dataMap={};
     arr.forEach(e=>dataMap[e.date]=Math.round((e.score/max)*100));
     return {
       label:sc+' (%)',
@@ -826,7 +826,7 @@ function renderEvo(){
     };
   });
 
-  const ctx=document.getElementById('evo-chart').getContext('2d');
+  var ctx=document.getElementById('evo-chart').getContext('2d');
   if(evoChart)evoChart.destroy();
   evoChart=new Chart(ctx,{
     type:'line',
@@ -847,17 +847,17 @@ function renderEvo(){
   });
 
   // ── TABELA com delta ──
-  const tbody=document.getElementById('evo-tbody');
-  const prevScore={};
-  const rows=[...evals].reverse(); // mais recente primeiro
+  var tbody=document.getElementById('evo-tbody');
+  var prevScore={};
+  var rows=[...evals].reverse(); // mais recente primeiro
   tbody.innerHTML=rows.map(e=>{
-    const key=e.scale;
-    const delta=prevScore[key]!==undefined?e.score-prevScore[key]:null;
+    var key=e.scale;
+    var delta=prevScore[key]!==undefined?e.score-prevScore[key]:null;
     prevScore[key]=e.score;
-    let deltaHtml='<span style="color:var(--text3)">—</span>';
+    var deltaHtml='<span style="color:var(--text3)">—</span>';
     if(delta!==null){
-      const sign=delta>0?'+':'';
-      const col=delta>0?'#003087':delta<0?'#b83232':'#6b6560';
+      var sign=delta>0?'+':'';
+      var col=delta>0?'#003087':delta<0?'#b83232':'#6b6560';
       deltaHtml=`<span style="color:${col};font-weight:500">${sign}${delta}</span>`;
     }
     return `<tr><td>${e.date}</td><td>${e.scale}</td><td><strong>${e.score}</strong></td><td>${deltaHtml}</td><td>${e.interp}</td></tr>`;
@@ -875,9 +875,9 @@ if(history.length){
 
 // ─── SERVICE WORKER (offline) ────────────────────────────────────────────────
 if('serviceWorker' in navigator){
-  const swCode=`
-const CACHE='reabscale-v3';
-const ASSETS=[
+  var swCode=`
+var CACHE='reabscale-v3';
+var ASSETS=[
   self.registration.scope,
   'https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap',
   'https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js'
@@ -891,30 +891,29 @@ self.addEventListener('activate',e=>{
 self.addEventListener('fetch',e=>{
   e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request).then(res=>{
     if(res&&res.status===200&&e.request.method==='GET'){
-      const c=res.clone();
+      var c=res.clone();
       caches.open(CACHE).then(cache=>cache.put(e.request,c));
     }
     return res;
   }).catch(()=>caches.match(self.registration.scope))));
 });
 `;
-  const blob=new Blob([swCode],{type:'application/javascript'});
-  const swUrl=URL.createObjectURL(blob);
+  var blob=new Blob([swCode],{type:'application/javascript'});
+  var swUrl=URL.createObjectURL(blob);
   navigator.serviceWorker.register(swUrl,{scope:'./'})
     .then(()=>{ console.log('SW registrado — modo offline ativo'); })
     .catch(e=>console.warn('SW falhou:',e));
 }
 
 // ─── PWA INSTALL BANNER ───────────────────────────────────────────────────────
-let deferredPrompt=null;
+var deferredPrompt=null;
 window.addEventListener('beforeinstallprompt',e=>{
   e.preventDefault();
   deferredPrompt=e;
-  const banner=document.getElementById('install-banner');
+  var banner=document.getElementById('install-banner');
   if(banner) banner.style.display='flex';
 });
 window.addEventListener('appinstalled',()=>{
-  const banner=document.getElementById('install-banner');
   if(banner) banner.style.display='none';
   deferredPrompt=null;
   toast('✓ App instalado com sucesso!');
@@ -925,18 +924,16 @@ function installApp(){
   deferredPrompt.userChoice.then(()=>{deferredPrompt=null;});
 }
 function dismissBanner(){
-  const banner=document.getElementById('install-banner');
   if(banner) banner.style.display='none';
   localStorage.setItem('reabscale_banner_dismissed','1');
 }
 // Não mostrar banner se já foi dispensado
 if(localStorage.getItem('reabscale_banner_dismissed')==='1'){
-  const banner=document.getElementById('install-banner');
   if(banner) banner.style.display='none';
 }
 
 // ─── FAROL ───────────────────────────────────────────────────────────────────
-const FAROL_HOSPITAL=[
+var FAROL_HOSPITAL=[
   {id:'h_hb',label:'Hemoglobina na alta < 12 g/dL',pts:1},
   {id:'h_onc',label:'Alta do serviço de Oncologia',pts:2},
   {id:'h_na',label:'Sódio na alta < 135 mEq/L',pts:1},
@@ -944,12 +941,12 @@ const FAROL_HOSPITAL=[
   {id:'h_urg',label:'Admissão índice não-eletiva (urgência/emergência)',pts:1},
   {id:'h_los',label:'Tempo de permanência ≥ 5 dias',pts:2},
 ];
-const FAROL_PRIOR=[
+var FAROL_PRIOR=[
   {id:'pa_01',label:'0 a 1 internação no último ano',pts:0},
   {id:'pa_25',label:'2 a 5 internações no último ano',pts:2},
   {id:'pa_6', label:'> 5 internações no último ano',pts:5},
 ];
-const FAROL_READINESS=[
+var FAROL_READINESS=[
   {id:'r_hemo', label:'Hemodinâmica estável nas últimas 24h'},
   {id:'r_afeb', label:'Afebril ≥ 24h sem antitérmico'},
   {id:'r_spo2', label:'SpO₂ estável em ar ambiente ou O₂ domiciliar titulado'},
@@ -960,7 +957,7 @@ const FAROL_READINESS=[
   {id:'r_teach',label:'Teach-back positivo (paciente/cuidador compreendeu plano)'},
   {id:'r_news', label:'NEWS2 ≤ 2 nas últimas 12h'},
 ];
-const FAROL_FORSTER=[
+var FAROL_FORSTER=[
   {id:'f_poly', label:'Polifarmácia (≥ 5 medicamentos na alta)'},
   {id:'f_hra',  label:'Droga de alta vigilância iniciada (anticoagulante, hipoglicemiante, opioide, imunossupressor)'},
   {id:'f_pend', label:'Exame pendente com resultado após a alta'},
@@ -970,11 +967,11 @@ const FAROL_FORSTER=[
   {id:'f_hb10', label:'Hemoglobina < 10 g/dL na alta'},
 ];
 
-let fState={hospital:{},prior:'pa_01',readiness:{},forster:{}};
+var fState={hospital:{},prior:'pa_01',readiness:{},forster:{}};
 
-const ICON_UNCHECKED=`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text3)"><circle cx="12" cy="12" r="10"/></svg>`;
-const ICON_CHECKED=`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent)"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>`;
-const ICON_CHECKED_AMBER=`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent2)"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>`;
+var ICON_UNCHECKED=`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text3)"><circle cx="12" cy="12" r="10"/></svg>`;
+var ICON_CHECKED=`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent)"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>`;
+var ICON_CHECKED_AMBER=`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent2)"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>`;
 
 function buildFarolItems(){
   // Hospital checks
@@ -1010,21 +1007,21 @@ function buildFarolItems(){
 
 function farolToggleHospital(id){
   fState.hospital[id]=!fState.hospital[id];
-  const row=document.getElementById('frow-'+id);
+  var row=document.getElementById('frow-'+id);
   row.classList.toggle('checked',fState.hospital[id]);
   row.querySelector('.farol-check-icon').innerHTML=fState.hospital[id]?ICON_CHECKED:ICON_UNCHECKED;
   farolCalc();
 }
 function farolToggleReadiness(id){
   fState.readiness[id]=!fState.readiness[id];
-  const row=document.getElementById('frow-'+id);
+  var row=document.getElementById('frow-'+id);
   row.classList.toggle('checked',fState.readiness[id]);
   row.querySelector('.farol-check-icon').innerHTML=fState.readiness[id]?ICON_CHECKED:ICON_UNCHECKED;
   farolCalc();
 }
 function farolToggleForster(id){
   fState.forster[id]=!fState.forster[id];
-  const row=document.getElementById('frow-'+id);
+  var row=document.getElementById('frow-'+id);
   row.classList.toggle('checked',!!fState.forster[id]);
   row.classList.toggle('checked-amber',!!fState.forster[id]);
   row.querySelector('.farol-check-icon').innerHTML=fState.forster[id]?ICON_CHECKED_AMBER:ICON_UNCHECKED;
@@ -1033,9 +1030,9 @@ function farolToggleForster(id){
 function farolSetPrior(id){
   fState.prior=id;
   FAROL_PRIOR.forEach(it=>{
-    const row=document.getElementById('fprior-'+it.id);
+    var row=document.getElementById('fprior-'+it.id);
     row.classList.toggle('checked',it.id===id);
-    const lbl=row.querySelector('.farol-check-label');
+    var lbl=row.querySelector('.farol-check-label');
     lbl.style.color=it.id===id?'var(--accent)':'';
     lbl.style.fontWeight=it.id===id?'500':'';
   });
@@ -1043,15 +1040,15 @@ function farolSetPrior(id){
 }
 
 function farolCalc(){
-  const hospBase=FAROL_HOSPITAL.reduce((a,it)=>a+(fState.hospital[it.id]?it.pts:0),0);
-  const priorPts=FAROL_PRIOR.find(p=>p.id===fState.prior)?.pts??0;
-  const hospTotal=hospBase+priorPts;
-  const readinessFilled=FAROL_READINESS.filter(it=>fState.readiness[it.id]).length;
-  const readinessGaps=FAROL_READINESS.length-readinessFilled;
-  const forsterCount=FAROL_FORSTER.filter(it=>fState.forster[it.id]).length;
+  var hospBase=FAROL_HOSPITAL.reduce((a,it)=>a+(fState.hospital[it.id]?it.pts:0),0);
+  var priorPts=FAROL_PRIOR.find(p=>p.id===fState.prior)?.pts??0;
+  var hospTotal=hospBase+priorPts;
+  var readinessFilled=FAROL_READINESS.filter(it=>fState.readiness[it.id]).length;
+  var readinessGaps=FAROL_READINESS.length-readinessFilled;
+  var forsterCount=FAROL_FORSTER.filter(it=>fState.forster[it.id]).length;
 
   // Band
-  const band=hospTotal<=4?{label:'Baixo risco',rate:'5,8%'}:hospTotal<=6?{label:'Risco intermediário',rate:'12,0%'}:{label:'Alto risco',rate:'23,7%'};
+  var band=hospTotal<=4?{label:'Baixo risco',rate:'5,8%'}:hospTotal<=6?{label:'Risco intermediário',rate:'12,0%'}:{label:'Alto risco',rate:'23,7%'};
 
   document.getElementById('fr-hospital').innerHTML=`${hospTotal}<span class="farol-score-max">/13</span>`;
   document.getElementById('fr-hospital-band').textContent=`${band.label} · ~${band.rate}`;
@@ -1061,8 +1058,8 @@ function farolCalc(){
   document.getElementById('fr-forster-sub').textContent=forsterCount===0?'Sem gatilhos':`${forsterCount} ativo(s)`;
 
   // Recommendation
-  let level,title,followUp,detail,actions=[];
-  const started=hospTotal>0||forsterCount>0||readinessFilled>0;
+  var level,title,followUp,detail,actions=[];
+  var started=hospTotal>0||forsterCount>0||readinessFilled>0;
   if(!started){
     level='idle';title='';followUp='';detail='Preencha os três blocos para gerar a recomendação.';
   } else if(readinessGaps>=2){
@@ -1091,24 +1088,24 @@ function farolCalc(){
   }
 
   // Update UI
-  const bar=document.getElementById('farol-result-bar');
-  const topbar=bar.querySelector('.farol-result-topbar')||document.createElement('div');
+  var bar=document.getElementById('farol-result-bar');
+  var topbar=bar.querySelector('.farol-result-topbar')||document.createElement('div');
   topbar.className=`farol-result-topbar ${level}`;
   if(!bar.querySelector('.farol-result-topbar')) bar.prepend(topbar);
 
-  const chip=document.getElementById('farol-rec-chip');
+  var chip=document.getElementById('farol-rec-chip');
   chip.className='farol-chip farol-chip-'+level;
   chip.textContent=level==='idle'?'Aguardando dados':level==='low'?'Baixo risco':level==='moderate'?'Risco intermediário':level==='high'?'Alto risco':'Alta não recomendada';
 
-  const titleEl=document.getElementById('farol-rec-title');
+  var titleEl=document.getElementById('farol-rec-title');
   titleEl.textContent=title;
   titleEl.className='farol-rec-title '+level;
 
   document.getElementById('farol-rec-followup').textContent=followUp;
   document.getElementById('farol-rec-detail').textContent=detail;
 
-  const actWrap=document.getElementById('farol-actions-wrap');
-  const actList=document.getElementById('farol-actions-list');
+  var actWrap=document.getElementById('farol-actions-wrap');
+  var actList=document.getElementById('farol-actions-list');
   if(actions.length){
     actWrap.style.display='block';
     actList.innerHTML=actions.map(a=>`<li class="farol-action-item"><div class="farol-action-dot"></div><span>${a}</span></li>`).join('');
@@ -1121,18 +1118,18 @@ function farolCalc(){
 }
 
 function farolCopyProntuario(){
-  const d=document.getElementById('farol-result-bar')._farolData;
+  var d=document.getElementById('farol-result-bar')._farolData;
   if(!d){toast('Preencha o FAROL antes de copiar.');return;}
-  const ptid=document.getElementById('f-ptid').value;
-  const age=document.getElementById('f-age').value;
-  const unit=document.getElementById('f-unit').value;
-  const date=new Date().toLocaleString('pt-BR');
-  const hospChecked=FAROL_HOSPITAL.filter(it=>fState.hospital[it.id]).map(it=>`  · ${it.label} (+${it.pts})`);
-  const priorLabel=FAROL_PRIOR.find(p=>p.id===fState.prior)?.label;
-  const priorPts=FAROL_PRIOR.find(p=>p.id===fState.prior)?.pts??0;
-  const readyMissing=FAROL_READINESS.filter(it=>!fState.readiness[it.id]).map(it=>`  · ${it.label}`);
-  const forsterActive=FAROL_FORSTER.filter(it=>fState.forster[it.id]).map(it=>`  · ${it.label}`);
-  const txt=[
+  var ptid=document.getElementById('f-ptid').value;
+  var age=document.getElementById('f-age').value;
+  var unit=document.getElementById('f-unit').value;
+  var date=new Date().toLocaleString('pt-BR');
+  var hospChecked=FAROL_HOSPITAL.filter(it=>fState.hospital[it.id]).map(it=>`  · ${it.label} (+${it.pts})`);
+  var priorLabel=FAROL_PRIOR.find(p=>p.id===fState.prior)?.label;
+  var priorPts=FAROL_PRIOR.find(p=>p.id===fState.prior)?.pts??0;
+  var readyMissing=FAROL_READINESS.filter(it=>!fState.readiness[it.id]).map(it=>`  · ${it.label}`);
+  var forsterActive=FAROL_FORSTER.filter(it=>fState.forster[it.id]).map(it=>`  · ${it.label}`);
+  var txt=[
     `FAROL · Score de Alta Segura — ${date}`,
     [ptid&&`Pront: ${ptid}`,age&&`${age}a`,unit].filter(Boolean).join(' · ')||null,
     '',
@@ -1154,7 +1151,7 @@ function farolCopyProntuario(){
     ...d.actions.map(a=>`  → ${a}`),
   ].filter(l=>l!==null).join('\n');
   navigator.clipboard.writeText(txt).then(()=>{
-    const btn=document.getElementById('farol-copy-btn');
+    var btn=document.getElementById('farol-copy-btn');
     btn.textContent='✓ Resumo copiado!';
     setTimeout(()=>btn.innerHTML='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copiar resumo para prontuário',2000);
   });
@@ -1216,7 +1213,6 @@ NAV_LABELS['farol']='FAROL · Alta';
 })();
 
 // PWA
-var deferredPrompt=null;
 window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();deferredPrompt=e;var b=document.getElementById('install-banner');if(b)b.style.display='flex';});
 window.addEventListener('appinstalled',function(){var b=document.getElementById('install-banner');if(b)b.style.display='none';deferredPrompt=null;toast('✓ App instalado!');});
 function installApp(){if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(function(){deferredPrompt=null;});}}
@@ -1225,8 +1221,6 @@ if(localStorage.getItem('reabscale_banner')==='1'){var b=document.getElementById
 
 // Service Worker
 if('serviceWorker' in navigator){
-  var swCode='const CACHE="reabscale-v3";self.addEventListener("install",function(e){e.waitUntil(caches.open(CACHE).then(function(c){return c.addAll([self.registration.scope]).catch(function(){});}).then(function(){return self.skipWaiting();}));});self.addEventListener("activate",function(e){e.waitUntil(caches.keys().then(function(ks){return Promise.all(ks.filter(function(k){return k!==CACHE;}).map(function(k){return caches.delete(k);}));}).then(function(){return self.clients.claim();}));});self.addEventListener("fetch",function(e){e.respondWith(caches.match(e.request).then(function(r){return r||fetch(e.request).then(function(res){if(res&&res.status===200&&e.request.method==="GET"){var c=res.clone();caches.open(CACHE).then(function(cache){cache.put(e.request,c);});}return res;}).catch(function(){return caches.match(self.registration.scope);});}));});';
-  var blob=new Blob([swCode],{type:'application/javascript'});
   navigator.serviceWorker.register(URL.createObjectURL(blob),{scope:'./'}).catch(function(e){console.warn('SW:',e);});
 }
 
